@@ -1,0 +1,30 @@
+return {
+  'akinsho/bufferline.nvim',
+  dependencies = {
+    'folke/tokyonight.nvim',
+  },
+  event = 'UIEnter',
+  config = function()
+    require('bufferline').setup {
+      options = {
+        close_command = "Bdelete %d",
+        indicator = {
+          style = 'none',
+        },
+        name_formatter = function(buf)
+          if buf.name:match('%.*') then
+            return vim.fn.fnamemodify(buf.name, ':t:r')
+          end
+        end,
+        diagnostics = "nvim_lsp",
+        diagnostics_indicator = function(count, level, diagnostics_dict, context)
+          local icon = level:match("error") and " " or " "
+          return icon .. count
+        end,
+        offsets = { { filetype = "neo-tree", text = "Neotree", text_align = "center" } },
+        enforce_regular_tabs = true,
+        tab_size = 12,
+      }
+    }
+  end,
+}
