@@ -1,0 +1,22 @@
+{
+  "math display": {
+    "prefix": "dd",
+    "body": ["$ $1 $$0"],
+    "description": "Math display mode."
+  },
+  "math align": {
+    "prefix": "al",
+    "body": ["$", "$1", "$$0"],
+    "description": "Math display mode."
+  },
+  "text bold": {
+    "prefix": "bf",
+    "body": ["*$1*"],
+    "description": "Text bold"
+  },
+  "text italic": {
+    "prefix": "it",
+    "body": ["_$1_"],
+    "description": "Text italic"
+  }
+}

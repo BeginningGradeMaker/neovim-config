@@ -1,0 +1,34 @@
+return {
+	-- "rebelot/heirline.nvim",
+	-- lazy = false,
+	-- config = function()
+	-- 	local a = { provider = string.rep("A", 40) }
+	-- 	local b = { provider = string.rep("B", 30) }
+	-- 	local c = { provider = string.rep("C", 20) }
+	-- 	local d = { provider = string.rep("D", 10) }
+	-- 	local e = { provider = string.rep("E", 8) }
+	-- 	local f = { provider = string.rep("F", 4) }
+	--
+	-- 	local nest_madness = {
+	-- 		{
+	-- 			flexible = 1, -- first root, with two levels of nesting, for a total of #3 levels
+	-- 			a,
+	-- 			{
+	-- 				flexible = true, -- nested components priority is ignored!
+	-- 				b,
+	-- 				{ flexible = true, c, d },
+	-- 				e,
+	-- 			},
+	-- 			f,
+	-- 		},
+	-- 		{ provider = "%=" },
+	-- 		{
+	-- 			flexible = 4, -- second root, if we want it to have a higher priority, priority should be at least 1 + 3 = 4
+	-- 			a,
+	-- 			{ flexible = true, b, { flexible = true, c, d }, e },
+	-- 			f,
+	-- 		},
+	-- 	}
+	-- 	require("heirline").setup(nest_madness)
+	-- end,
+}
