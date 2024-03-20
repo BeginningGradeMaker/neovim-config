@@ -26,20 +26,20 @@ return {
       desc = "Explorer NeoTree (cwd)",
       remap = true
     },
-    {
-      "<leader>ge",
-      function()
-        require("neo-tree.command").execute({ source = "git_status", toggle = true })
-      end,
-      desc = "Git explorer",
-    },
-    {
-      "<leader>b",
-      function()
-        require("neo-tree.command").execute({ source = "buffers", toggle = true })
-      end,
-      desc = "Buffer explorer",
-    },
+    -- {
+    --   "<leader>ge",
+    --   function()
+    --     require("neo-tree.command").execute({ source = "git_status", toggle = true })
+    --   end,
+    --   desc = "Git explorer",
+    -- },
+    -- {
+    --   "<leader>bb",
+    --   function()
+    --     require("neo-tree.command").execute({ source = "buffers", toggle = true })
+    --   end,
+    --   desc = "Buffer explorer",
+    -- },
   },
   config = function()
     local utils = require "utils"
