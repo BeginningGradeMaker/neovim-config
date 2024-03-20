@@ -53,7 +53,7 @@ return {
 		},
 		opts = function()
 			local commentstring_avail, commentstring =
-				pcall(require, "ts_context_commentstring.integrations.comment_nvim")
+					pcall(require, "ts_context_commentstring.integrations.comment_nvim")
 			return commentstring_avail and commentstring and { pre_hook = commentstring.create_pre_hook() } or {}
 		end,
 	},
@@ -79,14 +79,14 @@ return {
 		lazy = true,
 		config = function()
 			require("tabout").setup({
-				tabkey = "<Tab>", -- key to trigger tabout, set to an empty string to disable
+				tabkey = "<Tab>",         -- key to trigger tabout, set to an empty string to disable
 				backwards_tabkey = "<S-Tab>", -- key to trigger backwards tabout, set to an empty string to disable
-				act_as_tab = true, -- shift content if tab out is not possible
+				act_as_tab = true,        -- shift content if tab out is not possible
 				act_as_shift_tab = false, -- reverse shift content if tab out is not possible (if your keyboard/terminal supports <S-Tab>)
-				default_tab = "<C-t>", -- shift default action (only at the beginning of a line, otherwise <TAB> is used)
+				default_tab = "<C-t>",    -- shift default action (only at the beginning of a line, otherwise <TAB> is used)
 				default_shift_tab = "<C-d>", -- reverse shift default action,
-				enable_backwards = true, -- well ...
-				completion = false, -- if the tabkey is used in a completion pum
+				enable_backwards = true,  -- well ...
+				completion = false,       -- if the tabkey is used in a completion pum
 				tabouts = {
 					{ open = "'", close = "'" },
 					{ open = '"', close = '"' },
@@ -104,7 +104,7 @@ return {
 			"L3MON4D3/LuaSnip",
 			"hrsh7th/nvim-cmp",
 		},
-		opt = true,        -- Set this to true if the plugin is optional
+		opt = true,            -- Set this to true if the plugin is optional
 		event = "InsertCharPre", -- Set the event to 'InsertCharPre' for better compatibility
 		priority = 1000,
 	},
@@ -180,41 +180,93 @@ return {
 		"Tyler-Barham/floating-help.nvim",
 		event = "CmdlineEnter",
 		config = function()
-			local fh = require('floating-help')
+			local fh = require("floating-help")
 
 			fh.setup({
 				-- Defaults
-				width = 80,            -- Whole numbers are columns/rows
-				height = 0.9,          -- Decimals are a percentage of the editor
-				position = 'E',        -- NW,N,NW,W,C,E,SW,S,SE (C==center)
-				border = 'rounded',    -- rounded,double,single
+				width = 80,                    -- Whole numbers are columns/rows
+				height = 0.9,                  -- Decimals are a percentage of the editor
+				position = "E",                -- NW,N,NW,W,C,E,SW,S,SE (C==center)
+				border = "rounded",            -- rounded,double,single
 				onload = function(query_type) end, -- optional callback to be executed after help contents has been loaded
 			})
 
 			-- Create a keymap for toggling the help window
-			vim.keymap.set('n', '<F1>', fh.toggle)
+			vim.keymap.set("n", "<F1>", fh.toggle)
 			-- Create a keymap to search cppman for the word under the cursor
-			vim.keymap.set('n', '<F2>', function()
-				fh.open('t=cppman', vim.fn.expand('<cword>'))
+			vim.keymap.set("n", "<F2>", function()
+				fh.open("t=cppman", vim.fn.expand("<cword>"))
 			end)
 			-- Create a keymap to search man for the word under the cursor
-			vim.keymap.set('n', '<F3>', function()
-				fh.open('t=man', vim.fn.expand('<cword>'))
+			vim.keymap.set("n", "<F3>", function()
+				fh.open("t=man", vim.fn.expand("<cword>"))
 			end)
 
 			-- Only replace cmds, not search; only replace the first instance
 			local function cmd_abbrev(abbrev, expansion)
-				local cmd = 'cabbr ' ..
-					abbrev ..
-					' <c-r>=(getcmdpos() == 1 && getcmdtype() == ":" ? "' .. expansion .. '" : "' .. abbrev .. '")<CR>'
+				local cmd = "cabbr "
+						.. abbrev
+						.. ' <c-r>=(getcmdpos() == 1 && getcmdtype() == ":" ? "'
+						.. expansion
+						.. '" : "'
+						.. abbrev
+						.. '")<CR>'
 				vim.cmd(cmd)
 			end
 
 			-- Redirect `:h` to `:FloatingHelp`
-			cmd_abbrev('h', 'FloatingHelp')
-			cmd_abbrev('help', 'FloatingHelp')
-			cmd_abbrev('helpc', 'FloatingHelpClose')
-			cmd_abbrev('helpclose', 'FloatingHelpClose')
-		end
+			cmd_abbrev("h", "FloatingHelp")
+			cmd_abbrev("help", "FloatingHelp")
+			cmd_abbrev("helpc", "FloatingHelpClose")
+			cmd_abbrev("helpclose", "FloatingHelpClose")
+		end,
 	},
+	{
+		"folke/flash.nvim",
+		event = "VeryLazy",
+		opts = {},
+		keys = {
+			{
+				"s",
+				mode = { "n", "x", "o" },
+				function()
+					require("flash").jump()
+				end,
+				desc = "Flash",
+			},
+			{
+				"S",
+				mode = { "n", "x", "o" },
+				function()
+					require("flash").treesitter()
+				end,
+				desc = "Flash Treesitter",
+			},
+			{
+				"r",
+				mode = "o",
+				function()
+					require("flash").remote()
+				end,
+				desc = "Remote Flash",
+			},
+			{
+				"R",
+				mode = { "o", "x" },
+				function()
+					require("flash").treesitter_search()
+				end,
+				desc = "Treesitter Search",
+			},
+			{
+				"<c-s>",
+				mode = { "c" },
+				function()
+					require("flash").toggle()
+				end,
+				desc = "Toggle Flash Search",
+			},
+		},
+	},
+	{ "lukas-reineke/indent-blankline.nvim", event = "VeryLazy", main = "ibl", opts = {} },
 }

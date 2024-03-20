@@ -77,7 +77,7 @@ vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper win
 
 -- Standard Operations
 vim.keymap.set('n', "<leader>w", "<cmd>w<cr>", { desc = "Save" })
-vim.keymap.set('n', "<leader>W", "<cmd>wqa<cr>", { desc = "Save All and quit" })
+vim.keymap.set('n', "<leader>W", "<cmd>wa<cr>", { desc = "Save all" })
 vim.keymap.set('n', "<leader>q", "<cmd>confirm q<cr>", { desc = "Quit" })
 vim.keymap.set('n', "<leader>Q", "<cmd>confirm qall<cr>", { desc = "Quit all" })
 vim.keymap.set('n', "<leader>n", "<<cmd>enew<cr>", { desc = "New File" })
@@ -116,7 +116,7 @@ vim.opt.fillchars = { eob = " " }
 vim.keymap.set('n', '<leader>s', '<cmd>w<cr>', { desc = "Save current buffer" })
 vim.keymap.set('n', '<leader>x', '<cmd>bd<cr>', { desc = "Close current buffer" })
 
-vim.g.maplocalleader = ','
+vim.g.maplocalleader = '<SPACE>'
 
 -- vim.api.nvim_create_autocmd("BufEnter", {
 --     group = vim.api.nvim_create_augroup("HelpReplaceWindow", { clear = true }),

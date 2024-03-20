@@ -15,7 +15,7 @@ return {
       function()
         require("neo-tree.command").execute({ toggle = true, dir = vim.fn.expand('%:p:h') })
       end,
-      desc = "Explorer NeoTree (cb)",
+      desc = "Toggle explorer (cb)",
       remap = true
     },
     {
@@ -23,7 +23,7 @@ return {
       function()
         require("neo-tree.command").execute({ toggle = true, dir = vim.loop.cwd() })
       end,
-      desc = "Explorer NeoTree (cwd)",
+      desc = "Toggle explorer (cwd)",
       remap = true
     },
     -- {

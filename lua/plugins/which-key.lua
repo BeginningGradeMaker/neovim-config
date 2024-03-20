@@ -20,6 +20,7 @@ return {
       ["<leader>u"] = { name = get_icon("Window", 1, true) .. "UI/UX" },
       ["<leader>w"] = { name = get_icon("WordFile", 1, true) .. "Workspace" },
       ["<leader>S"] = { name = get_icon("Session", 1, true) .. "Session" },
+      ["<leader>d"] = { name = get_icon("Debugger", 1, true) .. "Debug" },
     },
     -- icons = { group = vim.g.icons_enabled and "" or "+", separator = "" },
     icons = { group = "", separator = "" },
