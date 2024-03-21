@@ -53,7 +53,7 @@ return {
 		},
 		opts = function()
 			local commentstring_avail, commentstring =
-					pcall(require, "ts_context_commentstring.integrations.comment_nvim")
+				pcall(require, "ts_context_commentstring.integrations.comment_nvim")
 			return commentstring_avail and commentstring and { pre_hook = commentstring.create_pre_hook() } or {}
 		end,
 	},
@@ -79,14 +79,14 @@ return {
 		lazy = true,
 		config = function()
 			require("tabout").setup({
-				tabkey = "<Tab>",         -- key to trigger tabout, set to an empty string to disable
+				tabkey = "<Tab>", -- key to trigger tabout, set to an empty string to disable
 				backwards_tabkey = "<S-Tab>", -- key to trigger backwards tabout, set to an empty string to disable
-				act_as_tab = true,        -- shift content if tab out is not possible
+				act_as_tab = true, -- shift content if tab out is not possible
 				act_as_shift_tab = false, -- reverse shift content if tab out is not possible (if your keyboard/terminal supports <S-Tab>)
-				default_tab = "<C-t>",    -- shift default action (only at the beginning of a line, otherwise <TAB> is used)
+				default_tab = "<C-t>", -- shift default action (only at the beginning of a line, otherwise <TAB> is used)
 				default_shift_tab = "<C-d>", -- reverse shift default action,
-				enable_backwards = true,  -- well ...
-				completion = false,       -- if the tabkey is used in a completion pum
+				enable_backwards = true, -- well ...
+				completion = false, -- if the tabkey is used in a completion pum
 				tabouts = {
 					{ open = "'", close = "'" },
 					{ open = '"', close = '"' },
@@ -104,7 +104,7 @@ return {
 			"L3MON4D3/LuaSnip",
 			"hrsh7th/nvim-cmp",
 		},
-		opt = true,            -- Set this to true if the plugin is optional
+		opt = true, -- Set this to true if the plugin is optional
 		event = "InsertCharPre", -- Set the event to 'InsertCharPre' for better compatibility
 		priority = 1000,
 	},
@@ -161,9 +161,16 @@ return {
 	{
 		"xeluxee/competitest.nvim",
 		lazy = true,
+		event = "VimEnter",
 		dependencies = "MunifTanjim/nui.nvim",
 		config = function()
-			require("competitest").setup()
+			require("competitest").setup({
+				compile_command = {
+					cpp = { exec = "g++-13", args = { "-O2", "-Wall", "$(FNAME)", "-o", "$(FNOEXT)" } },
+				},
+			})
+			vim.keymap.set("n", "<leader>rr", "<cmd>CompetiTest run<cr>", { desc = "Rerun" })
+			vim.keymap.set("n", "<leader>rt", "<cmd>CompetiTest receive testcases<cr>", { desc = "Receive testcases" })
 		end,
 	},
 	{
@@ -184,10 +191,10 @@ return {
 
 			fh.setup({
 				-- Defaults
-				width = 80,                    -- Whole numbers are columns/rows
-				height = 0.9,                  -- Decimals are a percentage of the editor
-				position = "E",                -- NW,N,NW,W,C,E,SW,S,SE (C==center)
-				border = "rounded",            -- rounded,double,single
+				width = 80, -- Whole numbers are columns/rows
+				height = 0.9, -- Decimals are a percentage of the editor
+				position = "E", -- NW,N,NW,W,C,E,SW,S,SE (C==center)
+				border = "rounded", -- rounded,double,single
 				onload = function(query_type) end, -- optional callback to be executed after help contents has been loaded
 			})
 
@@ -205,12 +212,12 @@ return {
 			-- Only replace cmds, not search; only replace the first instance
 			local function cmd_abbrev(abbrev, expansion)
 				local cmd = "cabbr "
-						.. abbrev
-						.. ' <c-r>=(getcmdpos() == 1 && getcmdtype() == ":" ? "'
-						.. expansion
-						.. '" : "'
-						.. abbrev
-						.. '")<CR>'
+					.. abbrev
+					.. ' <c-r>=(getcmdpos() == 1 && getcmdtype() == ":" ? "'
+					.. expansion
+					.. '" : "'
+					.. abbrev
+					.. '")<CR>'
 				vim.cmd(cmd)
 			end
 

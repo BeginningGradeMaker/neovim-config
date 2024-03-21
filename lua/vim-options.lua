@@ -77,7 +77,7 @@ vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper win
 
 -- Standard Operations
 vim.keymap.set('n', "<leader>w", "<cmd>w<cr>", { desc = "Save" })
-vim.keymap.set('n', "<leader>W", "<cmd>wa<cr>", { desc = "Save all" })
+vim.keymap.set('n', "<leader>W", "<cmd>wqa<cr>", { desc = "Save All and quit" })
 vim.keymap.set('n', "<leader>q", "<cmd>confirm q<cr>", { desc = "Quit" })
 vim.keymap.set('n', "<leader>Q", "<cmd>confirm qall<cr>", { desc = "Quit all" })
 vim.keymap.set('n', "<leader>n", "<<cmd>enew<cr>", { desc = "New File" })
@@ -90,15 +90,11 @@ vim.keymap.set('n', "\\", "<cmd>split<cr>", { desc = "Horizontal Split" })
 vim.keymap.set('n', "H", ":bp<cr>", { desc = "Previous buffer" })
 vim.keymap.set('n', "L", ":bn<cr>", { desc = "Next buffer" })
 
--- -- Vim-tex
--- vim.g.tex_flavor = 'latex'
--- vim.g.vimtex_quickfix_mode = 0
--- vim.g.vimtex_view_method = 'zathura'
--- vim.g.vimtex_view_general_viewer = 'skim'
--- vim.g.vimtex_view_general_options = '--unique file:@pdf\\#src:@line@tex'
--- vim.g.vimtex_compiler_progname = 'nvr'
--- vim.g.vimtex_compiler_method = 'latexrun'
--- vim.maplocalleader = "<leader>"
+-- Vim-tex
+vim.g.tex_flavor = 'latex'
+vim.g.vimtex_quickfix_mode = 0
+vim.g.vimtex_view_general_viewer = 'zathura'
+vim.g.vimtex_compiler_progname = 'nvr'
 
 -- Insert blank lines in normal mode
 vim.keymap.set('n', '<S-CR>', 'm`o<Esc>``')
@@ -111,29 +107,8 @@ vim.g.loaded_netrwPlugin = 1
 vim.g.loaded_netrw = 1
 
 -- hide ~ chars at the end of file
-vim.opt.fillchars = { eob = " " }
+vim.opt.fillchars = {eob = " "}
 
-vim.keymap.set('n', '<leader>s', '<cmd>w<cr>', { desc = "Save current buffer" })
-vim.keymap.set('n', '<leader>x', '<cmd>bd<cr>', { desc = "Close current buffer" })
-
-vim.g.maplocalleader = '<SPACE>'
-
--- vim.api.nvim_create_autocmd("BufEnter", {
---     group = vim.api.nvim_create_augroup("HelpReplaceWindow", { clear = true }),
---     callback = function()
---         if vim.bo.filetype == "help" and vim.b.already_opened == nil then
---             -- remember we already opened this buffer
---             vim.b.already_opened = true
-
---             -- close the original window
---             local original_win = vim.fn.win_getid(vim.fn.winnr('#'))
---             local help_win = vim.api.nvim_get_current_win()
---             if original_win ~= help_win then
---                 vim.api.nvim_win_close(original_win, false)
---             end
-
---             -- put the help buffer in the buffer list
---             vim.bo.buflisted = true
---         end
---     end,
--- })
+-- Copy all content of buffer
+vim.keymap.set('n', '<leader>aa', "<cmd>%y+<cr>", {desc = "Yank entire file"})
+vim.keymap.set('n', '<leader>ad', "<cmd>%d<cr>", {desc = "Yank entire file"})
