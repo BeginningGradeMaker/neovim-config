@@ -76,6 +76,8 @@ vim.keymap.set('n', '<C-j>', '<C-w><C-j>', { desc = 'Move focus to the lower win
 vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
 
 -- Standard Operations
+vim.keymap.set('n', "<leader>s", "<cmd>s<cr>", { desc = "Save" })
+vim.keymap.set('n', "<leader>x", "<cmd>bd<cr>", { desc = "Close current buffer" })
 vim.keymap.set('n', "<leader>w", "<cmd>w<cr>", { desc = "Save" })
 vim.keymap.set('n', "<leader>W", "<cmd>wqa<cr>", { desc = "Save All and quit" })
 vim.keymap.set('n', "<leader>q", "<cmd>confirm q<cr>", { desc = "Quit" })
@@ -107,8 +109,18 @@ vim.g.loaded_netrwPlugin = 1
 vim.g.loaded_netrw = 1
 
 -- hide ~ chars at the end of file
-vim.opt.fillchars = {eob = " "}
+vim.opt.fillchars = { eob = " " }
 
 -- Copy all content of buffer
-vim.keymap.set('n', '<leader>aa', "<cmd>%y+<cr>", {desc = "Yank entire file"})
-vim.keymap.set('n', '<leader>ad', "<cmd>%d<cr>", {desc = "Yank entire file"})
+vim.keymap.set('n', '<leader>aa', "<cmd>%y+<cr>", { desc = "Yank entire file" })
+vim.keymap.set('n', '<leader>ad', "<cmd>%d<cr>", { desc = "Yank entire file" })
+
+vim.api.nvim_create_autocmd('TextYankPost', {
+    desc = 'Highlight when yanking (copying) text',
+    group = vim.api.nvim_create_augroup('kickstart-highlight-yank', {
+        clear = true,
+    }),
+    callback = function()
+        vim.highlight.on_yank()
+    end
+})
