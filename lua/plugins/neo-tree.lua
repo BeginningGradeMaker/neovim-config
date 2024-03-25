@@ -1,6 +1,6 @@
 return {
   "nvim-neo-tree/neo-tree.nvim",
-  lazy = false,
+  lazy = true,
   cmd = "Neotree",
   branch = "v3.x",
   dependencies = {
@@ -11,7 +11,7 @@ return {
   },
   keys = {
     {
-      "<leader>e",
+      "<leader>E",
       function()
         require("neo-tree.command").execute({ toggle = true, dir = vim.fn.expand('%:p:h') })
       end,
@@ -19,7 +19,7 @@ return {
       remap = true
     },
     {
-      "<leader>E",
+      "<leader>e",
       function()
         require("neo-tree.command").execute({ toggle = true, dir = vim.loop.cwd() })
       end,

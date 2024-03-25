@@ -2,6 +2,7 @@ return {
 	{
 		"akinsho/toggleterm.nvim",
 		version = "*",
+    cmd = { "ToggleTerm", "TermExec" },
 		config = function()
 			local get_height = function()
 				return math.floor(vim.o.lines * 0.70)
@@ -12,7 +13,7 @@ return {
 			require("toggleterm").setup({
 				-- size can be a number or function which is passed the current terminal
 				size = get_height,
-				open_mapping = [[<c-\><c-\>]],
+				open_mapping = [[<c-\>]],
 				hide_numbers = true, -- hide the number column in toggleterm buffers
 				shade_terminals = true,
 				-- shading_factor = 1,       -- the degree by which to darken to terminal colour, default: 1 for dark backgrounds, 3 for light
@@ -70,24 +71,23 @@ return {
 	},
 	{
 		"kdheepak/lazygit.nvim",
+		lazy = true,
+		event = "VeryLazy",
+		-- cmd = {
+		-- 	"LazyGit",
+		-- 	"LazyGitConfig",
+		-- 	"LazyGitCurrentFile",
+		-- 	"LazyGitFilter",
+		-- 	"LazyGitFilterCurrentFile",
+		-- },
+		-- optional for floating window border decoration
+		dependencies = {
+			"nvim-lua/plenary.nvim",
+		},
+
 		config = function()
 			-- nvim v0.8.0
-			require("lazy").setup({
-				{
-					"kdheepak/lazygit.nvim",
-					cmd = {
-						"LazyGit",
-						"LazyGitConfig",
-						"LazyGitCurrentFile",
-						"LazyGitFilter",
-						"LazyGitFilterCurrentFile",
-					},
-					-- optional for floating window border decoration
-					dependencies = {
-						"nvim-lua/plenary.nvim",
-					},
-				},
-			})
+			-- require("lazygit").setup()
 			vim.keymap.set("n", "<leader>gg", "<cmd>LazyGit<cr>", { desc = "LazyGit" })
 		end,
 	},

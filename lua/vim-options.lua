@@ -5,6 +5,8 @@ vim.cmd("set shiftwidth=2")
 vim.g.mapleader = " "
 vim.wo.relativenumber = true
 
+vim.opt.swapfile = false
+
 -- Set to true if you have a Nerd Font installed
 vim.g.have_nerd_font = true
 
@@ -76,7 +78,7 @@ vim.keymap.set('n', '<C-j>', '<C-w><C-j>', { desc = 'Move focus to the lower win
 vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
 
 -- Standard Operations
-vim.keymap.set('n', "<leader>s", "<cmd>s<cr>", { desc = "Save" })
+vim.keymap.set('n', "<leader>s", "<cmd>w<cr>", { desc = "Save" })
 vim.keymap.set('n', "<leader>x", "<cmd>bd<cr>", { desc = "Close current buffer" })
 vim.keymap.set('n', "<leader>w", "<cmd>w<cr>", { desc = "Save" })
 vim.keymap.set('n', "<leader>W", "<cmd>wqa<cr>", { desc = "Save All and quit" })

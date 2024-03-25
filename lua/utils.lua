@@ -49,12 +49,12 @@ function M.is_available(plugin)
     return lazy_config_avail and lazy_config.spec.plugins[plugin] ~= nil
 end
 
---- Serve a notification with a title of AstroNvim
+--- Serve a notification with a title of Gavin
 ---@param msg string The notification body
 ---@param type? number The type of the notification (:help vim.log.levels)
 ---@param opts? table The nvim-notify options to use (:help notify-options)
 function M.notify(msg, type, opts)
-    vim.schedule(function() vim.notify(msg, type, M.extend_tbl({ title = "AstroNvim" }, opts)) end)
+    vim.schedule(function() vim.notify(msg, type, M.extend_tbl({ title = "Gavin" }, opts)) end)
 end
 
 return M

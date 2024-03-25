@@ -1,10 +1,14 @@
+local get_icon = require("utils").get_icon
+
 return {
 	-- Highlight todo, notes, etc in comments
 	{
 		"folke/todo-comments.nvim",
-		event = "VimEnter",
+		event = "VeryLazy",
 		dependencies = { "nvim-lua/plenary.nvim" },
-		opts = { signs = false },
+		opts = {
+			signs = false,
+		},
 	},
 	{ -- Collection of various small independent plugins/modules
 		"echasnovski/mini.nvim",
@@ -48,13 +52,33 @@ return {
 		"numToStr/Comment.nvim",
 		event = "VeryLazy",
 		keys = {
-			{ "gc", mode = { "n", "v" }, desc = "Comment toggle linewise" },
-			{ "gb", mode = { "n", "v" }, desc = "Comment toggle blockwise" },
+			-- { "<leader>/", mode = { "n", "v" }, desc = "Comment toggle linewise" },
+			-- { "<leader>?", mode = { "n", "v" }, desc = "Comment toggle blockwise" },
+			{
+				"<leader>/",
+				function()
+					require("Comment.api").toggle.linewise.count(vim.v.count > 0 and vim.v.count or 1)
+				end,
+				desc = "Comment toggle linewise",
+			},
+			{
+				"<leader>?",
+				function()
+					require("Comment.api").toggle.blockwise.count()
+				end,
+				desc = "Comment toggle blockwise",
+			},
 		},
 		opts = function()
 			local commentstring_avail, commentstring =
 				pcall(require, "ts_context_commentstring.integrations.comment_nvim")
-			return commentstring_avail and commentstring and { pre_hook = commentstring.create_pre_hook() } or {}
+			return commentstring_avail
+					and commentstring
+					and {
+						pre_hook = commentstring.create_pre_hook(),
+						toggler = { line = "<leader>/", block = "<leader>?" },
+					}
+				or {}
 		end,
 	},
 	"tpope/vim-sleuth", -- Detect tabstop and shiftwidth automatically
@@ -114,6 +138,11 @@ return {
 	},
 	{
 		"rcarriga/nvim-notify",
+		lazy = false,
+		config = function()
+			vim.notify = require("notify")
+			require("notify").setup()
+		end,
 	},
 	{ -- Adds git related signs to the gutter, as well as utilities for managing changes
 		"lewis6991/gitsigns.nvim",
@@ -132,11 +161,12 @@ return {
 		},
 		opts = {
 			signs = {
-				add = { text = "+" },
-				change = { text = "~" },
-				delete = { text = "_" },
-				topdelete = { text = "‾" },
-				changedelete = { text = "~" },
+				add = { text = get_icon("GitSign") },
+				change = { text = get_icon("GitSign") },
+				delete = { text = get_icon("GitSign") },
+				topdelete = { text = get_icon("GitSign") },
+				changedelete = { text = get_icon("GitSign") },
+				untracked = { text = get_icon("GitSign") },
 			},
 		},
 	},
@@ -161,7 +191,7 @@ return {
 	{
 		"xeluxee/competitest.nvim",
 		lazy = true,
-		event = "VimEnter",
+		event = "VeryLazy",
 		dependencies = "MunifTanjim/nui.nvim",
 		config = function()
 			require("competitest").setup({
@@ -228,52 +258,21 @@ return {
 			cmd_abbrev("helpclose", "FloatingHelpClose")
 		end,
 	},
-	{
-		"folke/flash.nvim",
-		event = "VeryLazy",
-		opts = {},
-		keys = {
-			{
-				"s",
-				mode = { "n", "x", "o" },
-				function()
-					require("flash").jump()
-				end,
-				desc = "Flash",
-			},
-			{
-				"S",
-				mode = { "n", "x", "o" },
-				function()
-					require("flash").treesitter()
-				end,
-				desc = "Flash Treesitter",
-			},
-			{
-				"r",
-				mode = "o",
-				function()
-					require("flash").remote()
-				end,
-				desc = "Remote Flash",
-			},
-			{
-				"R",
-				mode = { "o", "x" },
-				function()
-					require("flash").treesitter_search()
-				end,
-				desc = "Treesitter Search",
-			},
-			{
-				"<c-s>",
-				mode = { "c" },
-				function()
-					require("flash").toggle()
-				end,
-				desc = "Toggle Flash Search",
-			},
-		},
-	},
 	{ "lukas-reineke/indent-blankline.nvim", event = "VeryLazy", main = "ibl", opts = {} },
+	-- lazy.nvim
+	-- {
+	-- 	"folke/noice.nvim",
+	-- 	event = "VeryLazy",
+	-- 	opts = {
+	-- 		-- add any options here
+	-- 	},
+	-- 	dependencies = {
+	-- 		-- if you lazy-load any plugin below, make sure to add proper `module="..."` entries
+	-- 		"MunifTanjim/nui.nvim",
+	-- 		-- OPTIONAL:
+	-- 		--   `nvim-notify` is only needed, if you want to use the notification view.
+	-- 		--   If not available, we use `mini` as the fallback
+	-- 		"rcarriga/nvim-notify",
+	-- 	},
+	-- },
 }

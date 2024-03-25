@@ -1,7 +1,7 @@
 return {
   "mfussenegger/nvim-dap",
   lazu = true,
-  event = "VeryLazy",
+  event = "CmdlineEnter",
   dependencies = {
     {
       "jay-babu/mason-nvim-dap.nvim",
