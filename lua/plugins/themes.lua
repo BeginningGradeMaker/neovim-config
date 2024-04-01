@@ -80,13 +80,18 @@ return {
 	{
 		"sainnhe/sonokai",
 	},
-	-- Lazy
 	{
 		"olimorris/onedarkpro.nvim",
 		priority = 1000, -- Ensure it loads first
 		config = function()
 			-- somewhere in your config:
 		end,
+	},
+	{
+		"luisiacc/the-matrix.nvim",
+	},
+	{
+		"rebelot/kanagawa.nvim",
 	},
 }
 -- require("catppuccin").setup()

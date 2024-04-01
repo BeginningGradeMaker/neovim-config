@@ -1,8 +1,11 @@
 return {
 	{
 		"akinsho/toggleterm.nvim",
-		version = "*",
-    cmd = { "ToggleTerm", "TermExec" },
+		lazy = true;
+		cmd = { "ToggleTerm", "TermExec" },
+		keys = {
+			{"<c-\\>"},
+		},
 		config = function()
 			local get_height = function()
 				return math.floor(vim.o.lines * 0.70)

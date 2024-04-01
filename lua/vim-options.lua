@@ -89,6 +89,10 @@ vim.keymap.set('n', "<C-s>", "<cmd>w!<cr>", { desc = "Force write" })
 vim.keymap.set('n', "<C-q>", "<cmd>qa!<cr>", { desc = "Force quit" })
 vim.keymap.set('n', "|", "<cmd>vsplit<cr>", { desc = "Vertical Split" })
 vim.keymap.set('n', "\\", "<cmd>split<cr>", { desc = "Horizontal Split" })
+vim.keymap.set('n', "<Tab>", ">>")
+vim.keymap.set('n', "<S-Tab>", "<<")
+vim.keymap.set('v', "<Tab>", ">gv")
+vim.keymap.set('v', "<S-Tab>", "<gv")
 
 -- Switch buffers
 vim.keymap.set('n', "H", ":bp<cr>", { desc = "Previous buffer" })
