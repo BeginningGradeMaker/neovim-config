@@ -22,7 +22,7 @@ return {
 				button("LDR f o", get_icon("DefaultFile", 2, true) .. "Recents  "),
 				button("LDR f w", get_icon("WordFile", 2, true) .. "Find Word  "),
 				-- button("LDR f '", get_icon("Bookmarks", 2) .. "Bookmarks  "),
-				button("LDR S l", get_icon("Refresh", 2) .. "Last Session  "),
+				button("LDR s l", get_icon("Refresh", 2) .. "Last Session  "),
 			}
 
 			dashboard.config.layout = {

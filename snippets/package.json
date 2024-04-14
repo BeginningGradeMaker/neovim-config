@@ -7,7 +7,7 @@
         "snippets": [
             {
                 "language": "cpp",
-                "path": "./latex.json"
+                "path": "./cpp.json"
             }
         ]
     }

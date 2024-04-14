@@ -22,18 +22,9 @@ return {
 			--  - ci'  - [C]hange [I]nside [']quote
 			require("mini.ai").setup({ n_lines = 500 })
 
-			-- Add/delete/replace surroundings (brackets, quotes, etc.)
-			--
-			-- - saiw) - [S]urround [A]dd [I]nner [W]ord [)]Paren
-			-- - sd'   - [S]urround [D]elete [']quotes
-			-- - sr)'  - [S]urround [R]eplace [)] [']
-			-- require("mini.surround").setup()
+			require("mini.pairs").setup()
 
-			-- Simple and easy statusline.
-			--  You could remove this setup call if you don't like it,
-			--  and try some other statusline plugin
 			local statusline = require("mini.statusline")
-			-- set use_icons to true if you have a Nerd Font
 			statusline.setup({ use_icons = vim.g.have_nerd_font })
 
 			-- You can configure sections in the statusline by overriding their
@@ -43,9 +34,6 @@ return {
 			statusline.section_location = function()
 				return "%2l:%-2v"
 			end
-
-			-- ... and there is more!
-			--  Check out: https://github.com/echasnovski/mini.nvim
 		end,
 	},
 	{
@@ -56,6 +44,7 @@ return {
 			-- { "<leader>?", mode = { "n", "v" }, desc = "Comment toggle blockwise" },
 			{
 				"<leader>/",
+				mode = {"n", "v"},
 				function()
 					require("Comment.api").toggle.linewise.count(vim.v.count > 0 and vim.v.count or 1)
 				end,
@@ -63,6 +52,7 @@ return {
 			},
 			{
 				"<leader>?",
+				mode = {"n", "v"},
 				function()
 					require("Comment.api").toggle.blockwise.count()
 				end,
@@ -82,15 +72,15 @@ return {
 		end,
 	},
 	"tpope/vim-sleuth", -- Detect tabstop and shiftwidth automatically
-	{
-		"altermo/ultimate-autopair.nvim",
-		event = { "InsertEnter", "CmdlineEnter" },
-		branch = "v0.6", --recommended as each new version will have breaking changes
-		opts = {
-			--Config goes here
-			tabout = { enable = true },
-		},
-	},
+	-- {
+	-- 	"altermo/ultimate-autopair.nvim",
+	-- 	event = { "InsertEnter", "CmdlineEnter" },
+	-- 	branch = "v0.6", --recommended as each new version will have breaking changes
+	-- 	opts = {
+	-- 		--Config goes here
+	-- 		tabout = { enable = true },
+	-- 	},
+	-- },
 	-- {
 	-- 	"windwp/nvim-autopairs",
 	-- 	event = "InsertEnter",
@@ -191,7 +181,7 @@ return {
 	{
 		"xeluxee/competitest.nvim",
 		lazy = true,
-		event = "VeryLazy",
+		ft = {"cpp"},
 		dependencies = "MunifTanjim/nui.nvim",
 		config = function()
 			require("competitest").setup({
@@ -214,52 +204,14 @@ return {
 		end,
 	},
 	{
-		"Tyler-Barham/floating-help.nvim",
-		event = "CmdlineEnter",
-		config = function()
-			local fh = require("floating-help")
-
-			fh.setup({
-				-- Defaults
-				width = 80, -- Whole numbers are columns/rows
-				height = 0.9, -- Decimals are a percentage of the editor
-				position = "E", -- NW,N,NW,W,C,E,SW,S,SE (C==center)
-				border = "rounded", -- rounded,double,single
-				onload = function(query_type) end, -- optional callback to be executed after help contents has been loaded
-			})
-
-			-- Create a keymap for toggling the help window
-			vim.keymap.set("n", "<F1>", fh.toggle)
-			-- Create a keymap to search cppman for the word under the cursor
-			vim.keymap.set("n", "<F2>", function()
-				fh.open("t=cppman", vim.fn.expand("<cword>"))
-			end)
-			-- Create a keymap to search man for the word under the cursor
-			vim.keymap.set("n", "<F3>", function()
-				fh.open("t=man", vim.fn.expand("<cword>"))
-			end)
-
-			-- Only replace cmds, not search; only replace the first instance
-			local function cmd_abbrev(abbrev, expansion)
-				local cmd = "cabbr "
-					.. abbrev
-					.. ' <c-r>=(getcmdpos() == 1 && getcmdtype() == ":" ? "'
-					.. expansion
-					.. '" : "'
-					.. abbrev
-					.. '")<CR>'
-				vim.cmd(cmd)
-			end
-
-			-- Redirect `:h` to `:FloatingHelp`
-			cmd_abbrev("h", "FloatingHelp")
-			cmd_abbrev("help", "FloatingHelp")
-			cmd_abbrev("helpc", "FloatingHelpClose")
-			cmd_abbrev("helpclose", "FloatingHelpClose")
-		end,
+		"nil70n/floating-help",
+		-- optional
+		opts = {
+			border = "single",
+			ratio = 0.8,
+		},
 	},
 	{ "lukas-reineke/indent-blankline.nvim", event = "VeryLazy", main = "ibl", opts = {} },
-	-- lazy.nvim
 	-- {
 	-- 	"folke/noice.nvim",
 	-- 	event = "VeryLazy",
@@ -275,7 +227,6 @@ return {
 	-- 		"rcarriga/nvim-notify",
 	-- 	},
 	-- },
-	-- lazy.nvim
 	{
 		"folke/flash.nvim",
 		event = "VeryLazy",

@@ -5,6 +5,8 @@ vim.cmd("set shiftwidth=2")
 vim.g.mapleader = " "
 vim.wo.relativenumber = true
 
+local keymap = vim.keymap
+
 vim.opt.swapfile = false
 
 -- Set to true if you have a Nerd Font installed
@@ -56,7 +58,7 @@ vim.opt.splitbelow = true
 -- Sets how neovim will display certain whitespace in the editor.
 --  See `:help 'list'`
 --  and `:help 'listchars'`
-vim.opt.list = true
+vim.opt.list = false
 vim.opt.listchars = { tab = '» ', trail = '·', nbsp = '␣' }
 
 -- Preview substitutions live, as you type!
@@ -95,20 +97,18 @@ vim.keymap.set('v', "<Tab>", ">gv")
 vim.keymap.set('v', "<S-Tab>", "<gv")
 
 -- Switch buffers
-vim.keymap.set('n', "H", ":bp<cr>", { desc = "Previous buffer" })
-vim.keymap.set('n', "L", ":bn<cr>", { desc = "Next buffer" })
+vim.keymap.set('n', "H", ":bp<cr>", { desc = "Previous buffer", noremap = true, silent = true })
+vim.keymap.set('n', "L", ":bn<cr>", { desc = "Next buffer", noremap = true, silent = true })
 
 -- Vim-tex
 vim.g.tex_flavor = 'latex'
 vim.g.vimtex_quickfix_mode = 0
-vim.g.vimtex_view_general_viewer = 'zathura'
+vim.g.vimtex_view_general_viewer = 'skim'
 vim.g.vimtex_compiler_progname = 'nvr'
 
 -- Insert blank lines in normal mode
 vim.keymap.set('n', '<S-CR>', 'm`o<Esc>``')
 vim.keymap.set('n', '<CR>', 'm`O<Esc>``')
--- vim.keymap.set('n', '<S-CR>', '@="m`o<C-V><Esc>``"<CR>')
--- vim.keymap.set('n', '<CR>', '@="m`O<C-V><Esc>``"<CR>')
 
 -- hijack netrw
 vim.g.loaded_netrwPlugin = 1
