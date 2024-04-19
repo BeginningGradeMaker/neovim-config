@@ -25,6 +25,7 @@ return {
 	},
 	{
 		"AstroNvim/astrotheme",
+		priority = 1000,
 		config = function()
 			require("astrotheme").setup({
 				style = {
@@ -71,7 +72,7 @@ return {
 	},
 	{
 		"AlexvZyl/nordic.nvim",
-		lazy = false,
+		lazy = true,
 		priority = 1000,
 		config = function()
 			require("nordic").load()
@@ -79,19 +80,25 @@ return {
 	},
 	{
 		"sainnhe/sonokai",
+		lazy = true,
+		priority = 1000, -- ensure it loads first
 	},
 	{
 		"olimorris/onedarkpro.nvim",
-		priority = 1000, -- Ensure it loads first
+		lazy = true,
+		priority = 1000, -- ensure it loads first
 		config = function()
 			-- somewhere in your config:
 		end,
 	},
 	{
 		"luisiacc/the-matrix.nvim",
+		lazy = true,
+		priority = 1000,
 	},
 	{
 		"rebelot/kanagawa.nvim",
+		lazy = true,
+		priority = 1000,
 	},
 }
--- require("catppuccin").setup()

@@ -203,14 +203,6 @@ return {
 			})
 		end,
 	},
-	{
-		"nil70n/floating-help",
-		-- optional
-		opts = {
-			border = "single",
-			ratio = 0.8,
-		},
-	},
 	{ "lukas-reineke/indent-blankline.nvim", event = "VeryLazy", main = "ibl", opts = {} },
 	-- {
 	-- 	"folke/noice.nvim",
