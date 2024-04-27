@@ -74,10 +74,10 @@ vim.opt.scrolloff = 10
 vim.opt.hlsearch = true
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 
-vim.keymap.set('n', '<C-h>', '<C-w><C-h>', { desc = 'Move focus to the left window' })
-vim.keymap.set('n', '<C-l>', '<C-w><C-l>', { desc = 'Move focus to the right window' })
-vim.keymap.set('n', '<C-j>', '<C-w><C-j>', { desc = 'Move focus to the lower window' })
-vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
+vim.keymap.set('n', '<C-h>', '_', { desc = 'Move cursor to the start of line.' })
+vim.keymap.set('n', '<C-l>', '$', { desc = 'Move cursor to the end of line.' })
+vim.keymap.set('n', '<C-j>', '<C-d>', { desc = 'Move half screen down.' })
+vim.keymap.set('n', '<C-k>', '<C-u>', { desc = 'Move half screen up.' })
 
 -- Standard Operations
 vim.keymap.set('n', "<leader>s", "<cmd>w<cr>", { desc = "Save" })
@@ -91,10 +91,10 @@ vim.keymap.set('n', "<C-s>", "<cmd>w!<cr>", { desc = "Force write" })
 vim.keymap.set('n', "<C-q>", "<cmd>qa!<cr>", { desc = "Force quit" })
 vim.keymap.set('n', "|", "<cmd>vsplit<cr>", { desc = "Vertical Split" })
 vim.keymap.set('n', "\\", "<cmd>split<cr>", { desc = "Horizontal Split" })
-vim.keymap.set('n', "<Tab>", ">>")
-vim.keymap.set('n', "<S-Tab>", "<<")
-vim.keymap.set('v', "<Tab>", ">gv")
-vim.keymap.set('v', "<S-Tab>", "<gv")
+vim.keymap.set('n', ">", ">>", { nowait = true })
+vim.keymap.set('n', "<", "<<", { nowait = true })
+vim.keymap.set('v', ">", ">gv", { nowait = true })
+vim.keymap.set('v', "<", "<gv", { nowait = true })
 
 -- Switch buffers
 vim.keymap.set('n', "H", ":bp<cr>", { desc = "Previous buffer", noremap = true, silent = true })
