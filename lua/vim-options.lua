@@ -1,7 +1,7 @@
 vim.cmd("set expandtab")
-vim.cmd("set tabstop=2")
-vim.cmd("set softtabstop=2")
-vim.cmd("set shiftwidth=2")
+vim.cmd("set tabstop=4")
+vim.cmd("set softtabstop=4")
+vim.cmd("set shiftwidth=4")
 vim.g.mapleader = " "
 vim.wo.relativenumber = true
 
@@ -82,7 +82,7 @@ vim.keymap.set('n', '<C-k>', '<C-u>', { desc = 'Move half screen up.' })
 -- Standard Operations
 vim.keymap.set('n', "<leader>s", "<cmd>w<cr>", { desc = "Save" })
 vim.keymap.set('n', "<leader>x", "<cmd>bd<cr>", { desc = "Close current buffer" })
-vim.keymap.set('n', "<leader>w", "<cmd>w<cr>", { desc = "Save" })
+vim.keymap.set('n', "<leader>w", "<cmd>bd<cr>", { desc = "Save" })
 vim.keymap.set('n', "<leader>W", "<cmd>wqa<cr>", { desc = "Save All and quit" })
 vim.keymap.set('n', "<leader>q", "<cmd>confirm q<cr>", { desc = "Quit" })
 vim.keymap.set('n', "<leader>Q", "<cmd>confirm qall<cr>", { desc = "Quit all" })
@@ -91,8 +91,8 @@ vim.keymap.set('n', "<C-s>", "<cmd>w!<cr>", { desc = "Force write" })
 vim.keymap.set('n', "<C-q>", "<cmd>qa!<cr>", { desc = "Force quit" })
 vim.keymap.set('n', "|", "<cmd>vsplit<cr>", { desc = "Vertical Split" })
 vim.keymap.set('n', "\\", "<cmd>split<cr>", { desc = "Horizontal Split" })
-vim.keymap.set('n', ">", ">>", { nowait = true })
-vim.keymap.set('n', "<", "<<", { nowait = true })
+-- vim.keymap.set('n', ">", ">>", { nowait = true })
+-- vim.keymap.set('n', "<", "<<", { nowait = true })
 vim.keymap.set('v', ">", ">gv", { nowait = true })
 vim.keymap.set('v', "<", "<gv", { nowait = true })
 

@@ -73,6 +73,7 @@ return {
 					--  This will auto-import if your LSP supports it.
 					--  This will expand snippets if the LSP sent a snippet.
 					["<CR>"] = cmp.mapping.confirm({ select = true }),
+					["<C-y>"] = cmp.mapping.confirm({ select = true }),
 
 					-- Manually trigger a completion from nvim-cmp.
 					--  Generally you don't need this, because nvim-cmp will display
@@ -114,8 +115,8 @@ return {
 					disallow_prefix_unmatching = true,
 				},
 				sources = {
-					{ name = "nvim_lsp", max_item_count = 5 },
-					{ name = "luasnip", max_item_count = 5 },
+					{ name = "luasnip", keyword_length = 2, max_item_count = 5 },
+					{ name = "nvim_lsp", keyword_length = 2, max_item_count = 5 },
 					-- { name = 'path',    max_item_count = 2 },
 				},
 				sorting = {

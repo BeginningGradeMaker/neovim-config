@@ -1,6 +1,6 @@
 return {
   "mfussenegger/nvim-dap",
-  lazu = true,
+  lazy = true,
   event = "CmdlineEnter",
   dependencies = {
     {

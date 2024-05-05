@@ -1,8 +1,21 @@
 return {
 	{
 		"goolord/alpha-nvim",
+		lazy = false,
 		config = function()
 			local dashboard = require("alpha.themes.dashboard")
+			vim.api.nvim_create_autocmd("User", {
+				pattern = "AlphaClosed",
+				callback = function()
+					vim.opt.showtabline = 2
+				end,
+			})
+			vim.api.nvim_create_autocmd("User", {
+				pattern = "AlphaReady",
+				callback = function()
+					vim.opt.showtabline = 0
+				end,
+			})
 			dashboard.section.header.val = {
 				"",
 				" ██████╗  █████╗ ███████╗██╗  ██╗██████╗  ██████╗  █████╗ ██████╗ ██████╗  ",
@@ -22,7 +35,7 @@ return {
 				button("LDR f o", get_icon("DefaultFile", 2, true) .. "Recents  "),
 				button("LDR f w", get_icon("WordFile", 2, true) .. "Find Word  "),
 				-- button("LDR f '", get_icon("Bookmarks", 2) .. "Bookmarks  "),
-				button("LDR s l", get_icon("Refresh", 2) .. "Last Session  "),
+				button("LDR S l", get_icon("Refresh", 2) .. "Last Session  "),
 			}
 
 			dashboard.config.layout = {
@@ -33,7 +46,7 @@ return {
 				{ type = "padding", val = 3 },
 				dashboard.section.footer,
 			}
-			dashboard.config.opts.noautocmd = true
+			-- dashboard.config.opts.noautocmd = true
 			require("alpha").setup(dashboard.config)
 			vim.keymap.set("n", "<leader>h", function()
 				local wins = vim.api.nvim_tabpage_list_wins(0)
