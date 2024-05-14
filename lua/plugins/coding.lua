@@ -22,7 +22,12 @@ return {
 			--  - ci'  - [C]hange [I]nside [']quote
 			require("mini.ai").setup({ n_lines = 500 })
 
-			require("mini.pairs").setup()
+			require("mini.pairs").setup({
+				-- mappings = {
+				-- 	["<"] = { action = "open", pair = "<>", neigh_pattern = "[^\\]." },
+				-- 	[">"] = { action = "close", pair = "<>", neigh_pattern = "[^\\]." },
+				-- },
+			})
 
 			local statusline = require("mini.statusline")
 			statusline.setup({ use_icons = vim.g.have_nerd_font })
@@ -44,7 +49,7 @@ return {
 			-- { "<leader>?", mode = { "n", "v" }, desc = "Comment toggle blockwise" },
 			{
 				"<leader>/",
-				mode = {"n", "v"},
+				mode = { "n", "v" },
 				function()
 					require("Comment.api").toggle.linewise.count(vim.v.count > 0 and vim.v.count or 1)
 				end,
@@ -52,7 +57,7 @@ return {
 			},
 			{
 				"<leader>?",
-				mode = {"n", "v"},
+				mode = { "n", "v" },
 				function()
 					require("Comment.api").toggle.blockwise.count()
 				end,
@@ -63,11 +68,11 @@ return {
 			local commentstring_avail, commentstring =
 				pcall(require, "ts_context_commentstring.integrations.comment_nvim")
 			return commentstring_avail
-					and commentstring
-					and {
-						pre_hook = commentstring.create_pre_hook(),
-						toggler = { line = "<leader>/", block = "<leader>?" },
-					}
+				and commentstring
+				and {
+					pre_hook = commentstring.create_pre_hook(),
+					toggler = { line = "<leader>/", block = "<leader>?" },
+				}
 				or {}
 		end,
 	},
@@ -93,14 +98,14 @@ return {
 		lazy = true,
 		config = function()
 			require("tabout").setup({
-				tabkey = "<Tab>", -- key to trigger tabout, set to an empty string to disable
+				tabkey = "", -- key to trigger tabout, set to an empty string to disable
 				backwards_tabkey = "<S-Tab>", -- key to trigger backwards tabout, set to an empty string to disable
 				act_as_tab = true, -- shift content if tab out is not possible
 				act_as_shift_tab = false, -- reverse shift content if tab out is not possible (if your keyboard/terminal supports <S-Tab>)
 				default_tab = "<C-t>", -- shift default action (only at the beginning of a line, otherwise <TAB> is used)
 				default_shift_tab = "<C-d>", -- reverse shift default action,
 				enable_backwards = true, -- well ...
-				completion = false, -- if the tabkey is used in a completion pum
+				completion = true, -- if the tabkey is used in a completion pum
 				tabouts = {
 					{ open = "'", close = "'" },
 					{ open = '"', close = '"' },
@@ -118,9 +123,19 @@ return {
 			"L3MON4D3/LuaSnip",
 			"hrsh7th/nvim-cmp",
 		},
-		opt = true, -- Set this to true if the plugin is optional
+		opt = true,        -- Set this to true if the plugin is optional
 		event = "InsertCharPre", -- Set the event to 'InsertCharPre' for better compatibility
 		priority = 1000,
+	},
+	{
+		"kawre/neotab.nvim",
+		event = "InsertEnter",
+		opts = {
+			-- configuration goes here
+			tabkey = "",
+			behavior = "closing",
+		},
+		opt = true,        -- Set this to true if the plugin is optional
 	},
 	{
 		"petertriho/nvim-scrollbar",
@@ -181,16 +196,18 @@ return {
 	{
 		"xeluxee/competitest.nvim",
 		lazy = true,
-		ft = {"cpp"},
+		ft = { "cpp" },
 		dependencies = "MunifTanjim/nui.nvim",
 		config = function()
 			require("competitest").setup({
 				compile_command = {
 					cpp = { exec = "g++-13", args = { "-O2", "-Wall", "$(FNAME)", "-o", "$(FNOEXT)" } },
 				},
+				-- runner_ui = { interface = "split" },
 			})
 			vim.keymap.set("n", "<leader>rr", "<cmd>CompetiTest run<cr>", { desc = "Rerun" })
 			vim.keymap.set("n", "<leader>rt", "<cmd>CompetiTest receive testcases<cr>", { desc = "Receive testcases" })
+			vim.keymap.set("n", "<leader>ru", "<cmd>CompetiTest show_ui<cr>", { desc = "Show UI" })
 		end,
 	},
 	{
@@ -232,8 +249,8 @@ return {
 		},
 		-- stylua: ignore
 		keys = {
-			{ "s",     mode = { "n", "x", "o" }, function() require("flash").jump() end,              desc = "Flash" },
-			{ "S",     mode = { "n", "x", "o" }, function() require("flash").treesitter() end,        desc = "Flash Treesitter" },
+			-- { "s",     mode = { "n", "x", "o" }, function() require("flash").jump() end,              desc = "Flash" },
+			-- { "S",     mode = { "n", "x", "o" }, function() require("flash").treesitter() end,        desc = "Flash Treesitter" },
 			{ "r",     mode = "o",               function() require("flash").remote() end,            desc = "Remote Flash" },
 			{ "R",     mode = { "o", "x" },      function() require("flash").treesitter_search() end, desc = "Treesitter Search" },
 			{ "<c-s>", mode = { "c" },           function() require("flash").toggle() end,            desc = "Toggle Flash Search" },

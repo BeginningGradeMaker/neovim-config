@@ -79,6 +79,11 @@ vim.keymap.set('n', '<C-l>', '$', { desc = 'Move cursor to the end of line.' })
 vim.keymap.set('n', '<C-j>', '<C-d>', { desc = 'Move half screen down.' })
 vim.keymap.set('n', '<C-k>', '<C-u>', { desc = 'Move half screen up.' })
 
+vim.keymap.set('n', '<C-Left>', '<C-w><C-h>', { desc = 'Move window left' })
+vim.keymap.set('n', '<C-Right>', '<C-w><C-l>', { desc = 'Move window right' })
+vim.keymap.set('n', '<C-Up>', '<C-w><C-k>', { desc = 'Move window up' })
+vim.keymap.set('n', '<C-Down>', '<C-w><C-j>', { desc = 'Move window down' })
+
 -- Standard Operations
 vim.keymap.set('n', "<leader>s", "<cmd>w<cr>", { desc = "Save" })
 vim.keymap.set('n', "<leader>x", "<cmd>bd<cr>", { desc = "Close current buffer" })
@@ -90,7 +95,7 @@ vim.keymap.set('n', "<leader>n", "<<cmd>enew<cr>", { desc = "New File" })
 vim.keymap.set('n', "<C-s>", "<cmd>w!<cr>", { desc = "Force write" })
 vim.keymap.set('n', "<C-q>", "<cmd>qa!<cr>", { desc = "Force quit" })
 vim.keymap.set('n', "|", "<cmd>vsplit<cr>", { desc = "Vertical Split" })
-vim.keymap.set('n', "\\", "<cmd>split<cr>", { desc = "Horizontal Split" })
+-- vim.keymap.set('n', "\\", "<cmd>split<cr>", { desc = "Horizontal Split" })
 -- vim.keymap.set('n', ">", ">>", { nowait = true })
 -- vim.keymap.set('n', "<", "<<", { nowait = true })
 vim.keymap.set('v', ">", ">gv", { nowait = true })
@@ -130,3 +135,12 @@ vim.api.nvim_create_autocmd('TextYankPost', {
         vim.highlight.on_yank()
     end
 })
+
+vim.g.neovide_cursor_vfx_particle_speed = 100.0
+vim.g.vimtex_indent_enabled = 1
+
+-- Delete word backword inclusively
+vim.keymap.set('n', "db", "dvb", {desc = "Delete word backword", noremap = true})
+
+-- Set U to redo
+vim.keymap.set('n', 'U', '<C-r>', { noremap = true })

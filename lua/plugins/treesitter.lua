@@ -1,6 +1,9 @@
 return {
 	"nvim-treesitter/nvim-treesitter",
 	build = ":TSUpdate",
+	dependencies = {
+		"neovim/nvim-lspconfig"
+	},
 	config = function()
 		local config = require("nvim-treesitter.configs")
 		config.setup({

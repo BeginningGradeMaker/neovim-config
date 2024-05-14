@@ -72,7 +72,6 @@ return {
 	},
 	{
 		"AlexvZyl/nordic.nvim",
-		lazy = true,
 		priority = 1000,
 		config = function()
 			require("nordic").load()
@@ -80,25 +79,21 @@ return {
 	},
 	{
 		"sainnhe/sonokai",
-		lazy = true,
 		priority = 1000, -- ensure it loads first
 	},
 	{
 		"olimorris/onedarkpro.nvim",
-		lazy = true,
 		priority = 1000, -- ensure it loads first
-		config = function()
-			-- somewhere in your config:
-		end,
+		-- config = function()
+		-- 	-- somewhere in your config:
+		-- end,
 	},
 	{
 		"luisiacc/the-matrix.nvim",
-		lazy = true,
 		priority = 1000,
 	},
 	{
 		"rebelot/kanagawa.nvim",
-		lazy = true,
 		priority = 1000,
 	},
 }

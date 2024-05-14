@@ -1,7 +1,7 @@
 return {
 	{ -- Autocompletion
 		"hrsh7th/nvim-cmp",
-		event = "InsertEnter",
+		event = "VeryLazy",
 		dependencies = {
 			-- Snippet Engine & its associated nvim-cmp source
 			{
@@ -72,8 +72,18 @@ return {
 					-- Accept ([y]es) the completion.
 					--  This will auto-import if your LSP supports it.
 					--  This will expand snippets if the LSP sent a snippet.
+					-- ["<Tab>"] = cmp.mapping.confirm({ select = true }),
 					["<CR>"] = cmp.mapping.confirm({ select = true }),
-					["<C-y>"] = cmp.mapping.confirm({ select = true }),
+					["<C-i>"] = cmp.mapping.confirm({ select = true }),
+					["<Tab>"] = cmp.mapping(function()
+						if cmp.visible() then
+							cmp.confirm({ select = true })
+						-- elseif vim.treesitter.highlighter.active[vim.api.nvim_get_current_buf()] then
+						-- 	require("tabout").tabout()
+						else
+							require("neotab").tabout()
+						end
+					end),
 
 					-- Manually trigger a completion from nvim-cmp.
 					--  Generally you don't need this, because nvim-cmp will display
@@ -115,19 +125,26 @@ return {
 					disallow_prefix_unmatching = true,
 				},
 				sources = {
-					{ name = "luasnip", keyword_length = 2, max_item_count = 5 },
-					{ name = "nvim_lsp", keyword_length = 2, max_item_count = 5 },
+					{ name = "luasnip", keyword_length = 1, max_item_count = 5 },
+					{
+						name = "nvim_lsp",
+						keyword_length = 2,
+						max_item_count = 5,
+						-- entry_filter = function(entry)
+						-- 	return require("cmp").lsp.CompletionItemKind.Function ~= entry:get_kind()
+						-- end,
+					},
 					-- { name = 'path',    max_item_count = 2 },
 				},
 				sorting = {
 					priority_weight = 1.0,
 					comparators = {
+						compare.recently_used,
 						compare.locality,
 						compare.sort_text,
 						-- compare.scopes,
 						compare.score,
 						compare.exact,
-						compare.recently_used,
 						compare.offset,
 						compare.kind,
 						compare.sort_text,

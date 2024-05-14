@@ -5,29 +5,29 @@
     "description": "Sort using sort()"
   },
   "atoi": {
-    "prefix": "atoi",
+    "prefix": "iota",
     "body": [
-      "atoi(${1:}.begin(), ${1:}.end(), 0);$0"],
+      "atoi(${1:}.begin(), ${1:}.end(), 0)$0"],
     "description": "Create an index array"
   },
   "accumulate": {
     "prefix": "accumulate",
     "body": [
-      "accumulate(${1:}.begin(), ${1:}.end(), 0$0);"
+      "accumulate(${1:}.begin(), ${1:}.end(), 0$0)"
     ],
     "description": "Sum up the the vector"
   },
   "lower_bound": {
     "prefix": "lower_bound",
     "body": [
-      "lower_bound(${1:}.begin(), ${1:}.end(), $2);"
+      "lower_bound(${1:}.begin(), ${1:}.end(), $2)"
     ],
     "description": "Lower bound"
   },
   "upper_bound": {
     "prefix": "upper_bound",
     "body": [
-      "upper_bound(${1:}.begin(), ${1:}.end(), $2);"
+      "upper_bound(${1:}.begin(), ${1:}.end(), $2)"
     ],
     "description": "Upper bound"
   }

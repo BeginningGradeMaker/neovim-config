@@ -61,7 +61,7 @@ return {
 					-- Jump to the definition of the word under your cursor.
 					--  This is where a variable was first declared, or where a function is defined, etc.
 					--  To jump back, press <C-t>.
-					map("<leader>gd", require("telescope.builtin").lsp_definitions, "Goto definition haha")
+					map("<leader>gd", require("telescope.builtin").lsp_definitions, "Goto definition")
 
 					-- Find references for the word under your cursor.
 					map("<leader>gr", require("telescope.builtin").lsp_references, "Goto references")
@@ -149,38 +149,17 @@ return {
 				-- tsserver = {},
 				--
 				clangd = {
+					on_attach = function(client)
+						client.server_capabilities.completionProvider = false
+					end,
 					cmd = {
 						"clangd",
 						"--offset-encoding=utf-16",
-						"--enable-config",
 						-- "--clang-tidy",
-						-- "--all-scopes-completion=false",
-						"--background-index",
-						"--header-insertion=iwyu",
-						"--pch-storage=memory",
+						"--all-scopes-completion=false",
 					},
 					handlers = {
 						["textDocument/publishDiagnostics"] = function() end,
-					},
-					capabilities = {
-						textDocument = {
-							completion = {
-								completionItem = {
-									commitCharactersSupport = true,
-									deprecatedSupport = true,
-									insertReplaceSupport = true,
-									labelDetailsSupport = true,
-									preselectSupport = true,
-									resolveSupport = {
-										properties = { "documentation", "detail", "additionalTextEdits" },
-									},
-									snippetSupport = false,
-									tagSupport = {
-										valueSet = { 1 },
-									},
-								},
-							},
-						},
 					},
 				},
 
@@ -198,6 +177,9 @@ return {
 						},
 					},
 				},
+				texlab = {
+				},
+				gopls = {},
 			}
 
 			-- Ensure the servers and tools above are installed
@@ -213,8 +195,6 @@ return {
 			local ensure_installed = vim.tbl_keys(servers or {})
 			vim.list_extend(ensure_installed, {
 				"stylua", -- Used to format lua code
-				"gopls",
-				"texlab",
 				"pyright",
 			})
 			require("mason-tool-installer").setup({ ensure_installed = ensure_installed })
@@ -230,7 +210,7 @@ return {
 						require("lspconfig")[server_name].setup(server)
 					end,
 				},
-				ensure_installed = {"clangd", "rust_analyzer", "gopls"},
+				-- ensure_installed = {"clangd", "rust_analyzer", "gopls", "texlab"},
 			})
 		end,
 	},

@@ -49,6 +49,7 @@ return {
             },
             n = { q = actions.close },
           },
+          file_ignore_patterns = {"compile_commands.json", "lazy-lock.json"}
         },
       }
 
