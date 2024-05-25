@@ -41,41 +41,6 @@ return {
 			end
 		end,
 	},
-	{
-		"numToStr/Comment.nvim",
-		event = "VeryLazy",
-		keys = {
-			-- { "<leader>/", mode = { "n", "v" }, desc = "Comment toggle linewise" },
-			-- { "<leader>?", mode = { "n", "v" }, desc = "Comment toggle blockwise" },
-			{
-				"<leader>/",
-				mode = { "n", "v" },
-				function()
-					require("Comment.api").toggle.linewise.count(vim.v.count > 0 and vim.v.count or 1)
-				end,
-				desc = "Comment toggle linewise",
-			},
-			{
-				"<leader>?",
-				mode = { "n", "v" },
-				function()
-					require("Comment.api").toggle.blockwise.count()
-				end,
-				desc = "Comment toggle blockwise",
-			},
-		},
-		opts = function()
-			local commentstring_avail, commentstring =
-				pcall(require, "ts_context_commentstring.integrations.comment_nvim")
-			return commentstring_avail
-				and commentstring
-				and {
-					pre_hook = commentstring.create_pre_hook(),
-					toggler = { line = "<leader>/", block = "<leader>?" },
-				}
-				or {}
-		end,
-	},
 	"tpope/vim-sleuth", -- Detect tabstop and shiftwidth automatically
 	-- {
 	-- 	"altermo/ultimate-autopair.nvim",

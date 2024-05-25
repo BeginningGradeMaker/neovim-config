@@ -141,6 +141,9 @@ vim.g.vimtex_indent_enabled = 1
 
 -- Delete word backword inclusively
 vim.keymap.set('n', "db", "dvb", {desc = "Delete word backword", noremap = true})
+vim.keymap.set('n', "cb", "cvb", {desc = "Change word backword", noremap = true})
 
 -- Set U to redo
 vim.keymap.set('n', 'U', '<C-r>', { noremap = true })
+
+vim.o.background = "dark"

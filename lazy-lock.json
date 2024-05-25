@@ -1,5 +1,4 @@
 {
-  "Comment.nvim": { "branch": "master", "commit": "0236521ea582747b58869cb72f70ccfa967d2e89" },
   "LuaSnip": { "branch": "master", "commit": "b152822e1a4bafb6bdf11a16cc26525cbd95ee00" },
   "alpha-nvim": { "branch": "main", "commit": "41283fb402713fc8b327e60907f74e46166f4cfd" },
   "astrotheme": { "branch": "main", "commit": "8b316aa3ecd8c4206430379c0b1da0b4e7969ab9" },
@@ -31,6 +30,7 @@
   "mini.nvim": { "branch": "main", "commit": "5df3155218807fb6049779bb488f48f77fdd9dcb" },
   "neo-tree.nvim": { "branch": "v3.x", "commit": "7aad1bf3f6b849cbf108e02c55ad4d701cb4d33a" },
   "neodev.nvim": { "branch": "main", "commit": "ce9a2e8eaba5649b553529c5498acb43a6c317cd" },
+  "neofusion.nvim": { "branch": "main", "commit": "d6e8bd7111dd67748a0b2470d834c534802bbf64" },
   "neotab.nvim": { "branch": "master", "commit": "6c6107dddaa051504e433608f59eca606138269b" },
   "none-ls.nvim": { "branch": "main", "commit": "f5632db2491fbe02b54f1a321a98548a8ba2bd15" },
   "nordic.nvim": { "branch": "main", "commit": "03fcff3c8d68049b8118047784746048b4a08049" },

@@ -67,7 +67,6 @@ return {
 				--   },
 				-- },
 			})
-			vim.cmd("colorscheme astrodark")
 		end,
 	},
 	{
@@ -95,5 +94,12 @@ return {
 	{
 		"rebelot/kanagawa.nvim",
 		priority = 1000,
+	},
+	{
+		"diegoulloao/neofusion.nvim",
+		priority = 1000,
+		config = function()
+			require "neofusion".setup()
+		end
 	},
 }

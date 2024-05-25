@@ -47,7 +47,7 @@ return {
     vim.keymap.set(
       'n',
       '<F5>', function() dap.continue() end,
-      { desc = { "Continue" } }
+      { desc =  "Continue"  }
     )
     vim.keymap.set('n', '<F10>', function() dap.step_over() end, { desc = "Step over" })
     vim.keymap.set('n', '<F11>', function() dap.step_into() end, { desc = "Step into" })
