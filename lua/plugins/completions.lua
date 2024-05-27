@@ -75,15 +75,15 @@ return {
 					-- ["<Tab>"] = cmp.mapping.confirm({ select = true }),
 					["<CR>"] = cmp.mapping.confirm({ select = true }),
 					["<C-i>"] = cmp.mapping.confirm({ select = true }),
-					["<Tab>"] = cmp.mapping(function()
-						if cmp.visible() then
-							cmp.confirm({ select = true })
-						-- elseif vim.treesitter.highlighter.active[vim.api.nvim_get_current_buf()] then
-						-- 	require("tabout").tabout()
-						else
-							require("neotab").tabout()
-						end
-					end),
+					-- ["<Tab>"] = cmp.mapping(function()
+					-- 	if cmp.visible() then
+					-- 		cmp.confirm({ select = true })
+					-- 	-- elseif vim.treesitter.highlighter.active[vim.api.nvim_get_current_buf()] then
+					-- 	-- 	require("tabout").tabout()
+					-- 	else
+					-- 		require("neotab").tabout()
+					-- 	end
+					-- end),
 
 					-- Manually trigger a completion from nvim-cmp.
 					--  Generally you don't need this, because nvim-cmp will display

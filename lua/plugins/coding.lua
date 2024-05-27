@@ -97,7 +97,7 @@ return {
 		event = "InsertEnter",
 		opts = {
 			-- configuration goes here
-			tabkey = "",
+			tabkey = "<Tab>",
 			behavior = "closing",
 		},
 		opt = true,        -- Set this to true if the plugin is optional

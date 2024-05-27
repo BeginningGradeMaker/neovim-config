@@ -74,8 +74,8 @@ vim.opt.scrolloff = 10
 vim.opt.hlsearch = true
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 
-vim.keymap.set('n', '<C-h>', '_', { desc = 'Move cursor to the start of line.' })
-vim.keymap.set('n', '<C-l>', '$', { desc = 'Move cursor to the end of line.' })
+vim.keymap.set('n', '<C-h>', ':bp<cr>', { desc = 'Previosu buffer' })
+vim.keymap.set('n', '<C-l>', ':bn<cr>', { desc = 'Next buffer' })
 vim.keymap.set('n', '<C-j>', '<C-d>', { desc = 'Move half screen down.' })
 vim.keymap.set('n', '<C-k>', '<C-u>', { desc = 'Move half screen up.' })
 
@@ -102,8 +102,8 @@ vim.keymap.set('v', ">", ">gv", { nowait = true })
 vim.keymap.set('v', "<", "<gv", { nowait = true })
 
 -- Switch buffers
-vim.keymap.set('n', "H", ":bp<cr>", { desc = "Previous buffer", noremap = true, silent = true })
-vim.keymap.set('n', "L", ":bn<cr>", { desc = "Next buffer", noremap = true, silent = true })
+vim.keymap.set('n', "H", "_", { desc = "End of line", noremap = true, silent = true })
+vim.keymap.set('n', "L", "$", { desc = "Start of line", noremap = true, silent = true })
 
 -- Vim-tex
 vim.g.tex_flavor = 'latex'
