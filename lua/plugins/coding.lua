@@ -23,10 +23,11 @@ return {
 			require("mini.ai").setup({ n_lines = 500 })
 
 			require("mini.pairs").setup({
-				-- mappings = {
-				-- 	["<"] = { action = "open", pair = "<>", neigh_pattern = "[^\\]." },
-				-- 	[">"] = { action = "close", pair = "<>", neigh_pattern = "[^\\]." },
-				-- },
+				mappings = {
+					-- ["<"] = { action = "open", pair = "<>", neigh_pattern = "[^\\]." },
+					-- [">"] = { action = "close", pair = "<>", neigh_pattern = "[^\\]." },
+					["*"] = { action = "closeopen", pair = "**", neigh_pattern = "[^\\]." },
+				},
 			})
 
 			local statusline = require("mini.statusline")
@@ -88,7 +89,7 @@ return {
 			"L3MON4D3/LuaSnip",
 			"hrsh7th/nvim-cmp",
 		},
-		opt = true,        -- Set this to true if the plugin is optional
+		opt = true, -- Set this to true if the plugin is optional
 		event = "InsertCharPre", -- Set the event to 'InsertCharPre' for better compatibility
 		priority = 1000,
 	},
@@ -100,7 +101,7 @@ return {
 			tabkey = "<Tab>",
 			behavior = "closing",
 		},
-		opt = true,        -- Set this to true if the plugin is optional
+		opt = true, -- Set this to true if the plugin is optional
 	},
 	{
 		"petertriho/nvim-scrollbar",
@@ -216,9 +217,15 @@ return {
 		keys = {
 			-- { "s",     mode = { "n", "x", "o" }, function() require("flash").jump() end,              desc = "Flash" },
 			-- { "S",     mode = { "n", "x", "o" }, function() require("flash").treesitter() end,        desc = "Flash Treesitter" },
-			{ "r",     mode = "o",               function() require("flash").remote() end,            desc = "Remote Flash" },
-			{ "R",     mode = { "o", "x" },      function() require("flash").treesitter_search() end, desc = "Treesitter Search" },
-			{ "<c-s>", mode = { "c" },           function() require("flash").toggle() end,            desc = "Toggle Flash Search" },
+			{ "r",     mode = "o",          function() require("flash").remote() end,            desc = "Remote Flash" },
+			{ "R",     mode = { "o", "x" }, function() require("flash").treesitter_search() end, desc = "Treesitter Search" },
+			{ "<c-s>", mode = { "c" },      function() require("flash").toggle() end,            desc = "Toggle Flash Search" },
 		},
+	},
+	-- {
+	-- 	"lifepillar/vim-formal-package",
+	-- },
+	{
+		"mgrabovsky/vim-xverif",
 	},
 }
