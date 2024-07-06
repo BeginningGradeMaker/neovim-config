@@ -147,3 +147,7 @@ vim.keymap.set('n', "cb", "cvb", {desc = "Change word backword", noremap = true}
 vim.keymap.set('n', 'U', '<C-r>', { noremap = true })
 
 vim.o.background = "dark"
+
+-- Don't skip wrapped lines
+keymap.set("n", "j", "v:count == 0 ? 'gj' : 'j'", { noremap = true, expr = true, silent = true })
+keymap.set("n", "k", "v:count == 0 ? 'gk' : 'k'", { noremap = true, expr = true, silent = true })

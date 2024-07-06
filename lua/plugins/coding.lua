@@ -26,7 +26,7 @@ return {
 				mappings = {
 					-- ["<"] = { action = "open", pair = "<>", neigh_pattern = "[^\\]." },
 					-- [">"] = { action = "close", pair = "<>", neigh_pattern = "[^\\]." },
-					["*"] = { action = "closeopen", pair = "**", neigh_pattern = "[^\\]." },
+					-- ["*"] = { action = "closeopen", pair = "**", neigh_pattern = "[^\\]." },
 				},
 			})
 
@@ -222,9 +222,34 @@ return {
 			{ "<c-s>", mode = { "c" },      function() require("flash").toggle() end,            desc = "Toggle Flash Search" },
 		},
 	},
-	-- {
-	-- 	"lifepillar/vim-formal-package",
-	-- },
+	{
+		"mistricky/codesnap.nvim",
+		build = "make build_generator",
+		keys = {
+			{ "<leader>cc", "<cmd>CodeSnap<cr>", mode = "x", desc = "Save selected code snapshot into clipboard" },
+			{ "<leader>cs", "<cmd>CodeSnapSave<cr>", mode = "x", desc = "Save selected code snapshot in ~/Pictures" },
+		},
+		opts = {
+			save_path = "~/Pictures",
+			has_breadcrumbs = true,
+			bg_theme = "bamboo",
+			mac_window_bar = true,
+			title = "Zhisu Wang",
+			code_font_family = "CaskaydiaCove Nerd Font",
+			watermark_font_family = "Pacifico",
+			watermark = "Zhisu Wang",
+			breadcrumbs_separator = "/",
+			has_line_number = true,
+			show_workspace = false,
+			min_width = 0,
+			bg_x_padding = 100,
+			bg_y_padding = 82,
+		},
+	},
+	{
+		"lifepillar/vim-formal-package",
+		dir = "~/.local/share/nvim/lazy/formal",
+	},
 	{
 		"mgrabovsky/vim-xverif",
 	},

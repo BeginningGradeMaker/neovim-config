@@ -31,5 +31,19 @@
       "upper_bound(${1:}.begin(), ${1:}.end(), $2)"
     ],
     "description": "Upper bound"
+  },
+  "max_element": {
+    "prefix": "max_element",
+    "body": [
+      "max_element(${1:}.begin(), ${1:}.end())$0"
+    ],
+    "description": "Max element"
+  },
+  "min_element": {
+    "prefix": "min_element",
+    "body": [
+      "min_element(${1:}.begin(), ${1:}.end())$0"
+    ],
+    "description": "Min element"
   }
 }
