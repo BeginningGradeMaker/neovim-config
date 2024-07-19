@@ -1,0 +1,22 @@
+{
+  "math inline": {
+    "prefix": "ii",
+    "body": ["$$1$"],
+    "description": "Math inline mode."
+  },
+  "math display": {
+    "prefix": "dd",
+    "body": ["$ $1 $"],
+    "description": "Math display mode."
+  },
+  "text bold": {
+    "prefix": "bf",
+    "body": ["*$1*"],
+    "description": "Text bold"
+  },
+  "text italic": {
+    "prefix": "it",
+    "body": ["_$1_"],
+    "description": "Text italic"
+  }
+}

@@ -179,9 +179,18 @@ return {
 						},
 					},
 				},
-				texlab = {
-				},
+				texlab = {},
 				gopls = {},
+				tinymist = {
+					single_file_support = true,
+					root_dir = function()
+						return vim.fn.getcwd()
+					end,
+					settings = {
+						exportPdf = "onType",
+						-- outputPath = "$root/target/$dir/$name",
+					},
+				},
 			}
 
 			-- Ensure the servers and tools above are installed
@@ -200,6 +209,7 @@ return {
 				"pyright",
 			})
 			require("mason-tool-installer").setup({ ensure_installed = ensure_installed })
+			require("lspconfig")["tinymist"].setup({})
 
 			require("mason-lspconfig").setup({
 				handlers = {
@@ -212,7 +222,7 @@ return {
 						require("lspconfig")[server_name].setup(server)
 					end,
 				},
-				-- ensure_installed = {"clangd", "rust_analyzer", "gopls", "texlab"},
+				-- ensure_installed = { "clangd", "rust_analyzer", "gopls", "tinymist" },
 			})
 		end,
 	},

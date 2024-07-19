@@ -56,7 +56,7 @@ return {
 				require("alpha").start(false)
 			end, { desc = "Home screen" })
 			-- require 'alpha'.setup(require 'alpha.themes.dashboard'.config)
-			vim.cmd.colorscheme "catppuccin-frappe"
+			vim.cmd.colorscheme "onedark"
 		end,
 	},
 }

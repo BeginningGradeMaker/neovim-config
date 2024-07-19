@@ -74,8 +74,8 @@ vim.opt.scrolloff = 10
 vim.opt.hlsearch = true
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 
-vim.keymap.set('n', '<C-h>', ':bp<cr>', { desc = 'Previosu buffer' })
-vim.keymap.set('n', '<C-l>', ':bn<cr>', { desc = 'Next buffer' })
+vim.keymap.set('n', '<C-h>', ':bp<cr>', { desc = 'Previosu buffer' , silent = true })
+vim.keymap.set('n', '<C-l>', ':bn<cr>', { desc = 'Next buffer', silent = true })
 vim.keymap.set('n', '<C-j>', '<C-d>', { desc = 'Move half screen down.' })
 vim.keymap.set('n', '<C-k>', '<C-u>', { desc = 'Move half screen up.' })
 
@@ -151,3 +151,10 @@ vim.o.background = "dark"
 -- Don't skip wrapped lines
 keymap.set("n", "j", "v:count == 0 ? 'gj' : 'j'", { noremap = true, expr = true, silent = true })
 keymap.set("n", "k", "v:count == 0 ? 'gk' : 'k'", { noremap = true, expr = true, silent = true })
+keymap.set("n", "0", "g0", { noremap = true, silent = true })
+keymap.set("n", "$", "g$", { noremap = true, silent = true })
+
+-- Make change/delete/select whole word default
+keymap.set("n", "cw", "ciw", { noremap = true, silent = true, desc = "Change word" })
+keymap.set("n", "dw", "diw", { noremap = true, silent = true, desc = "Delete word" })
+keymap.set("n", "vw", "viw", { noremap = true, silent = true, desc = "Select word" })

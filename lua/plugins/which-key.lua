@@ -1,36 +1,46 @@
-local utils = require "utils"
+local utils = require("utils")
 local get_icon = utils.get_icon
 
 return {
-  "folke/which-key.nvim",
-  event = "VeryLazy",
-  init = function()
-    vim.o.timeout = true
-    vim.o.timeoutlen = 300
-  end,
-  opts = {
-    -- your configuration comes here
-    -- or leave it empty to use the default settings
-    -- refer to the configuration section below
-    defaults = {
-      ["<leader>g"] = { name = get_icon("Bookmarks", 1, true) .. "Goto" },
-      ["<leader>f"] = { name = get_icon("Search", 1, true) .. "Find" },
-      ["<leader>t"] = { name = get_icon("Terminal", 1, true) .. "Terminal" },
-      ["<leader>c"] = { name = get_icon("DiagnosticHint", 1, true) .. "Code" },
-      ["<leader>u"] = { name = get_icon("Window", 1, true) .. "UI/UX" },
-      ["<leader>w"] = { name = get_icon("WordFile", 1, true) .. "Workspace" },
-      ["<leader>S"] = { name = get_icon("Session", 1, true) .. "Session" },
-      ["<leader>d"] = { name = get_icon("Debugger", 1, true) .. "Debug" },
-      ["<leader>a"] = { name = get_icon("Selected", 1, true) .. "Select all" },
-      ["<leader>r"] = { name = get_icon("ActiveLSP", 1, true) .. "Competition" },
-    },
-    -- icons = { group = vim.g.icons_enabled and "" or "+", separator = "" },
-    icons = { group = "", separator = "" },
-    disable = { filetypes = { "TelescopePrompt" } },
-  },
-  config = function(_, opts)
-    local wk = require("which-key")
-    wk.setup(opts)
-    wk.register(opts.defaults)
-  end
+	"folke/which-key.nvim",
+	event = "VeryLazy",
+	keys = {
+		{
+			"<leader>?",
+			function()
+				require("which-key").show({ global = false })
+			end,
+			desc = "Buffer Local Keymaps (which-key)",
+		},
+	},
+	init = function()
+		vim.o.timeout = true
+		vim.o.timeoutlen = 300
+	end,
+	opts = {
+		-- your configuration comes here
+		-- or leave it empty to use the default settings
+		-- refer to the configuration section below
+		defaults = {
+			{"<leader>g", group = get_icon("Bookmarks", 1, true) .. "Goto" },
+			{"<leader>f", group = get_icon("Search", 1, true) .. "Find" },
+			{"<leader>t", group = get_icon("Terminal", 1, true) .. "Toggle" },
+			{"<leader>c", group = get_icon("DiagnosticHint", 1, true) .. "Code" },
+			{"<leader>u", group = get_icon("Window", 1, true) .. "UI/UX" },
+			{"<leader>w", group = get_icon("WordFile", 1, true) .. "Workspace" },
+			{"<leader>S", group = get_icon("Session", 1, true) .. "Session" },
+			{"<leader>d", group = get_icon("Debugger", 1, true) .. "Debug" },
+			{"<leader>a", group = get_icon("Selected", 1, true) .. "Select all" },
+			{"<leader>r", group = get_icon("ActiveLSP", 1, true) .. "Competition" },
+		},
+		-- icons = { group = vim.g.icons_enabled and "" or "+", separator = "" },
+		icons = { rules = false, group = "", separator = "" },
+		disable = { filetypes = { "TelescopePrompt" } },
+		preset = "modern",
+	},
+	config = function(_, opts)
+		local wk = require("which-key")
+		wk.setup(opts)
+		wk.add(opts.defaults)
+	end,
 }

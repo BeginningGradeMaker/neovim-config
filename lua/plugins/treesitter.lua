@@ -1,9 +1,9 @@
 return {
 	"nvim-treesitter/nvim-treesitter",
 	build = ":TSUpdate",
-	dependencies = {
-		"neovim/nvim-lspconfig"
-	},
+	-- dependencies = {
+	-- 	"neovim/nvim-lspconfig"
+	-- },
 	config = function()
 		local config = require("nvim-treesitter.configs")
 		config.setup({
@@ -13,7 +13,7 @@ return {
 				disable = { "latex" },
 				additional_vim_regex_highlighting = { "latex", "markdown" },
 			},
-			indent = { enable = true },
+			indent = { enable = true, disable = {"typst"}},
 		})
 	end,
 }
