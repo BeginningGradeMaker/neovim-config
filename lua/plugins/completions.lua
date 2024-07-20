@@ -115,12 +115,14 @@ return {
 					end, { "i", "s" }),
 				}),
 				window = {
-					completion = {
-						border = border,
-					},
-					documentation = {
-						border = "rounded",
-					},
+					-- completion = {
+					-- 	border = border,
+					-- },
+					-- documentation = {
+					-- 	-- border = "rounded",
+					-- },
+					completion = cmp.config.window.bordered(),
+					documentation = cmp.config.window.bordered(),
 				},
 				matching = {
 					disallow_fuzzy_matching = true,
@@ -130,7 +132,7 @@ return {
 					disallow_prefix_unmatching = true,
 				},
 				sources = {
-					{ name = "luasnip", keyword_length = 2, max_item_count = 5 },
+					{ name = "luasnip", keyword_length = 1, max_item_count = 5 },
 					{
 						name = "nvim_lsp",
 						keyword_length = 2,

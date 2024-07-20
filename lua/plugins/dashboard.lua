@@ -48,7 +48,7 @@ return {
 			}
 			-- dashboard.config.opts.noautocmd = true
 			require("alpha").setup(dashboard.config)
-			vim.keymap.set("n", "<leader>h", function()
+			vim.keymap.set("n", "<leader>H", function()
 				local wins = vim.api.nvim_tabpage_list_wins(0)
 				if #wins > 1 and vim.bo[vim.api.nvim_win_get_buf(wins[1])].filetype == "neo-tree" then
 					vim.fn.win_gotoid(wins[2]) -- go to non-neo-tree window to toggle alpha
@@ -56,7 +56,7 @@ return {
 				require("alpha").start(false)
 			end, { desc = "Home screen" })
 			-- require 'alpha'.setup(require 'alpha.themes.dashboard'.config)
-			vim.cmd.colorscheme "onedark"
+			vim.cmd.colorscheme "tokyonight"
 		end,
 	},
 }

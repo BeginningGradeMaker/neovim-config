@@ -85,9 +85,9 @@ vim.keymap.set('n', '<C-Up>', '<C-w><C-k>', { desc = 'Move window up' })
 vim.keymap.set('n', '<C-Down>', '<C-w><C-j>', { desc = 'Move window down' })
 
 -- Standard Operations
-vim.keymap.set('n', "<leader>s", "<cmd>w<cr>", { desc = "Save" })
+vim.keymap.set('n', "<leader>s", "<cmd>w<cr>", { desc = "Save", silent = true })
 vim.keymap.set('n', "<leader>x", "<cmd>bd<cr>", { desc = "Close current buffer" })
-vim.keymap.set('n', "<leader>w", "<cmd>bd<cr>", { desc = "Save" })
+vim.keymap.set('n', "<leader>w", "<cmd>bd<cr>", { desc = "Close current buffer", silent = true })
 vim.keymap.set('n', "<leader>W", "<cmd>wqa<cr>", { desc = "Save All and quit" })
 vim.keymap.set('n', "<leader>q", "<cmd>confirm q<cr>", { desc = "Quit" })
 vim.keymap.set('n', "<leader>Q", "<cmd>confirm qall<cr>", { desc = "Quit all" })

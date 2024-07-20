@@ -32,6 +32,7 @@ return {
 			{"<leader>d", group = get_icon("Debugger", 1, true) .. "Debug" },
 			{"<leader>a", group = get_icon("Selected", 1, true) .. "Select all" },
 			{"<leader>r", group = get_icon("ActiveLSP", 1, true) .. "Competition" },
+			{"<leader>h", group = get_icon("Git", 1, true) .. "Git" },
 		},
 		-- icons = { group = vim.g.icons_enabled and "" or "+", separator = "" },
 		icons = { rules = false, group = "", separator = "" },

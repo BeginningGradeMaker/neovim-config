@@ -190,8 +190,21 @@ return {
 						exportPdf = "onType",
 						-- outputPath = "$root/target/$dir/$name",
 					},
+					-- handlers = {
+					-- 	["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
+					-- 		border = "rounded",
+					-- 	}),
+					-- },
 				},
 			}
+
+			-- vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
+			-- 	border = "rounded",
+			-- })
+			--
+			-- vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, {
+			-- 	border = "rounded",
+			-- })
 
 			-- Ensure the servers and tools above are installed
 			--  To check the current status of installed tools and/or manually install

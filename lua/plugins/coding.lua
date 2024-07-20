@@ -1,4 +1,4 @@
-local get_icon = require("utils").get_icon
+-- local get_icon = require("utils").get_icon
 
 return {
 	-- Highlight todo, notes, etc in comments
@@ -135,32 +135,6 @@ return {
 			require("notify").setup({ background_colour = "#000000" })
 		end,
 	},
-	{ -- Adds git related signs to the gutter, as well as utilities for managing changes
-		"lewis6991/gitsigns.nvim",
-		event = "VeryLazy",
-		keys = {
-			{
-				"<leader>gp",
-				"<cmd>Gitsigns preview_hunk<cr>",
-				desc = "Gitsigns preview",
-			},
-			{
-				"<leader>ub",
-				"<cmd>Gitsigns toggle_current_line_blame<cr>",
-				desc = "Toggle git line blame",
-			},
-		},
-		opts = {
-			signs = {
-				add = { text = get_icon("GitSign") },
-				change = { text = get_icon("GitSign") },
-				delete = { text = get_icon("GitSign") },
-				topdelete = { text = get_icon("GitSign") },
-				changedelete = { text = get_icon("GitSign") },
-				untracked = { text = get_icon("GitSign") },
-			},
-		},
-	},
 	{
 		"xeluxee/competitest.nvim",
 		lazy = true,
@@ -194,6 +168,9 @@ return {
 		lazy = false,
 		-- event = "VeryLazy",
 		opts = {
+			cmdline = {
+				-- view = "cmdline",
+			},
 			lsp = {
 				-- override markdown rendering so that **cmp** and other plugins use **Treesitter**
 				override = {
@@ -208,7 +185,7 @@ return {
 				command_palette = true, -- position the cmdline and popupmenu together
 				long_message_to_split = true, -- long messages will be sent to a split
 				inc_rename = false, -- enables an input dialog for inc-rename.nvim
-				lsp_doc_border = false, -- add a border to hover docs and signature help
+				lsp_doc_border = true, -- add a border to hover docs and signature help
 			},                    -- add any options here
 		},
 		dependencies = {
