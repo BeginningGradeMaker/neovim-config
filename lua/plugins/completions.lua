@@ -75,6 +75,8 @@ return {
 					-- ["<Tab>"] = cmp.mapping.confirm({ select = true }),
 					-- ["<CR>"] = cmp.mapping.confirm({ select = true }),
 					["<C-i>"] = cmp.mapping.confirm({ select = true }),
+					["<C-n>"] = cmp.mapping.close(),
+					[";"] = cmp.mapping.close(),
 					["<Tab>"] = cmp.mapping(function()
 						if cmp.visible() then
 							local CTRLg_u = vim.api.nvim_replace_termcodes('<C-g>u', true, true, true)
@@ -146,13 +148,13 @@ return {
 				sorting = {
 					priority_weight = 1.0,
 					comparators = {
+						compare.offset,
+						compare.exact,
+						compare.score,
 						compare.recently_used,
 						compare.locality,
-						compare.sort_text,
+						-- compare.sort_text,
 						-- compare.scopes,
-						compare.score,
-						compare.exact,
-						compare.offset,
 						compare.kind,
 						compare.sort_text,
 						compare.length,

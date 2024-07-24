@@ -10,12 +10,13 @@ return {
         build = 'make',
         -- `cond` is a condition used to determine whether this plugin should be
         -- installed and loaded.
+
         cond = function()
           return vim.fn.executable 'make' == 1
         end,
       },
       { 'nvim-telescope/telescope-ui-select.nvim' },
-      { 'nvim-tree/nvim-web-devicons',            enabled = vim.g.have_nerd_font },
+      -- { 'nvim-tree/nvim-web-devicons',            enabled = vim.g.have_nerd_font },
     },
     config = function()
       local actions = require "telescope.actions"
@@ -64,11 +65,13 @@ return {
       vim.keymap.set('n', '<leader>fs', builtin.builtin, { desc = 'Find select telescope' })
       vim.keymap.set('n', '<leader>fc', builtin.grep_string, { desc = 'Find current word' })
       vim.keymap.set('n', '<leader>fd', builtin.diagnostics, { desc = 'Find diagnostics' })
-      vim.keymap.set('n', '<leader>fr', builtin.resume, { desc = 'Resume last search' })
+      vim.keymap.set('n', '<leader>fl', builtin.resume, { desc = 'Resume last search' })
       vim.keymap.set('n', '<leader>f.', builtin.oldfiles, { desc = 'Find recent files ("." for repeat)' })
       vim.keymap.set('n', '<leader>fb', builtin.buffers, { desc = 'Find existing buffers' })
-      vim.keymap.set('n', '<leader>fm', function() return builtin.lsp_document_symbols({ symbols = 'function' }) end,
+      vim.keymap.set('n', '<leader>fm', function() return builtin.lsp_document_symbols({ symbols = {'function', 'method'} }) end,
         { desc = 'Find methods' })
+      vim.keymap.set('n', '<leader>fa', function() return builtin.lsp_document_symbols() end,
+        { desc = 'Find all symbols' })
       vim.keymap.set('n', '<leader>ut', builtin.colorscheme,
         { desc = 'Change colorscheme' })
 

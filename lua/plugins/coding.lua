@@ -169,7 +169,7 @@ return {
 		-- event = "VeryLazy",
 		opts = {
 			cmdline = {
-				-- view = "cmdline",
+				view = "cmdline",
 			},
 			lsp = {
 				-- override markdown rendering so that **cmp** and other plugins use **Treesitter**
