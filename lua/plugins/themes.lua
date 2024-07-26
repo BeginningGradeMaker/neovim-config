@@ -151,10 +151,10 @@ return {
 		lazy = false,
 		priority = 1000,
 		opts = {
-			transparent = not vim.g.neovide,
+			transparent = false,
 			styles = {
 				sidebars = "transparent",
-				floats = "transparent",
+				-- floats = "transparent",
 			},
 			sections = {
 				lualine_a = {

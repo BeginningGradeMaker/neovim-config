@@ -105,12 +105,6 @@ vim.keymap.set('v', "<", "<gv", { nowait = true })
 vim.keymap.set('n', "H", "_", { desc = "End of line", noremap = true, silent = true })
 vim.keymap.set('n', "L", "$", { desc = "Start of line", noremap = true, silent = true })
 
--- Vim-tex
-vim.g.tex_flavor = 'latex'
-vim.g.vimtex_quickfix_mode = 0
-vim.g.vimtex_view_general_viewer = 'skim'
-vim.g.vimtex_compiler_progname = 'nvr'
-
 -- Insert blank lines in normal mode
 vim.keymap.set('n', '<S-CR>', 'm`o<Esc>``')
 vim.keymap.set('n', '<CR>', 'm`O<Esc>``')

@@ -273,8 +273,15 @@
     "answer": {
         "prefix": "ans",
         "body": [
-            "\\textbf{Answer:} $1"
+            "\\textbf{answer:} $1"
         ],
         "description": "answer"
+    },
+    "text": {
+        "prefix": "tt",
+        "body": [
+            "\\text{$1}$0"
+        ],
+        "description": "text"
     }
 }

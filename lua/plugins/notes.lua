@@ -4,7 +4,19 @@ return {
 		"lervag/vimtex",
 		ft = "tex",
 		config = function()
+			-- Vim-tex
+			vim.g.tex_flavor = "latex"
+			vim.g.vimtex_quickfix_mode = 0
+			vim.g.vimtex_compiler_progname = "nvr"
+			vim.g.vimtex_view_general_viewer = "skim"
 			vim.g.vimtex_view_method = "skim"
+            -- vim.g.vimtex_indent_delims = {
+            --    open = '{',
+            --    close = '}',
+            --    close_indented = 0,
+            --    include_modified_math = 1,
+            -- }
+            vim.g.vimtex_view_skim_sync = 1
 			-- vim.g.vimtex_quickfix_ignore_filters = { "Underfull", "Overfull", "Missing" }
 			-- vim.g.maplocalleader = ','
 			vim.g.vimtex_quickfix_open_on_warning = 0
