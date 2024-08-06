@@ -132,8 +132,9 @@ return {
 		"rcarriga/nvim-notify",
 		lazy = false,
 		config = function()
-			-- vim.notify = require("notify")
-			require("notify").setup({ background_colour = "#000000" })
+			vim.notify = require("notify")
+			-- require("notify").setup({ background_colour = "#000000" })
+			require("notify").setup()
 		end,
 	},
 	{
@@ -144,7 +145,7 @@ return {
 		config = function()
 			require("competitest").setup({
 				compile_command = {
-					cpp = { exec = "g++-13", args = { "-O2", "-Wall", "$(FNAME)", "-o", "$(FNOEXT)" } },
+					cpp = { exec = "g++-13", args = {"-std=c++20", "-O2", "-Wall", "$(FNAME)", "-o", "$(FNOEXT)" } },
 				},
 				-- runner_ui = { interface = "split" },
 			})
@@ -212,8 +213,8 @@ return {
 		},
 		-- stylua: ignore
 		keys = {
-			{ "s",     mode = { "n", "x", "o" }, function() require("flash").jump() end,              desc = "Flash" },
-			-- { "S",     mode = { "n", "x", "o" }, function() require("flash").treesitter() end,        desc = "Flash Treesitter" },
+			-- { "s",     mode = { "n", "x", "o" }, function() require("flash").jump() end,              desc = "Flash" },
+			{ "S",     mode = { "n", "x", "o" }, function() require("flash").jump() end,        desc = "Flash" },
 			{ "r",     mode = "o",               function() require("flash").remote() end,            desc = "Remote Flash" },
 			{ "R",     mode = { "o", "x" },      function() require("flash").treesitter_search() end, desc = "Treesitter Search" },
 			{ "<c-s>", mode = { "c" },           function() require("flash").toggle() end,            desc = "Toggle Flash Search" },

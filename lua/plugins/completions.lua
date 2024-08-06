@@ -73,23 +73,23 @@ return {
 					--  This will auto-import if your LSP supports it.
 					--  This will expand snippets if the LSP sent a snippet.
 					-- ["<Tab>"] = cmp.mapping.confirm({ select = true }),
-					-- ["<CR>"] = cmp.mapping.confirm({ select = true }),
+					["<CR>"] = cmp.mapping.confirm({ select = true }),
 					["<C-i>"] = cmp.mapping.confirm({ select = true }),
 					["<C-n>"] = cmp.mapping.close(),
-					[";"] = cmp.mapping.close(),
+					-- [";"] = cmp.mapping.close(),
 					["<Tab>"] = cmp.mapping(function()
-						if cmp.visible() then
-							local CTRLg_u = vim.api.nvim_replace_termcodes('<C-g>u', true, true, true)
-							vim.api.nvim_feedkeys(CTRLg_u, 'n', true)
-							cmp.confirm({
-								behavior = cmp.ConfirmBehavior.Insert,
-								select = true,
-							})
-						-- elseif vim.treesitter.highlighter.active[vim.api.nvim_get_current_buf()] then
-						-- 	require("tabout").tabout()
-						else
+						-- if cmp.visible() then
+						-- 	local CTRLg_u = vim.api.nvim_replace_termcodes('<C-g>u', true, true, true)
+						-- 	vim.api.nvim_feedkeys(CTRLg_u, 'n', true)
+						-- 	cmp.confirm({
+						-- 		behavior = cmp.ConfirmBehavior.Insert,
+						-- 		select = true,
+						-- 	})
+						-- -- elseif vim.treesitter.highlighter.active[vim.api.nvim_get_current_buf()] then
+						-- -- 	require("tabout").tabout()
+						-- else
 							require("neotab").tabout()
-						end
+						-- end
 					end),
 
 					-- Manually trigger a completion from nvim-cmp.

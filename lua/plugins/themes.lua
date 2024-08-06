@@ -201,4 +201,5 @@ return {
 		},
 	},
 	{ "ellisonleao/gruvbox.nvim", priority = 1000, config = true },
+    { 'marko-cerovac/material.nvim', priority = 1000}
 }

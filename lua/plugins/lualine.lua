@@ -5,7 +5,8 @@ return {
 	-- config = function()
 	--   require('lualine').setup({
 	--     options = {
-	--       theme = 'dracula'
+	--       -- theme = 'dracula'
+	--       -- theme = 'material deep ocean'
 	--       -- theme = 'tokyonight'
 	--       -- theme = require("neofusion.lualine"),
 	--     }
