@@ -2,6 +2,7 @@
 return {
 	{
 		"neovim/nvim-lspconfig",
+		lazy = true,
 		event = "VeryLazy",
 		dependencies = {
 			"williamboman/mason.nvim",
@@ -62,27 +63,31 @@ return {
 					-- Jump to the definition of the word under your cursor.
 					--  This is where a variable was first declared, or where a function is defined, etc.
 					--  To jump back, press <C-t>.
-					map("<leader>gd", require("telescope.builtin").lsp_definitions, "Goto definition")
+					map("gd", require("telescope.builtin").lsp_definitions, "Goto definition")
 
 					-- Find references for the word under your cursor.
-					map("<leader>gr", require("telescope.builtin").lsp_references, "Goto references")
+					map("gr", require("telescope.builtin").lsp_references, "Goto references")
 
 					-- Jump to the implementation of the word under your cursor.
 					--  Useful when your language has ways of declaring types without an actual implementation.
-					map("<leader>gI", require("telescope.builtin").lsp_implementations, "Goto implementation")
+					map("gI", require("telescope.builtin").lsp_implementations, "Goto implementation")
 
 					-- Jump to the type of the word under your cursor.
 					--  Useful when you're not sure what type a variable is and you want to see
 					--  the definition of its *type*, not where it was *defined*.
-					map("<leader>gt", require("telescope.builtin").lsp_type_definitions, "Type definition")
+					map("gt", require("telescope.builtin").lsp_type_definitions, "Type definition")
 
 					-- Fuzzy find all the symbols in your current document.
 					--  Symbols are things like variables, functions, types, etc.
-					map("<leader>gs", require("telescope.builtin").lsp_document_symbols, "Document symbols")
+					map("gs", require("telescope.builtin").lsp_document_symbols, "Document symbols")
 
 					-- Fuzzy find all the symbols in your current workspace
 					--  Similar to document symbols, except searches over your whole project.
-					map("<leader>gS", require("telescope.builtin").lsp_dynamic_workspace_symbols, "Workspace symbols")
+					map("gS", require("telescope.builtin").lsp_dynamic_workspace_symbols, "Workspace symbols")
+
+					map("<leader>ti", function()
+						vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({ 0 }), { 0 })
+					end, "Toggle inlay hints")
 
 					-- Rename the variable under your cursor
 					--  Most Language Servers support renaming across files, etc.
@@ -99,7 +104,7 @@ return {
 
 					-- WARN: This is not Goto Definition, this is Goto Declaration.
 					--  For example, in C this would take you to the header
-					map("<leader>gD", vim.lsp.buf.declaration, "Goto declaration")
+					map("gD", vim.lsp.buf.declaration, "Goto declaration")
 
 					map("go", vim.diagnostic.open_float, "Float diagonostics")
 
@@ -120,6 +125,13 @@ return {
 							callback = vim.lsp.buf.clear_references,
 						})
 					end
+
+					vim.api.nvim_create_autocmd("LspAttach", {
+						callback = function(args)
+							-- vim.lsp.inlay_hint.enable(false, { bufnr = args.buf })
+							vim.lsp.inlay_hint.enable(true, { bufnr = args.buf })
+						end,
+					})
 				end,
 			})
 
@@ -130,6 +142,10 @@ return {
 			local capabilities = vim.lsp.protocol.make_client_capabilities()
 			capabilities = vim.tbl_deep_extend("force", capabilities, require("cmp_nvim_lsp").default_capabilities())
 
+			vim.diagnostic.config({
+				float = { border = "rounded" },
+			})
+
 			-- Enable the following language servers
 			--  Feel free to add/remove any LSPs that you want here. They will automatically be installed.
 			--
@@ -139,11 +155,38 @@ return {
 			--  - capabilities (table): Override fields in capabilities. Can be used to disable certain LSP features.
 			--  - settings (table): Override the default settings passed when initializing the server.
 			--        For example, to see the options for `lua_ls`, you could go to: https://luals.github.io/wiki/settings/
+			local M = {}
 			local servers = {
 				-- clangd = {},
 				-- gopls = {},
-				-- pyright = {},
-				-- rust_analyzer = {},
+				pyright = {},
+				-- rust_analyzer = {
+				-- 	on_attach = function(client, bufnr)
+				-- 		-- If the LSP is not ready, the inlay hint character is empty,
+				-- 		-- this usually occurs during the first attach.
+				-- 		if client.supports_method(vim.lsp.protocol.Methods.textDocument_inlayHint) then
+				-- 			vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
+				-- 		end
+				-- 	end,
+				-- 	handlers = {
+				-- 		-- When the LSP is ready, enable inlay hint for existing bufnr again.
+				-- 		-- Learn from rust-tools.nvim
+				-- 		["experimental/serverStatus"] = function(_, result, ctx, _)
+				-- 			if result.quiescent and not M.ran_once then
+				-- 				for _, bufnr in ipairs(vim.lsp.get_buffers_by_client_id(ctx.client_id)) do
+				-- 					-- First, toggle disable because bufstate.applied
+				-- 					-- prevents vim.lsp.inlay_hint(bufnr, true) from refreshing.
+				-- 					-- Therefore, we need to clear bufstate.applied.
+				-- 					vim.lsp.inlay_hint.enable(false, { bufnr = bufnr })
+				-- 					-- toggle enable
+				-- 					vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
+				-- 				end
+				-- 				M.ran_once = true
+				-- 			end
+				-- 		end,
+				-- 		-- ["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = border }),
+				-- 	},
+				-- },
 				-- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs
 				--
 				-- Some languages (like typescript) have entire language plugins that can be useful:
@@ -200,13 +243,13 @@ return {
 				},
 			}
 
-			-- vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
-			-- 	border = "rounded",
-			-- })
+			vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
+				border = "rounded",
+			})
 			--
-			-- vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, {
-			-- 	border = "rounded",
-			-- })
+			vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, {
+				border = "rounded",
+			})
 
 			-- Ensure the servers and tools above are installed
 			--  To check the current status of installed tools and/or manually install
@@ -224,21 +267,30 @@ return {
 				"pyright",
 			})
 			require("mason-tool-installer").setup({ ensure_installed = ensure_installed })
-			require("lspconfig")["tinymist"].setup({})
+			-- require("lspconfig")["tinymist"].setup({})
+			for server_name, server in pairs(servers) do
+				server.capabilities = vim.tbl_deep_extend("force", {}, capabilities, server.capabilities or {})
+				require("lspconfig")[server_name].setup(server)
+			end
 
-			require("mason-lspconfig").setup({
-				handlers = {
-					function(server_name)
-						local server = servers[server_name] or {}
-						-- This handles overriding only values explicitly passed
-						-- by the server configuration above. Useful when disabling
-						-- certain features of an LSP (for example, turning off formatting for tsserver)
-						server.capabilities = vim.tbl_deep_extend("force", {}, capabilities, server.capabilities or {})
-						require("lspconfig")[server_name].setup(server)
-					end,
-				},
-				-- ensure_installed = { "clangd", "rust_analyzer", "gopls", "tinymist" },
-			})
+			-- require("mason-lspconfig").setup({
+			-- 	handlers = {
+			-- 		function(server_name)
+			-- 			local server = servers[server_name] or {}
+			-- 			-- This handles overriding only values explicitly passed
+			-- 			-- by the server configuration above. Useful when disabling
+			-- 			-- certain features of an LSP (for example, turning off formatting for tsserver)
+			-- 			server.capabilities = vim.tbl_deep_extend("force", {}, capabilities, server.capabilities or {})
+			-- 			require("lspconfig")[server_name].setup(server)
+			-- 		end,
+			-- 	},
+			-- 	ensure_installed = { "clangd", "gopls", "tinymist", "pyright", "lua_ls" },
+			-- })
 		end,
+	},
+	{
+		"mrcjkb/rustaceanvim",
+		version = "^5", -- Recommended
+		lazy = false, -- This plugin is already lazy
 	},
 }

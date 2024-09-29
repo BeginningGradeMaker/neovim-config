@@ -112,17 +112,6 @@ return {
 		end,
 	},
 	{
-		"AlexvZyl/nordic.nvim",
-		priority = 1000,
-		config = function()
-			require("nordic").load()
-		end,
-	},
-	{
-		"sainnhe/sonokai",
-		priority = 1000, -- ensure it loads first
-	},
-	{
 		"olimorris/onedarkpro.nvim",
 		priority = 1000, -- ensure it loads first
 		-- config = function()
@@ -131,10 +120,6 @@ return {
 	},
 	{
 		"luisiacc/the-matrix.nvim",
-		priority = 1000,
-	},
-	{
-		"rebelot/kanagawa.nvim",
 		priority = 1000,
 	},
 	{

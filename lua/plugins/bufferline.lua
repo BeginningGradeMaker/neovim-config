@@ -4,7 +4,7 @@ return {
 		"folke/tokyonight.nvim",
 	},
 	lazy = true,
-	event = "VeryLazy",
+    event = "VeryLazy",
 	config = function()
 		local bufferline = require("bufferline")
 		bufferline.setup({
@@ -14,11 +14,11 @@ return {
 				indicator = {
 					style = "none",
 				},
-				name_formatter = function(buf)
-					if buf.name:match("%.*") then
-						return vim.fn.fnamemodify(buf.name, ":t:r")
-					end
-				end,
+				-- name_formatter = function(buf)
+				-- 	if buf.name:match("%.*") then
+				-- 		return vim.fn.fnamemodify(buf.name, ":t:r")
+				-- 	end
+				-- end,
 				-- diagnostics = "nvim_lsp",
 				diagnostics_indicator = function(count, level, diagnostics_dict, context)
 					local icon = level:match("error") and " " or " "

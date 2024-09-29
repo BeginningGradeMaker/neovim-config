@@ -76,8 +76,10 @@ vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 
 vim.keymap.set('n', '<C-h>', ':bp<cr>', { desc = 'Previosu buffer' , silent = true })
 vim.keymap.set('n', '<C-l>', ':bn<cr>', { desc = 'Next buffer', silent = true })
-vim.keymap.set('n', '<C-j>', '<C-d>', { desc = 'Move half screen down.' })
-vim.keymap.set('n', '<C-k>', '<C-u>', { desc = 'Move half screen up.' })
+vim.keymap.set({'n', 'v'}, '<C-j>', '<C-d>', { desc = 'Move half screen down.' })
+vim.keymap.set({'n', 'v'}, '<C-k>', '<C-u>', { desc = 'Move half screen up.' })
+vim.keymap.set({'i', 'c', 'o'}, '<C-j>', '<C-n>', { desc = 'Select next item' })
+vim.keymap.set({'i', 'c', 'o'}, '<C-k>', '<C-p>', { desc = 'Select previous item' })
 
 vim.keymap.set('n', '<C-Left>', '<C-w><C-h>', { desc = 'Move window left' })
 vim.keymap.set('n', '<C-Right>', '<C-w><C-l>', { desc = 'Move window right' })
@@ -91,7 +93,7 @@ keymap.set('n', '<M-j>', '<C-w><C-j>', { desc = 'Go down split' })
 
 -- Standard Operations
 vim.keymap.set('n', "<leader>s", "<cmd>w<cr>", { desc = "Save", silent = true })
-vim.keymap.set('n', "<leader>x", "<cmd>bd<cr>", { desc = "Close current buffer" })
+-- vim.keymap.set('n', "<leader>x", "<cmd>bd<cr>", { desc = "Close current buffer" })
 vim.keymap.set('n', "<leader>w", "<cmd>bd<cr>", { desc = "Close current buffer", silent = true })
 vim.keymap.set('n', "<leader>W", "<cmd>wqa<cr>", { desc = "Save All and quit" })
 vim.keymap.set('n', "<leader>q", "<cmd>confirm q<cr>", { desc = "Quit" })
@@ -107,8 +109,8 @@ vim.keymap.set('v', ">", ">gv", { nowait = true })
 vim.keymap.set('v', "<", "<gv", { nowait = true })
 
 -- Switch buffers
-vim.keymap.set('n', "H", "_", { desc = "End of line", noremap = true, silent = true })
-vim.keymap.set('n', "L", "$", { desc = "Start of line", noremap = true, silent = true })
+vim.keymap.set({'n', 'v', 'c', 'o'}, "H", "_", { desc = "End of line", noremap = true, silent = true })
+vim.keymap.set({'n', 'v', 'c', 'o'}, "L", "$", { desc = "Start of line", noremap = true, silent = true })
 
 -- Insert blank lines in normal mode
 vim.keymap.set('n', '<S-CR>', 'm`o<Esc>``')
@@ -157,3 +159,5 @@ keymap.set("n", "$", "g$", { noremap = true, silent = true })
 -- keymap.set("n", "cw", "ciw", { noremap = true, silent = true, desc = "Change word" })
 -- keymap.set("n", "dw", "diw", { noremap = true, silent = true, desc = "Delete word" })
 -- keymap.set("n", "vw", "viw", { noremap = true, silent = true, desc = "Select word" })
+
+vim.g.copilot_enabled = 0

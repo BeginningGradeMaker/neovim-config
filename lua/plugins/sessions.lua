@@ -1,5 +1,7 @@
 return {
 	"stevearc/resession.nvim",
+    -- lazy = true,
+    -- event = "VeryLazy",
 	config = function()
 		local resession = require("resession")
 		resession.setup({
@@ -39,7 +41,16 @@ return {
 		-- 			resession.load(vim.fn.getcwd())
 		-- 		end
 		-- 	end,
-		-- })
+		-- vim.api.nvim_create_autocmd("VimEnter", {
+		-- 	callback = function()
+		-- 		-- Only load the session if nvim was started with no args
+		-- 		if vim.fn.argc(-1) == 0 then
+		-- 			-- Open the last session if it exists
+		-- 			resession.load(vim.fn.getcwd(), { silence_errors = true })
+		-- 		end
+		-- 	end,
+		-- 	nested = true,
+		-- }) -- })
 		vim.api.nvim_create_autocmd("VimLeavePre", {
 			callback = function()
 				resession.save(vim.fn.getcwd(), { notify = false })

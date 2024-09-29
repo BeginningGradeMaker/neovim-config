@@ -138,7 +138,7 @@ return {
 					{
 						name = "nvim_lsp",
 						keyword_length = 2,
-						max_item_count = 5,
+						max_item_count = 10,
 						-- entry_filter = function(entry)
 						-- 	return require("cmp").lsp.CompletionItemKind.Function ~= entry:get_kind()
 						-- end,

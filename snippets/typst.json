@@ -1,12 +1,12 @@
 {
-  "math inline": {
-    "prefix": "i",
-    "body": ["$$1$$0"],
-    "description": "Math inline mode."
-  },
   "math display": {
     "prefix": "dd",
     "body": ["$ $1 $$0"],
+    "description": "Math display mode."
+  },
+  "math align": {
+    "prefix": "al",
+    "body": ["$", "$1", "$$0"],
     "description": "Math display mode."
   },
   "text bold": {
