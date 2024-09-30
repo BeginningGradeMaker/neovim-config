@@ -67,7 +67,7 @@ return {
 			vim.keymap.set("n", "<leader>fd", builtin.diagnostics, { desc = "Find diagnostics" })
 			vim.keymap.set("n", "<leader>fl", builtin.resume, { desc = "Resume last search" })
 			vim.keymap.set("n", "<leader>f.", builtin.oldfiles, { desc = 'Find recent files ("." for repeat)' })
-			vim.keymap.set("n", "<leader>fb", builtin.buffers, { desc = "Find existing buffers" })
+			vim.keymap.set("n", "<leader>b", builtin.buffers, { desc = "Find existing buffers" })
 			vim.keymap.set("n", "<leader>fm", function()
 				return builtin.lsp_document_symbols({ symbols = { "function", "method" } })
 			end, { desc = "Find methods" })

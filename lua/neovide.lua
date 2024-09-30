@@ -22,6 +22,7 @@ vim.g.neovide_cursor_animation_length = 0.05
 vim.g.neovide_cursor_animate_command_line = true
 -- vim.g.neovide_cursor_unfocused_outline_width = 0.125
 vim.g.neovide_show_border = true
+vim.g.neovide_input_macos_option_key_is_meta = 'only_left'
 
 -- Cursor particles
 -- vim.g.neovide_cursor_vfx_mode = "railgun" -- railgun|torpedo|pixiedust|sonicboom|ripple|wireframe

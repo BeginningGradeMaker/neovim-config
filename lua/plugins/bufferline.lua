@@ -4,7 +4,7 @@ return {
 		"folke/tokyonight.nvim",
 	},
 	lazy = true,
-    event = "VeryLazy",
+	event = "VeryLazy",
 	config = function()
 		local bufferline = require("bufferline")
 		bufferline.setup({

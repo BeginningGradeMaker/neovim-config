@@ -73,8 +73,8 @@ return {
 					--  This will auto-import if your LSP supports it.
 					--  This will expand snippets if the LSP sent a snippet.
 					-- ["<Tab>"] = cmp.mapping.confirm({ select = true }),
-					["<CR>"] = cmp.mapping.confirm({ select = true }),
-					["<C-i>"] = cmp.mapping.confirm({ select = true }),
+					["<C-c>"] = cmp.mapping.confirm({ select = true }),
+					["<C-o>"] = cmp.mapping.confirm({ select = true }),
 					["<C-n>"] = cmp.mapping.close(),
 					-- [";"] = cmp.mapping.close(),
 					["<Tab>"] = cmp.mapping(function()
@@ -88,7 +88,7 @@ return {
 						-- -- elseif vim.treesitter.highlighter.active[vim.api.nvim_get_current_buf()] then
 						-- -- 	require("tabout").tabout()
 						-- else
-							require("neotab").tabout()
+						require("neotab").tabout()
 						-- end
 					end),
 
@@ -166,5 +166,24 @@ return {
 				},
 			})
 		end,
+	},
+	{
+		"windwp/nvim-autopairs",
+		event = "InsertEnter",
+		config = function()
+			require("nvim-autopairs").setup({
+				ignored_next_char = "[%w%.]",
+				enable_check_bracket_line = false,
+			})
+			local Rule = require("nvim-autopairs.rule")
+			local npairs = require("nvim-autopairs")
+			-- local cond = require("nvim-autopairs.conds")
+
+			npairs.add_rules({
+				Rule("$", "$", { "typ", "typst", "markdown" }),
+			})
+		end,
+		-- use opts = {} for passing setup options
+		-- this is equivalent to setup({}) function
 	},
 }

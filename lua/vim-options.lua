@@ -24,7 +24,7 @@ vim.opt.number = true
 -- vim.opt.relativenumber = true
 
 -- Enable mouse mode, can be useful for resizing splits for example!
-vim.opt.mouse = 'a'
+vim.opt.mouse = "a"
 
 -- Don't show the mode, since it's already in status line
 vim.opt.showmode = false
@@ -32,7 +32,7 @@ vim.opt.showmode = false
 -- Sync clipboard between OS and Neovim.
 --  Remove this option if you want your OS clipboard to remain independent.
 --  See `:help 'clipboard'`
-vim.opt.clipboard = 'unnamedplus'
+vim.opt.clipboard = "unnamedplus"
 
 -- Enable break indent
 vim.opt.breakindent = true
@@ -45,7 +45,7 @@ vim.opt.ignorecase = true
 vim.opt.smartcase = true
 
 -- Keep signcolumn on by default
-vim.opt.signcolumn = 'yes'
+vim.opt.signcolumn = "yes"
 
 -- Decrease update time
 vim.opt.updatetime = 250
@@ -59,10 +59,10 @@ vim.opt.splitbelow = true
 --  See `:help 'list'`
 --  and `:help 'listchars'`
 vim.opt.list = false
-vim.opt.listchars = { tab = '» ', trail = '·', nbsp = '␣' }
+vim.opt.listchars = { tab = "» ", trail = "·", nbsp = "␣" }
 
 -- Preview substitutions live, as you type!
-vim.opt.inccommand = 'split'
+vim.opt.inccommand = "split"
 
 -- Show which line your cursor is on
 vim.opt.cursorline = true
@@ -72,49 +72,49 @@ vim.opt.scrolloff = 10
 
 -- Set highlight on search, but clear on pressing <Esc> in normal mode
 vim.opt.hlsearch = true
-vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
+vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>")
 
-vim.keymap.set('n', '<C-h>', ':bp<cr>', { desc = 'Previosu buffer' , silent = true })
-vim.keymap.set('n', '<C-l>', ':bn<cr>', { desc = 'Next buffer', silent = true })
-vim.keymap.set({'n', 'v'}, '<C-j>', '<C-d>', { desc = 'Move half screen down.' })
-vim.keymap.set({'n', 'v'}, '<C-k>', '<C-u>', { desc = 'Move half screen up.' })
-vim.keymap.set({'i', 'c', 'o'}, '<C-j>', '<C-n>', { desc = 'Select next item' })
-vim.keymap.set({'i', 'c', 'o'}, '<C-k>', '<C-p>', { desc = 'Select previous item' })
+vim.keymap.set("n", "<C-h>", ":bp<cr>", { desc = "Previosu buffer", silent = true })
+vim.keymap.set("n", "<C-l>", ":bn<cr>", { desc = "Next buffer", silent = true })
+vim.keymap.set({ "n", "v" }, "<C-j>", "<C-d>", { desc = "Move half screen down." })
+vim.keymap.set({ "n", "v" }, "<C-k>", "<C-u>", { desc = "Move half screen up." })
+vim.keymap.set({ "i", "c", "o" }, "<C-j>", "<C-n>", { desc = "Select next item" })
+vim.keymap.set({ "i", "c", "o" }, "<C-k>", "<C-p>", { desc = "Select previous item" })
 
-vim.keymap.set('n', '<C-Left>', '<C-w><C-h>', { desc = 'Move window left' })
-vim.keymap.set('n', '<C-Right>', '<C-w><C-l>', { desc = 'Move window right' })
-vim.keymap.set('n', '<C-Up>', '<C-w><C-k>', { desc = 'Move window up' })
-vim.keymap.set('n', '<C-Down>', '<C-w><C-j>', { desc = 'Move window down' })
-keymap.set('n', '<M-Tab>', '<C-w><C-w>', { desc = 'Cycle through splits' })
-keymap.set('n', '<M-h>', '<C-w><C-h>', { desc = 'Go left split' })
-keymap.set('n', '<M-l>', '<C-w><C-l>', { desc = 'Go right split' })
-keymap.set('n', '<M-k>', '<C-w><C-k>', { desc = 'Go up split' })
-keymap.set('n', '<M-j>', '<C-w><C-j>', { desc = 'Go down split' })
+vim.keymap.set("n", "<C-Left>", "<C-w><C-h>", { desc = "Move window left" })
+vim.keymap.set("n", "<C-Right>", "<C-w><C-l>", { desc = "Move window right" })
+vim.keymap.set("n", "<C-Up>", "<C-w><C-k>", { desc = "Move window up" })
+vim.keymap.set("n", "<C-Down>", "<C-w><C-j>", { desc = "Move window down" })
+keymap.set("n", "<M-Tab>", "<C-w><C-w>", { desc = "Cycle through splits" })
+keymap.set("n", "<M-h>", "<C-w><C-h>", { desc = "Go left split" })
+keymap.set("n", "<M-l>", "<C-w><C-l>", { desc = "Go right split" })
+keymap.set("n", "<M-k>", "<C-w><C-k>", { desc = "Go up split" })
+keymap.set("n", "<M-j>", "<C-w><C-j>", { desc = "Go down split" })
 
 -- Standard Operations
-vim.keymap.set('n', "<leader>s", "<cmd>w<cr>", { desc = "Save", silent = true })
+vim.keymap.set("n", "<leader>s", "<cmd>w<cr>", { desc = "Save", silent = true })
 -- vim.keymap.set('n', "<leader>x", "<cmd>bd<cr>", { desc = "Close current buffer" })
-vim.keymap.set('n', "<leader>w", "<cmd>bd<cr>", { desc = "Close current buffer", silent = true })
-vim.keymap.set('n', "<leader>W", "<cmd>wqa<cr>", { desc = "Save All and quit" })
-vim.keymap.set('n', "<leader>q", "<cmd>confirm q<cr>", { desc = "Quit" })
-vim.keymap.set('n', "<leader>Q", "<cmd>confirm qall<cr>", { desc = "Quit all" })
-vim.keymap.set('n', "<leader>n", "<<cmd>enew<cr>", { desc = "New File" })
-vim.keymap.set('n', "<C-s>", "<cmd>w!<cr>", { desc = "Force write" })
-vim.keymap.set('n', "<C-q>", "<cmd>qa!<cr>", { desc = "Force quit" })
-vim.keymap.set('n', "|", "<cmd>vsplit<cr>", { desc = "Vertical Split" })
-vim.keymap.set('n', "<leader>\\", "<cmd>split<cr>", { desc = "Horizontal Split" })
+vim.keymap.set("n", "<leader>w", "<cmd>bd<cr>", { desc = "Close current buffer", silent = true })
+vim.keymap.set("n", "<leader>W", "<cmd>wqa<cr>", { desc = "Save All and quit" })
+vim.keymap.set("n", "<leader>q", "<cmd>confirm q<cr>", { desc = "Quit" })
+vim.keymap.set("n", "<leader>Q", "<cmd>confirm qall<cr>", { desc = "Quit all" })
+vim.keymap.set("n", "<leader>n", "<<cmd>enew<cr>", { desc = "New File" })
+vim.keymap.set("n", "<C-s>", "<cmd>w!<cr>", { desc = "Force write" })
+vim.keymap.set("n", "<C-q>", "<cmd>qa!<cr>", { desc = "Force quit" })
+vim.keymap.set("n", "|", "<cmd>vsplit<cr>", { desc = "Vertical Split" })
+vim.keymap.set("n", "<leader>\\", "<cmd>split<cr>", { desc = "Horizontal Split" })
 -- vim.keymap.set('n', ">", ">>", { nowait = true })
 -- vim.keymap.set('n', "<", "<<", { nowait = true })
-vim.keymap.set('v', ">", ">gv", { nowait = true })
-vim.keymap.set('v', "<", "<gv", { nowait = true })
+vim.keymap.set("v", ">", ">gv", { nowait = true })
+vim.keymap.set("v", "<", "<gv", { nowait = true })
 
 -- Switch buffers
-vim.keymap.set({'n', 'v', 'c', 'o'}, "H", "_", { desc = "End of line", noremap = true, silent = true })
-vim.keymap.set({'n', 'v', 'c', 'o'}, "L", "$", { desc = "Start of line", noremap = true, silent = true })
+vim.keymap.set({ "n", "v", "o" }, "H", "_", { desc = "End of line", noremap = true, silent = true })
+vim.keymap.set({ "n", "v", "o" }, "L", "$", { desc = "Start of line", noremap = true, silent = true })
 
 -- Insert blank lines in normal mode
-vim.keymap.set('n', '<S-CR>', 'm`o<Esc>``')
-vim.keymap.set('n', '<CR>', 'm`O<Esc>``')
+vim.keymap.set("n", "<S-CR>", "m`o<Esc>``")
+vim.keymap.set("n", "<CR>", "m`O<Esc>``")
 
 -- hijack netrw
 vim.g.loaded_netrwPlugin = 1
@@ -124,28 +124,28 @@ vim.g.loaded_netrw = 1
 vim.opt.fillchars = { eob = " " }
 
 -- Copy all content of buffer
-vim.keymap.set('n', '<leader>aa', "<cmd>%y+<cr>", { desc = "Yank entire file" })
-vim.keymap.set('n', '<leader>ad', "<cmd>%d<cr>", { desc = "Yank entire file" })
+vim.keymap.set("n", "<leader>aa", "<cmd>%y+<cr>", { desc = "Yank entire file" })
+vim.keymap.set("n", "<leader>ad", "<cmd>%d<cr>", { desc = "Yank entire file" })
 
-vim.api.nvim_create_autocmd('TextYankPost', {
-    desc = 'Highlight when yanking (copying) text',
-    group = vim.api.nvim_create_augroup('kickstart-highlight-yank', {
-        clear = true,
-    }),
-    callback = function()
-        vim.highlight.on_yank()
-    end
+vim.api.nvim_create_autocmd("TextYankPost", {
+	desc = "Highlight when yanking (copying) text",
+	group = vim.api.nvim_create_augroup("kickstart-highlight-yank", {
+		clear = true,
+	}),
+	callback = function()
+		vim.highlight.on_yank()
+	end,
 })
 
 vim.g.neovide_cursor_vfx_particle_speed = 100.0
 vim.g.vimtex_indent_enabled = 1
 
 -- Delete word backword inclusively
-vim.keymap.set('n', "db", "dvb", {desc = "Delete word backword", noremap = true})
-vim.keymap.set('n', "cb", "cvb", {desc = "Change word backword", noremap = true})
+vim.keymap.set("n", "db", "dvb", { desc = "Delete word backword", noremap = true })
+vim.keymap.set("n", "cb", "cvb", { desc = "Change word backword", noremap = true })
 
 -- Set U to redo
-vim.keymap.set('n', 'U', '<C-r>', { noremap = true })
+vim.keymap.set("n", "U", "<C-r>", { noremap = true })
 
 vim.o.background = "dark"
 
@@ -161,3 +161,8 @@ keymap.set("n", "$", "g$", { noremap = true, silent = true })
 -- keymap.set("n", "vw", "viw", { noremap = true, silent = true, desc = "Select word" })
 
 vim.g.copilot_enabled = 0
+
+keymap.set("v", ")", "sa)", { noremap = true, silent = true })
+keymap.set("v", '"', 'sa"', { noremap = true, silent = true })
+keymap.set("v", "'", "sa'", { noremap = true, silent = true })
+keymap.set("v", "$", "sa$", { noremap = true, silent = true })
