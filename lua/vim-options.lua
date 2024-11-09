@@ -3,7 +3,7 @@ vim.cmd("set tabstop=4")
 vim.cmd("set softtabstop=4")
 vim.cmd("set shiftwidth=4")
 vim.g.mapleader = " "
-vim.wo.relativenumber = true
+vim.wo.relativenumber = false
 
 local keymap = vim.keymap
 
@@ -98,10 +98,10 @@ vim.keymap.set("n", "<C-Right>", "<C-w><C-l>", { desc = "Move window right" })
 vim.keymap.set("n", "<C-Up>", "<C-w><C-k>", { desc = "Move window up" })
 vim.keymap.set("n", "<C-Down>", "<C-w><C-j>", { desc = "Move window down" })
 keymap.set("n", "<M-Tab>", "<C-w><C-w>", { desc = "Cycle through splits" })
-keymap.set("n", "<M-h>", "<C-w><C-h>", { desc = "Go left split" })
-keymap.set("n", "<M-l>", "<C-w><C-l>", { desc = "Go right split" })
-keymap.set("n", "<M-k>", "<C-w><C-k>", { desc = "Go up split" })
-keymap.set("n", "<M-j>", "<C-w><C-j>", { desc = "Go down split" })
+keymap.set("n", "<C-S-h>", "<C-w><C-h>", { desc = "Go left split" })
+keymap.set("n", "<C-S-l>", "<C-w><C-l>", { desc = "Go right split" })
+keymap.set("n", "<C-S-k>", "<C-w><C-k>", { desc = "Go up split" })
+keymap.set("n", "<C-S-j>", "<C-w><C-j>", { desc = "Go down split" })
 
 -- Standard Operations
 vim.keymap.set("n", "<leader>s", "<cmd>w<cr>", { desc = "Save", silent = true })
@@ -121,8 +121,6 @@ vim.keymap.set("v", "<Tab>", ">gv", { nowait = true })
 vim.keymap.set("v", "<S-tab>", "<gv", { nowait = true })
 
 -- Switch buffers
-vim.keymap.set({ "n", "v", "o" }, "H", "_", { desc = "End of line", noremap = true, silent = true })
-vim.keymap.set({ "n", "v", "o" }, "L", "$", { desc = "Start of line", noremap = true, silent = true })
 vim.keymap.set("n", "-", "<C-6>", { silent = true })
 
 -- Insert blank lines in normal mode
@@ -139,6 +137,7 @@ vim.opt.fillchars = { eob = " " }
 -- Copy all content of buffer
 vim.keymap.set("n", "<leader>aa", "<cmd>%y+<cr>", { desc = "Yank entire file" })
 vim.keymap.set("n", "<leader>ad", "<cmd>%d<cr>", { desc = "Yank entire file" })
+vim.keymap.set("n", "<leader>ab", ":%bd|e#|bd#", { noremap = true, desc = "Clean non-active buffers" })
 
 vim.api.nvim_create_autocmd("TextYankPost", {
 	desc = "Highlight when yanking (copying) text",
@@ -163,10 +162,12 @@ vim.keymap.set("n", "U", "<C-r>", { noremap = true })
 vim.o.background = "dark"
 
 -- Don't skip wrapped lines
-keymap.set("n", "j", "v:count == 0 ? 'gj' : 'j'", { noremap = true, expr = true, silent = true })
-keymap.set("n", "k", "v:count == 0 ? 'gk' : 'k'", { noremap = true, expr = true, silent = true })
+keymap.set({"n", "v"}, "j", "v:count == 0 ? 'gj' : 'j'", { noremap = true, expr = true, silent = true })
+keymap.set({"n", "v"}, "k", "v:count == 0 ? 'gk' : 'k'", { noremap = true, expr = true, silent = true })
 keymap.set("n", "0", "g0", { noremap = true, silent = true })
 keymap.set("n", "$", "g$", { noremap = true, silent = true })
+vim.keymap.set({ "n", "v", "o" }, "H", "g^", { desc = "End of line", noremap = true, silent = true })
+vim.keymap.set({ "n", "v", "o" }, "L", "g$", { desc = "Start of line", noremap = true, silent = true })
 
 keymap.set("n", "s", "<Nop>", {noremap = true})
 

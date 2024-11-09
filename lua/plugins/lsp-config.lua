@@ -1,4 +1,4 @@
--- local utils = require("utils")
+local icons = require("icons.nerd_font")
 return {
 	{
 		"neovim/nvim-lspconfig",
@@ -94,9 +94,9 @@ return {
 					--  Similar to document symbols, except searches over your whole project.
 					map("gS", require("telescope.builtin").lsp_dynamic_workspace_symbols, "Workspace symbols")
 
-					map("<leader>ti", function()
-						vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({ 0 }), { 0 })
-					end, "Toggle inlay hints")
+					-- map("<leader>ti", function()
+					-- 	vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({ 0 }), { 0 })
+					-- end, "Toggle inlay hints")
 
 					-- Rename the variable under your cursor
 					--  Most Language Servers support renaming across files, etc.
@@ -160,6 +160,14 @@ return {
 
 			vim.diagnostic.config({
 				float = { border = "rounded" },
+                -- signs = {
+                --     text = {
+                --         [vim.diagnostic.severity.ERROR] = icons.DiagnosticError,
+                --         [vim.diagnostic.severity.WARN] = icons.DiagnosticWarn,
+                --         [vim.diagnostic.severity.HINT] = icons.DiagnosticHint,
+                --         [vim.diagnostic.severity.INFO] = icons.DiagnosticInfo,
+                --     },
+                -- }
 			})
 
 			-- Enable the following language servers
@@ -227,7 +235,8 @@ return {
 						return vim.fn.getcwd()
 					end,
 					settings = {
-						exportPdf = "onType",
+						-- exportPdf = "onType",
+						exportPdf = "onSave",
 						-- outputPath = "$root/target/$dir/$name",
 					},
 					-- handlers = {

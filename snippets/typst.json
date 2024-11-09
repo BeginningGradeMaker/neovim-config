@@ -18,5 +18,10 @@
     "prefix": "it",
     "body": ["_$1_"],
     "description": "Text italic"
+  },
+  "math fraction": {
+    "prefix": "frac",
+    "body": ["($1)/($2)$0"],
+    "description": "Math fraction"
   }
 }

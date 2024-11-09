@@ -34,11 +34,12 @@ return {
 			local button, get_icon = require("utils").alpha_button, require("utils").get_icon
 			dashboard.section.buttons.val = {
 				button("LDR n  ", get_icon("FileNew", 2, true) .. "New File  "),
-				button("LDR f f", get_icon("Search", 2, true) .. "Find File  "),
-				button("LDR f o", get_icon("DefaultFile", 2, true) .. "Recents  "),
+				button("LDR LDR", get_icon("Search", 2, true) .. "Find File  "),
+				button("LDR f k", get_icon("DefaultFile", 2, true) .. "Keymaps  "),
 				button("LDR f w", get_icon("WordFile", 2, true) .. "Find Word  "),
 				-- button("LDR f '", get_icon("Bookmarks", 2) .. "Bookmarks  "),
-				button("LDR S l", get_icon("Refresh", 2) .. "Last Session  "),
+				button("LDR S .", get_icon("Refresh", 2) .. "Load Current Session  "),
+				button("LDR e  ", get_icon("Tab", 2) .. "File Tree  "),
 			}
 
 			dashboard.config.layout = {

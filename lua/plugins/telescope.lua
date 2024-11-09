@@ -25,7 +25,12 @@ return {
 			local actions = require("telescope.actions")
 			local get_icon = require("utils").get_icon
 			require("telescope").setup({
-				pickers = { colorscheme = { enable_preview = true } },
+				pickers = {
+                    colorscheme = { enable_preview = true },
+                    -- find_files = {
+                    --     find_command = {"rg", "--files", "--sortr=modified"}
+                    -- }
+                },
 				extensions = {
 					["ui-select"] = {
 						require("telescope.themes").get_dropdown(),
@@ -65,7 +70,8 @@ return {
 			pcall(require("telescope").load_extension, "themes")
 
 			local builtin = require("telescope.builtin")
-			vim.keymap.set("n", "<leader>ff", builtin.find_files, { desc = "Find files" })
+			-- vim.keymap.set("n", "<leader>ff", builtin.find_files, { desc = "Find files" })
+			vim.keymap.set("n", "<leader><leader>", builtin.find_files, { desc = "Find files" })
 			vim.keymap.set("n", "<leader>fw", builtin.live_grep, { desc = "Find live grep" })
 			vim.keymap.set("n", "<leader>fh", builtin.help_tags, { desc = "Find help" })
 			vim.keymap.set("n", "<leader>fk", builtin.keymaps, { desc = "Find keymaps" })
@@ -75,7 +81,7 @@ return {
 			vim.keymap.set("n", "<leader>fl", builtin.resume, { desc = "Resume last search" })
 			vim.keymap.set("n", "<leader>f.", builtin.oldfiles, { desc = 'Find recent files ("." for repeat)' })
 			vim.keymap.set("n", "<leader>b", builtin.buffers, { desc = "Find existing buffers" })
-			vim.keymap.set("n", "<leader>fm", function()
+			vim.keymap.set("n", "<leader>ff", function()
 				return builtin.lsp_document_symbols({ symbols = { "function", "method" } })
 			end, { desc = "Find methods" })
 			vim.keymap.set("n", "<leader>fa", function()
@@ -83,13 +89,13 @@ return {
 			end, { desc = "Find all symbols" })
 			vim.keymap.set("n", "<leader>fs", function()
 				return builtin.lsp_document_symbols({ symbols = { "struct", "class" } })
-			end, { desc = "Find methods" })
+			end, { desc = "Find struct" })
 			vim.keymap.set("n", "<leader>fc", function()
 				return builtin.lsp_document_symbols({ symbols = { "constant" } })
-			end, { desc = "Find methods" })
-			vim.keymap.set("n", "<leader>fb", function()
+			end, { desc = "Find constant" })
+			vim.keymap.set("n", "<leader>fm", function()
 				return builtin.marks()
-			end, { desc = "Find methods" })
+			end, { desc = "Find marks" })
 
             -- Change colorschemes
 			vim.keymap.set("n", "<leader>ft", builtin.colorscheme, { desc = "Change colorscheme" })

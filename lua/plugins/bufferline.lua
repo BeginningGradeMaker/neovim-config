@@ -11,7 +11,7 @@ return {
 			options = {
                 auto_toggle_bufferline = false,
 				style_preset = bufferline.style_preset.minimal, -- or bufferline.style_preset.minimal,
-				close_command = "Bdelete %d",
+				close_command = "bdelete %d",
 				indicator = {
 					style = "none",
 				},

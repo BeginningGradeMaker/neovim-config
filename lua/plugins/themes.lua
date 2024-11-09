@@ -2,44 +2,49 @@ return {
 	{
 		"xiyaowong/transparent.nvim",
 		lazy = false,
-		keys = {
-			{
-				"<leader>tp",
-				":TransparentToggle<cr>",
-				{ desc = "Toggle transparent background", silent = true },
-			},
-		},
-		opts = {
-			groups = { -- table: default groups
-				"Normal",
-				"NormalNC",
-				"Comment",
-				"Constant",
-				"Special",
-				"Identifier",
-				"Statement",
-				"PreProc",
-				"Type",
-				"Underlined",
-				"Todo",
-				"String",
-				"Function",
-				"Conditional",
-				"Repeat",
-				"Operator",
-				"Structure",
-				"LineNr",
-				"NonText",
-				"SignColumn",
-				"CursorLine",
-				"CursorLineNr",
-				"StatusLine",
-				"StatusLineNC",
-				"EndOfBuffer",
-			},
-			extra_groups = {}, -- table: additional groups that should be cleared
-			exclude_groups = {}, -- table: groups you don't want to clear
-		},
+		config = function()
+			require("transparent").setup({
+				groups = { -- table: default groups
+					"Normal",
+					"NormalNC",
+					"Comment",
+					"Constant",
+					"Special",
+					"Identifier",
+					"Statement",
+					"PreProc",
+					"Type",
+					"Underlined",
+					"Todo",
+					"String",
+					"Function",
+					"Conditional",
+					"Repeat",
+					"Operator",
+					"Structure",
+					"LineNr",
+					"NonText",
+					"SignColumn",
+					"CursorLine",
+					"CursorLineNr",
+					"StatusLine",
+					"StatusLineNC",
+					"EndOfBuffer",
+				},
+				extra_groups = {}, -- table: additional groups that should be cleared
+				exclude_groups = {}, -- table: groups you don't want to clear
+                on_clear = function ()
+                    require("transparent").clear_prefix("NeoTree")
+                    -- require("transparent").clear_prefix("lualine")
+                    require("transparent").clear_prefix("Bufferline")
+                end
+			})
+
+			vim.keymap.set("n", "<leader>tp", function()
+                -- require("transparent").clear_prefix("lualine")
+				vim.cmd("TransparentToggle")
+			end, {desc = "Toggle transparent background"})
+		end,
 	},
 	{
 		"catppuccin/nvim",
@@ -61,7 +66,7 @@ return {
 			},
 		},
 		config = function()
-			require("catppuccin").setup({})
+			require("catppuccin").setup({term_colors = true})
 			-- vim.cmd.colorscheme "catppuccin"
 		end,
 	},
@@ -136,10 +141,10 @@ return {
 	-- 	-- 	-- somewhere in your config:
 	-- 	-- end,
 	-- },
-    {
-        "navarasu/onedark.nvim",
-        priority = 1000,
-    },
+	{
+		"navarasu/onedark.nvim",
+		priority = 1000,
+	},
 	{
 		"luisiacc/the-matrix.nvim",
 		priority = 1000,
@@ -199,18 +204,18 @@ return {
 	{
 		"AlexvZyl/nordic.nvim",
 		lazy = true,
-        event = "VeryLazy",
+		event = "VeryLazy",
 		priority = 1000,
 		-- config = function()
 		-- 	require("nordic").load()
 		-- end,
 	},
-    {
-        "Mofiqul/vscode.nvim",
-        priority = 1000,
-    },
-    {
-        "shaunsingh/nord.nvim",
-        priority = 1000,
-    },
+	{
+		"Mofiqul/vscode.nvim",
+		priority = 1000,
+	},
+	{
+		"shaunsingh/nord.nvim",
+		priority = 1000,
+	},
 }

@@ -23,12 +23,12 @@ return {
 		-- or leave it empty to use the default settings
 		-- refer to the configuration section below
 		defaults = {
-			{ "<leader>g", group = get_icon("Bookmarks", 1, true) .. "Goto" },
+			{ "<leader>g", group = get_icon("Git", 1, true) .. "Git" },
 			{ "<leader>f", group = get_icon("Search", 1, true) .. "Find" },
 			{ "<leader>t", group = get_icon("Terminal", 1, true) .. "Toggle" },
 			{ "<leader>c", group = get_icon("DiagnosticHint", 1, true) .. "Code" },
 			{ "<leader>u", group = get_icon("Window", 1, true) .. "UI/UX" },
-			{ "<leader>w", group = get_icon("WordFile", 1, true) .. "Workspace" },
+			-- { "<leader>w", group = get_icon("WordFile", 1, true) .. "Workspace" },
 			{ "<leader>S", group = get_icon("Session", 1, true) .. "Session" },
 			{ "<leader>d", group = get_icon("Debugger", 1, true) .. "Debug" },
 			{ "<leader>a", group = get_icon("Selected", 1, true) .. "Select all" },

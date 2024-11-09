@@ -20,7 +20,33 @@ return {
 			--  - va)  - [V]isually select [A]round [)]paren
 			--  - yinq - [Y]ank [I]nside [N]ext [']quote
 			--  - ci'  - [C]hange [I]nside [']quote
-			require("mini.ai").setup({ n_lines = 500 })
+			local ai = require("mini.ai")
+			ai.setup({
+				n_lines = 500,
+				custom_textobjects = {
+					o = ai.gen_spec.treesitter({ -- code block
+						a = { "@block.outer", "@conditional.outer", "@loop.outer" },
+						i = { "@block.inner", "@conditional.inner", "@loop.inner" },
+					}),
+					m = ai.gen_spec.treesitter({ a = "@function.outer", i = "@function.inner" }), -- function
+					c = ai.gen_spec.treesitter({ a = "@class.outer", i = "@class.inner" }), -- class
+					t = { "<([%p%w]-)%f[^<%w][^<>]->.-</%1>", "^<.->().*()</[^/]->$" }, -- tags
+					d = { "%f[%d]%d+" }, -- digits
+					e = { -- Word with case
+						{
+							"%u[%l%d]+%f[^%l%d]",
+							"%f[%S][%l%d]+%f[^%l%d]",
+							"%f[%P][%l%d]+%f[^%l%d]",
+							"^[%l%d]+%f[^%l%d]",
+						},
+						"^().*()$",
+					},
+					-- i = LazyVim.mini.ai_indent, -- indent
+					-- g = LazyVim.mini.ai_buffer, -- buffer
+					u = ai.gen_spec.function_call(), -- u for "Usage"
+					U = ai.gen_spec.function_call({ name_pattern = "[%w_]" }), -- without dot in function name
+				},
+			})
 
 			-- require("mini.pairs").setup({
 			--     mappings = {
@@ -48,6 +74,13 @@ return {
 				-- Number of lines within which surrounding is searched
 				n_lines = 20,
 			})
+			vim.keymap.set("v", ")", "sa)", { remap = true })
+			vim.keymap.set("v", "]", "sa]", { remap = true })
+			vim.keymap.set("v", '"', 'sa"', { remap = true })
+			vim.keymap.set("v", "'", "sa'", { remap = true })
+			vim.keymap.set("v", "}", "sa}", { remap = true })
+			vim.keymap.set("v", "$", "sa}", { remap = true })
+			-- vim.keymap.set("v", ">", "sa>", { remap = true })
 			-- vim.keymap.set("n", "s", "<Nop>", { silent = true })
 
 			-- local statusline = require("mini.statusline")
@@ -60,104 +93,6 @@ return {
 			-- statusline.section_location = function()
 			-- 	return "%2l:%-2v"
 			-- end
-		end,
-	},
-	-- "tpope/vim-sleuth", -- Detect tabstop and shiftwidth automatically
-	-- {
-	-- 	"altermo/ultimate-autopair.nvim",
-	-- 	event = { "InsertEnter", "CmdlineEnter" },
-	-- 	branch = "v0.6", --recommended as each new version will have breaking changes
-	-- 	opts = {
-	-- 		--Config goes here
-	-- 		tabout = { enable = true },
-	-- 	},
-	-- },
-	-- {
-	-- 	"windwp/nvim-autopairs",
-	-- 	event = "InsertEnter",
-	-- 	config = true,
-	-- 	-- use opts = {} for passing setup options
-	-- 	-- this is equalent to setup({}) function
-	-- },
-	{
-		"abecodes/tabout.nvim",
-		lazy = true,
-		config = function()
-			require("tabout").setup({
-				tabkey = "", -- key to trigger tabout, set to an empty string to disable
-				backwards_tabkey = "<S-Tab>", -- key to trigger backwards tabout, set to an empty string to disable
-				act_as_tab = true, -- shift content if tab out is not possible
-				act_as_shift_tab = false, -- reverse shift content if tab out is not possible (if your keyboard/terminal supports <S-Tab>)
-				default_tab = "<C-t>", -- shift default action (only at the beginning of a line, otherwise <TAB> is used)
-				default_shift_tab = "<C-d>", -- reverse shift default action,
-				enable_backwards = true, -- well ...
-				completion = true, -- if the tabkey is used in a completion pum
-				tabouts = {
-					{ open = "'", close = "'" },
-					{ open = '"', close = '"' },
-					{ open = "`", close = "`" },
-					{ open = "(", close = ")" },
-					{ open = "[", close = "]" },
-					{ open = "{", close = "}" },
-				},
-				ignore_beginning = true, --[[ if the cursor is at the beginning of a filled element it will rather tab out than shift the content ]]
-				exclude = {}, -- tabout will ignore these filetypes
-			})
-		end,
-		requires = {
-			"nvim-treesitter/nvim-treesitter",
-			"L3MON4D3/LuaSnip",
-			"hrsh7th/nvim-cmp",
-		},
-		opt = true, -- Set this to true if the plugin is optional
-		event = "InsertCharPre", -- Set the event to 'InsertCharPre' for better compatibility
-		priority = 1000,
-	},
-	{
-		"kawre/neotab.nvim",
-		event = "InsertEnter",
-		opts = {
-			-- configuration goes here
-			tabkey = "<Tab>",
-			behavior = "closing",
-			pairs = {
-				{ open = "(", close = ")" },
-				{ open = "[", close = "]" },
-				{ open = "{", close = "}" },
-				{ open = "'", close = "'" },
-				{ open = '"', close = '"' },
-				{ open = "`", close = "`" },
-				{ open = "<", close = ">" },
-				-- For typst
-				{ open = "$", close = "$" },
-				{ open = "_", close = "_" },
-				{ open = "*", close = "*" },
-			},
-		},
-		opt = true, -- Set this to true if the plugin is optional
-	},
-	{
-		"petertriho/nvim-scrollbar",
-		event = "VeryLazy",
-	},
-	{
-		"rcarriga/nvim-notify",
-		lazy = false,
-		-- keys = {
-		-- 	{
-		-- 		"<leader><leader>",
-		-- 		function()
-		-- 			-- vim.api.nvim_feedkeys("<Esc>", 'n', true)
-		-- 			require("notify").dismiss({ silent = true, pending = true })
-		-- 		end,
-		-- 		{ noremap = true, desc = "Dimiss Notify" },
-		-- 	},
-		-- },
-		config = function()
-			vim.notify = require("notify")
-			-- require("notify").setup({ background_colour = "#000000" })
-			require("notify").setup()
-            vim.keymap.set("n", "<leader><leader>", function() require("notify").dismiss({silent = true, pending = true}) end, {desc = "Dimiss notification"})
 		end,
 	},
 	{
@@ -177,16 +112,6 @@ return {
 			vim.keymap.set("n", "<leader>ru", "<cmd>CompetiTest show_ui<cr>", { desc = "Show UI" })
 		end,
 	},
-	-- {
-	-- 	"kylechui/nvim-surround",
-	-- 	version = "*", -- Use for stability; omit to use `main` branch for the latest features
-	-- 	event = "VeryLazy",
-	-- 	config = function()
-	-- 		require("nvim-surround").setup({
-	-- 			-- Configuration here, or leave empty to use defaults
-	-- 		})
-	-- 	end,
-	-- },
 	{ "lukas-reineke/indent-blankline.nvim", event = "VeryLazy", main = "ibl", opts = {} },
 	{
 
@@ -202,100 +127,20 @@ return {
 		},
         -- stylua: ignore
         keys = {
-            -- { "s",     mode = { "n", "x", "o" }, function() require("flash").jump() end,              desc = "Flash" },
+            -- { "s",     mode = { "n", "x", "o" }, ";",              {desc = "Flash", noremap = true, silent = true} },
+            -- {"<leader>;", mode = {"n"}, ";", {noremap = false, silent = true }},
             { "S",     mode = { "n", "x", "o" }, function() require("flash").treesitter_search() end,              desc = "Treesitter search" },
             { "r",     mode = "o",               function() require("flash").remote() end,            desc = "Remote Flash" },
             { "R",     mode = { "o", "x" },      function() require("flash").treesitter_search() end, desc = "Treesitter Search" },
             { "<c-s>", mode = { "c" },           function() require("flash").toggle() end,            desc = "Toggle Flash Search" },
         },
 	},
-	-- {
-	-- 	"mistricky/codesnap.nvim",
-	-- 	build = "make build_generator",
-	--        lazy = false,
-	--        event = "VeryLazy",
-	-- 	keys = {
-	-- 		{ "<leader>cc", "<cmd>CodeSnap<cr>", mode = "x", desc = "Save selected code snapshot into clipboard" },
-	-- 		{ "<leader>cs", "<cmd>CodeSnapSave<cr>", mode = "x", desc = "Save selected code snapshot in ~/Pictures" },
-	-- 	},
-	-- 	opts = {
-	-- 		save_path = "~/Pictures",
-	-- 		has_breadcrumbs = true,
-	-- 		bg_theme = "bamboo",
-	-- 		mac_window_bar = true,
-	-- 		title = "Zhisu Wang",
-	-- 		code_font_family = "CaskaydiaCove Nerd Font",
-	-- 		watermark_font_family = "Pacifico",
-	-- 		watermark = "Zhisu Wang",
-	-- 		breadcrumbs_separator = "/",
-	-- 		has_line_number = true,
-	-- 		show_workspace = false,
-	-- 		min_width = 0,
-	-- 		bg_x_padding = 100,
-	-- 		bg_y_padding = 82,
-	-- 	},
-	-- },
-	-- {
-	-- 	"mgrabovsky/vim-xverif",
-	-- },
-	{
-		"github/copilot.vim",
-	},
-	{
-		"nvchad/volt",
-		lazy = true,
-	},
-	{
-		"nvchad/menu",
-		lazy = false,
-		config = function()
-			vim.keymap.set("n", "<RightMouse>", function()
-				vim.cmd.exec('"normal! \\<RightMouse>"')
-
-				local options = vim.bo.ft == "NvimTree" and "nvimtree" or "default"
-				require("menu").open(options, { mouse = true })
-			end, {})
-		end,
-	},
-	-- {
-	-- 	"lewis6991/hover.nvim",
-	-- 	config = function()
-	-- 		require("hover").setup({
-	-- 			init = function()
-	-- 				require("hover.providers.lsp")
-	-- 				-- require('hover.providers.gh')
-	-- 				-- require('hover.providers.gh_user')
-	-- 				-- require('hover.providers.jira')
-	-- 				-- require('hover.providers.dap')
-	-- 				-- require('hover.providers.fold_preview')
-	-- 				require("hover.providers.diagnostic")
-	-- 				-- require('hover.providers.man')
-	-- 				-- require('hover.providers.dictionary')
-	-- 			end,
-	-- 			preview_opts = {
-	-- 				border = "single",
-	-- 			},
-	-- 			-- Whether the contents of a currently open hover window should be moved
-	-- 			-- to a :h preview-window when pressing the hover keymap.
-	-- 			preview_window = false,
-	-- 			title = true,
-	-- 			mouse_providers = {
-	-- 				"LSP",
-	-- 			},
-	-- 			mouse_delay = 500,
-	-- 		})
-	--
-	-- 		-- Mouse support
-	-- 		vim.keymap.set("n", "<MouseMove>", require("hover").hover_mouse, { desc = "hover.nvim (mouse)" })
-	-- 		vim.o.mousemoveevent = true
-	-- 	end,
-	-- },
 	{
 		"mbbill/undotree",
 		lazy = true,
 		event = "VeryLazy",
 		config = function()
-			vim.keymap.set("n", "<leader>u", vim.cmd.UndotreeToggle, { desc = "Undotree" })
+			vim.keymap.set("n", "<leader>uu", vim.cmd.UndotreeToggle, { desc = "Undotree" })
 		end,
 	},
 	{
@@ -328,5 +173,152 @@ return {
 			-- { "=p", "<Plug>(YankyPutAfterFilter)", desc = "Put after applying a filter" },
 			-- { "=P", "<Plug>(YankyPutBeforeFilter)", desc = "Put before applying a filter" },
 		},
+	},
+	{
+		"MagicDuck/grug-far.nvim",
+		opts = { headerMaxWidth = 80 },
+		cmd = "GrugFar",
+		keys = {
+			{
+				"<leader>fr",
+				function()
+					local grug = require("grug-far")
+					local ext = vim.bo.buftype == "" and vim.fn.expand("%:e")
+					grug.open({
+						transient = true,
+						prefills = {
+							filesFilter = ext and ext ~= "" and "*." .. ext or nil,
+						},
+					})
+				end,
+				mode = { "n", "v" },
+				desc = "Search and Replace",
+			},
+		},
+	},
+	{
+		"folke/snacks.nvim",
+		priority = 1000,
+		lazy = false,
+		---@type snacks.Config
+		opts = {
+			bigfile = { enabled = true },
+			notifier = {
+				enabled = false,
+				timeout = 3000,
+			},
+			quickfile = { enabled = true },
+			statuscolumn = { enabled = false },
+			words = { enabled = true },
+		},
+		keys = {
+			{
+				"<leader>bd",
+				function()
+					Snacks.bufdelete()
+				end,
+				desc = "Delete Buffer",
+			},
+			{
+				"<leader>gg",
+				function()
+					Snacks.lazygit()
+				end,
+				desc = "Lazygit",
+			},
+			{
+				"<leader>gb",
+				function()
+					Snacks.git.blame_line()
+				end,
+				desc = "Git Blame Line",
+			},
+			{
+				"<leader>gB",
+				function()
+					Snacks.gitbrowse()
+				end,
+				desc = "Git Browse",
+			},
+			{
+				"<leader>gf",
+				function()
+					Snacks.lazygit.log_file()
+				end,
+				desc = "Lazygit Current File History",
+			},
+			{
+				"<leader>gl",
+				function()
+					Snacks.lazygit.log()
+				end,
+				desc = "Lazygit Log (cwd)",
+			},
+			{
+				"<leader>cR",
+				function()
+					Snacks.rename()
+				end,
+				desc = "Rename File",
+			},
+			{
+				"<c-/>",
+				function()
+					Snacks.terminal()
+				end,
+				desc = "Toggle Terminal",
+			},
+			{
+				"<c-_>",
+				function()
+					Snacks.terminal()
+				end,
+				desc = "which_key_ignore",
+			},
+			{
+				"]r",
+				function()
+					Snacks.words.jump(vim.v.count1)
+				end,
+				desc = "Next Reference",
+			},
+			{
+				"[r",
+				function()
+					Snacks.words.jump(-vim.v.count1)
+				end,
+				desc = "Prev Reference",
+			},
+		},
+		init = function()
+			vim.api.nvim_create_autocmd("User", {
+				pattern = "VeryLazy",
+				callback = function()
+					-- Setup some globals for debugging (lazy-loaded)
+					_G.dd = function(...)
+						Snacks.debug.inspect(...)
+					end
+					_G.bt = function()
+						Snacks.debug.backtrace()
+					end
+					vim.print = _G.dd -- Override print to use snacks for `:=` command
+
+					-- Create some toggle mappings
+					Snacks.toggle.option("spell", { name = "Spelling" }):map("<leader>us")
+					Snacks.toggle.option("wrap", { name = "Wrap" }):map("<leader>uw")
+					Snacks.toggle.option("relativenumber", { name = "Relative Number" }):map("<leader>uL")
+					Snacks.toggle.diagnostics():map("<leader>ud")
+					Snacks.toggle.line_number():map("<leader>ul")
+					Snacks.toggle
+						.option("conceallevel", { off = 0, on = vim.o.conceallevel > 0 and vim.o.conceallevel or 2 })
+						:map("<leader>uc")
+					Snacks.toggle.treesitter():map("<leader>uT")
+					Snacks.toggle
+						.option("background", { off = "light", on = "dark", name = "Dark Background" })
+						:map("<leader>ub")
+					Snacks.toggle.inlay_hints():map("<leader>uh")
+				end,
+			})
+		end,
 	},
 }
