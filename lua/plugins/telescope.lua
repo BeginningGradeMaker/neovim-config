@@ -26,16 +26,20 @@ return {
 			local get_icon = require("utils").get_icon
 			require("telescope").setup({
 				pickers = {
-                    colorscheme = { enable_preview = true },
-                    -- find_files = {
-                    --     find_command = {"rg", "--files", "--sortr=modified"}
-                    -- }
-                },
+					colorscheme = { enable_preview = true },
+					-- find_files = {
+					--     find_command = {"rg", "--files", "--sortr=modified"}
+					-- }
+				},
 				extensions = {
 					["ui-select"] = {
 						require("telescope.themes").get_dropdown(),
 					},
-					["themes"] = { enable_live_preview = true, enable_previewer = true, persist = { enabled = true, path = vim.fn.stdpath("config") .. "/lua/colorscheme.lua"} },
+					["themes"] = {
+						enable_live_preview = true,
+						enable_previewer = true,
+						persist = { enabled = true, path = vim.fn.stdpath("config") .. "/lua/colorscheme.lua" },
+					},
 				},
 				defaults = {
 					git_worktrees = vim.g.git_worktrees,
@@ -58,8 +62,20 @@ return {
 							["<C-h>"] = actions.cycle_history_prev,
 							["<C-j>"] = actions.move_selection_next,
 							["<C-k>"] = actions.move_selection_previous,
+							["<RightMouse>"] = actions.close,
+							["<LeftMouse>"] = actions.select_default,
+							["<ScrollWheelDown>"] = actions.move_selection_next,
+							["<ScrollWheelUp>"] = actions.move_selection_previous,
 						},
-						n = { q = actions.close },
+						n = {
+							q = actions.close,
+							["<C-j>"] = actions.results_scrolling_up,
+							["<C-k>"] = actions.results_scrolling_down,
+							["<RightMouse>"] = actions.close,
+							["<LeftMouse>"] = actions.select_default,
+							-- ["<ScrollWheelDown>"] = actions.move_selection_next,
+							-- ["<ScrollWheelUp>"] = actions.move_selection_previous,
+						},
 					},
 					file_ignore_patterns = { "compile_commands.json", "lazy-lock.json" },
 				},
@@ -97,13 +113,15 @@ return {
 				return builtin.marks()
 			end, { desc = "Find marks" })
 
-            -- Change colorschemes
+			-- Change colorschemes
 			vim.keymap.set("n", "<leader>ft", builtin.colorscheme, { desc = "Change colorscheme" })
 			-- vim.keymap.set("n", "<leader>ft", require("telescope").extensions.themes.themes, { desc = "Change colorscheme" })
 			vim.keymap.set(
 				"n",
 				"<leader>fp",
-                function() vim.cmd("Telescope themes") end,
+				function()
+					vim.cmd("Telescope themes")
+				end,
 				-- ":Telescope themes<CR>",
 				{ noremap = true, silent = true, desc = "Change persistent colorscheme" }
 			)

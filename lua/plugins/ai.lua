@@ -1,7 +1,7 @@
 -- if true then
 --   return {}
 -- end
-local mapping_key_prefix = vim.g.ai_prefix_key or "<leader>c"
+local mapping_key_prefix = vim.g.ai_prefix_key or "<leader>a"
 local machine = vim.loop.os_uname().sysname
 
 -- This is custom system prompt for Copilot adapter
@@ -478,8 +478,8 @@ return {
 				desc = "Code Companion - Actions",
 			},
 			{
-				"<leader>t" .. "v",
-				"<cmd>CodeCompanionToggle<cr>",
+				mapping_key_prefix .. "p",
+				"<cmd>CodeCompanionChat Toggle<cr>",
 				desc = "Toggle Code Companion",
 				mode = { "n", "v" },
 			},
@@ -559,12 +559,6 @@ return {
 					end
 				end,
 				desc = "Code Companion - Quick chat",
-			},
-			{
-				"<C-q>",
-				"<cmd>CodeCompanionChat Toggle<cr>",
-				desc = "Toggle CodeCompanion",
-				mode = "n",
 			},
 		},
 	},

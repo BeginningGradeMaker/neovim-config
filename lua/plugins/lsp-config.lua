@@ -160,14 +160,14 @@ return {
 
 			vim.diagnostic.config({
 				float = { border = "rounded" },
-                -- signs = {
-                --     text = {
-                --         [vim.diagnostic.severity.ERROR] = icons.DiagnosticError,
-                --         [vim.diagnostic.severity.WARN] = icons.DiagnosticWarn,
-                --         [vim.diagnostic.severity.HINT] = icons.DiagnosticHint,
-                --         [vim.diagnostic.severity.INFO] = icons.DiagnosticInfo,
-                --     },
-                -- }
+				-- signs = {
+				--     text = {
+				--         [vim.diagnostic.severity.ERROR] = icons.DiagnosticError,
+				--         [vim.diagnostic.severity.WARN] = icons.DiagnosticWarn,
+				--         [vim.diagnostic.severity.HINT] = icons.DiagnosticHint,
+				--         [vim.diagnostic.severity.INFO] = icons.DiagnosticInfo,
+				--     },
+				-- }
 			})
 
 			-- Enable the following language servers
@@ -297,6 +297,15 @@ return {
 		version = "^5", -- Recommended
 		lazy = false, -- This plugin is already lazy
 		-- ft = "rust",
+		keys = {
+			{
+				"gC",
+				function()
+					vim.cmd.RustLsp("openCargo")
+				end,
+				desc = "Open Cargo.toml",
+			},
+		},
 		config = function()
 			vim.g.rustaceanvim = {
 				-- Plugin configuration

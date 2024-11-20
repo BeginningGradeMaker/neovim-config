@@ -3,7 +3,7 @@ return {
 	{
 		"nvim-lualine/lualine.nvim",
 		lazy = true,
-		event = "VeryLazy",
+		event = "BufReadPre",
 		-- dependencies = { "nvim-tree/nvim-web-devicons" },
 		config = function()
 			local hl = vim.api.nvim_get_hl(0, { name = "lualine_a_normal", create = true })

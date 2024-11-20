@@ -19,6 +19,7 @@ require("lazy").setup("plugins", {
 		border = "rounded",
 	},
 })
+require("colorscheme")
 
 for _, source in ipairs({
 	"autocmds",

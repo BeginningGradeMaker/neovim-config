@@ -31,10 +31,10 @@ return {
 			-- { "<leader>w", group = get_icon("WordFile", 1, true) .. "Workspace" },
 			{ "<leader>S", group = get_icon("Session", 1, true) .. "Session" },
 			{ "<leader>d", group = get_icon("Debugger", 1, true) .. "Debug" },
-			{ "<leader>a", group = get_icon("Selected", 1, true) .. "Select all" },
+			{ "<leader>a", group = get_icon("Spark", 1, true) .. "AI" },
 			{ "<leader>r", group = get_icon("ActiveLSP", 1, true) .. "Competition" },
 			{ "<leader>h", group = get_icon("Git", 1, true) .. "Git" },
-            { "<leader>x", group = get_icon("DiagnosticWarn", 1, true) .. "Diagnostic"}
+            { "<leader>x", group = get_icon("DiagnosticWarn", 1, true) .. "Diagnostic"},
 		},
 		-- Defer popup for certain keys
 		defer = function(ctx)

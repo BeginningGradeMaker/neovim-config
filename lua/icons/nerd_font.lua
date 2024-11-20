@@ -57,4 +57,5 @@ return {
 	Terminal = "",
 	Window = "",
 	WordFile = "󰈭",
+    Spark = "",
 }

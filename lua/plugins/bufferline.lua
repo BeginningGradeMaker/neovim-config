@@ -9,7 +9,7 @@ return {
 		local bufferline = require("bufferline")
 		bufferline.setup({
 			options = {
-                auto_toggle_bufferline = false,
+				auto_toggle_bufferline = false,
 				style_preset = bufferline.style_preset.minimal, -- or bufferline.style_preset.minimal,
 				close_command = "bdelete %d",
 				indicator = {
@@ -31,15 +31,15 @@ return {
 				TabLineFill = { bg = bufferline.line_bg },
 			},
 		})
-        local show = true
+		local show = true
 		vim.keymap.set("n", "<leader>tl", function()
 			if show then
-                vim.opt.showtabline = 0
-                show = false
-            else
-                vim.opt.showtabline = 2
-                show = true
-            end
-		end, {desc = "Toggle bufferline"})
+				vim.opt.showtabline = 0
+				show = false
+			else
+				vim.opt.showtabline = 2
+				show = true
+			end
+		end, { desc = "Toggle bufferline" })
 	end,
 }

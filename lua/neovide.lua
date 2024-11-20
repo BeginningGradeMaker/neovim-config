@@ -2,12 +2,12 @@ if vim.g.neovide then
 -- Put anything you want to happen only in Neovide here
 vim.o.guifont = "JetBrainsMono Nerd Font:h15" -- text below applies for VimScript
 vim.g.neovide_window_blurred = false
+-- vim.g.neovide_transparency = 0.96
 vim.g.neovide_transparency = 1.0
 vim.g.neovide_floating_shadow = true
 vim.g.neovide_floating_z_height = 10
 vim.g.neovide_light_angle_degrees = 45
 vim.g.neovide_light_radius = 5
--- vim.g.neovide_position_animation_length = 0.5
 -- vim.g.neovide_position_animation_length = 0.9
 vim.g.neovide_scroll_animation_length = 0.2
 vim.g.neovide_theme = 'dark'

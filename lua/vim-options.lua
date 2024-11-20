@@ -135,8 +135,8 @@ vim.g.loaded_netrw = 1
 vim.opt.fillchars = { eob = " " }
 
 -- Copy all content of buffer
-vim.keymap.set("n", "<leader>aa", "<cmd>%y+<cr>", { desc = "Yank entire file" })
-vim.keymap.set("n", "<leader>ad", "<cmd>%d<cr>", { desc = "Yank entire file" })
+vim.keymap.set("n", "yaa", "<cmd>%y+<cr>", { desc = "Yank entire file" })
+vim.keymap.set("n", "dad", "<cmd>%d<cr>", { desc = "Delete entire file" })
 vim.keymap.set("n", "<leader>ab", ":%bd|e#|bd#", { noremap = true, desc = "Clean non-active buffers" })
 
 vim.api.nvim_create_autocmd("TextYankPost", {
@@ -179,4 +179,8 @@ keymap.set("n", "s", "<Nop>", {noremap = true})
 vim.g.disable_autoformat = true
 vim.g.copilot_enabled = 0
 vim.opt.showtabline = 2
+
+-- views can only be fully collapsed with the global statusline
+vim.opt.laststatus = 3
+
 
