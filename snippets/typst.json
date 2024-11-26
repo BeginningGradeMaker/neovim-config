@@ -1,4 +1,9 @@
 {
+  "math inline": {
+    "prefix": "i",
+    "body": ["$$1$$0"],
+    "description": "Math inline mode."
+  },
   "math display": {
     "prefix": "dd",
     "body": ["$ $1 $$0"],
@@ -23,5 +28,25 @@
     "prefix": "frac",
     "body": ["($1)/($2)$0"],
     "description": "Math fraction"
+  },
+  "math definition": {
+    "prefix": "defnition",
+    "body": ["#definition(\"$1\")[", "$2", "]$0"],
+    "description": "Math definition"
+  },
+  "math theorem": {
+    "prefix": "theorem",
+    "body": ["#theorem(\"$1\")[", "$2", "]$0"],
+    "description": "Math theorem"
+  },
+  "math proposition": {
+    "prefix": "proposition",
+    "body": ["#proposition()[", "$1", "]$0"],
+    "description": "Math proposition"
+  },
+  "math proof": {
+    "prefix": "proof",
+    "body": ["#proof()[", "$1", "]$0"],
+    "description": "Math proof"
   }
 }

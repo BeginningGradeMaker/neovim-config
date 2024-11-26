@@ -16,7 +16,7 @@ return {
 					disable = { "latex" },
 					additional_vim_regex_highlighting = { "latex", "markdown" },
 				},
-				indent = { enable = true, disable = {  } },
+				indent = { enable = true, disable = { "typst" } },
 				textobjects = {
 					move = {
 						enable = true,

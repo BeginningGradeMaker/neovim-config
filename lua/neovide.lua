@@ -3,7 +3,7 @@ if vim.g.neovide then
 vim.o.guifont = "JetBrainsMono Nerd Font:h15" -- text below applies for VimScript
 vim.g.neovide_window_blurred = false
 -- vim.g.neovide_transparency = 0.96
-vim.g.neovide_transparency = 1.0
+vim.g.neovide_transparency = 0.99
 vim.g.neovide_floating_shadow = true
 vim.g.neovide_floating_z_height = 10
 vim.g.neovide_light_angle_degrees = 45
@@ -47,4 +47,5 @@ vim.keymap.set('n', '<D-v>', '"+P')    -- Paste normal mode
 vim.keymap.set('v', '<D-v>', '"+P')    -- Paste visual mode
 vim.keymap.set('c', '<D-v>', '<C-R>+') -- Paste command mode
 vim.keymap.set('i', '<D-v>', '<C-R>+') -- Paste insert mode
+vim.keymap.set("i", "<M-BS>", "<C-w>")
 end

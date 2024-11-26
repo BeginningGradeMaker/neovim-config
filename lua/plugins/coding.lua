@@ -144,37 +144,6 @@ return {
 		end,
 	},
 	{
-		"gbprod/yanky.nvim",
-		lazy = true,
-		event = "VeryLazy",
-		keys = {
-			{
-				"<leader>p",
-				function()
-					require("telescope").extensions.yank_history.yank_history({})
-				end,
-				desc = "Open Yank History",
-			},
-			-- { "y", "<Plug>(YankyYank)", mode = { "n", "x" }, desc = "Yank text" },
-			-- { "p", "<Plug>(YankyPutAfter)", mode = { "n", "x" }, desc = "Put yanked text after cursor" },
-			-- { "P", "<Plug>(YankyPutBefore)", mode = { "n", "x" }, desc = "Put yanked text before cursor" },
-			-- { "gp", "<Plug>(YankyGPutAfter)", mode = { "n", "x" }, desc = "Put yanked text after selection" },
-			-- { "gP", "<Plug>(YankyGPutBefore)", mode = { "n", "x" }, desc = "Put yanked text before selection" },
-			-- { "<c-p>", "<Plug>(YankyPreviousEntry)", desc = "Select previous entry through yank history" },
-			-- { "<c-n>", "<Plug>(YankyNextEntry)", desc = "Select next entry through yank history" },
-			-- { "]p", "<Plug>(YankyPutIndentAfterLinewise)", desc = "Put indented after cursor (linewise)" },
-			-- { "[p", "<Plug>(YankyPutIndentBeforeLinewise)", desc = "Put indented before cursor (linewise)" },
-			-- { "]P", "<Plug>(YankyPutIndentAfterLinewise)", desc = "Put indented after cursor (linewise)" },
-			-- { "[P", "<Plug>(YankyPutIndentBeforeLinewise)", desc = "Put indented before cursor (linewise)" },
-			-- { ">p", "<Plug>(YankyPutIndentAfterShiftRight)", desc = "Put and indent right" },
-			-- { "<p", "<Plug>(YankyPutIndentAfterShiftLeft)", desc = "Put and indent left" },
-			-- { ">P", "<Plug>(YankyPutIndentBeforeShiftRight)", desc = "Put before and indent right" },
-			-- { "<P", "<Plug>(YankyPutIndentBeforeShiftLeft)", desc = "Put before and indent left" },
-			-- { "=p", "<Plug>(YankyPutAfterFilter)", desc = "Put after applying a filter" },
-			-- { "=P", "<Plug>(YankyPutBeforeFilter)", desc = "Put before applying a filter" },
-		},
-	},
-	{
 		"MagicDuck/grug-far.nvim",
 		opts = { headerMaxWidth = 80 },
 		cmd = "GrugFar",
@@ -206,6 +175,16 @@ return {
 			dashboard = {
 				enabled = true,
 				preset = {
+					header = [[
+ I use                                                             
+      ████ ██████           █████      ██                 btw
+     ███████████             █████                            
+     █████████ ███████████████████ ███   ███████████  
+    █████████  ███    █████████████ █████ ██████████████  
+   █████████ ██████████ █████████ █████ █████ ████ █████  
+ ███████████ ███    ███ █████████ █████ █████ ████ █████ 
+██████  █████████████████████ ████ █████ █████ ████ ██████
+                    ]],
 					keys = {
 						{
 							icon = " ",
@@ -352,6 +331,25 @@ return {
 						.option("background", { off = "light", on = "dark", name = "Dark Background" })
 						:map("<leader>ub")
 					Snacks.toggle.inlay_hints():map("<leader>uh")
+				end,
+			})
+			vim.api.nvim_create_autocmd("User", {
+				pattern = "SnacksDashboardOpened",
+				callback = function()
+					local hl = vim.api.nvim_get_hl(0, { name = "Cursor", create = true })
+					hl.blend = 100
+					vim.api.nvim_set_hl(0, "Cursor", hl)
+					vim.cmd("set guicursor+=a:Cursor/lCursor")
+				end,
+			})
+			vim.api.nvim_create_autocmd("User", {
+				pattern = "SnacksDashboardClosed",
+				callback = function()
+					local hl = vim.api.nvim_get_hl(0, { name = "Cursor", create = true })
+					hl.blend = 0
+					vim.api.nvim_set_hl(0, "Cursor", hl)
+					-- vim.opt.guicursor.append("a:Cursor/lCursor")
+					vim.cmd("set guicursor+=a:Cursor/lCursor")
 				end,
 			})
 		end,

@@ -112,13 +112,16 @@ return {
 			vim.keymap.set("n", "<leader>fm", function()
 				return builtin.marks()
 			end, { desc = "Find marks" })
+			vim.keymap.set("n", "<leader>fp", function()
+				return builtin.registers()
+			end, { desc = "Find registers" })
 
 			-- Change colorschemes
 			vim.keymap.set("n", "<leader>ft", builtin.colorscheme, { desc = "Change colorscheme" })
 			-- vim.keymap.set("n", "<leader>ft", require("telescope").extensions.themes.themes, { desc = "Change colorscheme" })
 			vim.keymap.set(
 				"n",
-				"<leader>fp",
+				"<leader>fT",
 				function()
 					vim.cmd("Telescope themes")
 				end,
