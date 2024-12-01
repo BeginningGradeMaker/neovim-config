@@ -12,6 +12,7 @@ return {
 	},
 	{ -- Collection of various small independent plugins/modules
 		"echasnovski/mini.nvim",
+		enabled = true,
 		event = "VeryLazy",
 		config = function()
 			-- Better Around/Inside textobjects
@@ -83,6 +84,107 @@ return {
 			-- vim.keymap.set("v", ">", "sa>", { remap = true })
 			-- vim.keymap.set("n", "s", "<Nop>", { silent = true })
 
+			local operator = require("mini.operators")
+			operator.setup({
+				-- Each entry configures one operator.
+				-- `prefix` defines keys mapped during `setup()`: in Normal mode
+				-- to operate on textobject and line, in Visual - on selection.
+
+				-- Evaluate text and replace with output
+				evaluate = {
+					prefix = "g=",
+
+					-- Function which does the evaluation
+					func = nil,
+				},
+
+				-- Exchange text regions
+				exchange = {
+					prefix = "gx",
+
+					-- Whether to reindent new text to match previous indent
+					reindent_linewise = true,
+				},
+
+				-- Multiply (duplicate) text
+				multiply = {
+					prefix = "gm",
+
+					-- Function which can modify text before multiplying
+					func = nil,
+				},
+
+				-- Replace text with register
+				replace = {
+					prefix = "gt",
+
+					-- Whether to reindent new text to match previous indent
+					reindent_linewise = true,
+				},
+
+				-- Sort text
+				sort = {
+					prefix = "gs",
+
+					-- Function which does the sort
+					func = nil,
+				},
+			})
+
+			require("mini.files").setup({
+				mappings = {
+					-- close = "<ESC>",
+				},
+				windows = {
+					preview = true,
+					width_focus = 30,
+					width_preview = 30,
+				},
+			})
+			vim.keymap.set("n", "<leader>e", MiniFiles.open, { desc = "Open file explorer" })
+			vim.keymap.set("n", "<leader>E", function()
+				MiniFiles.open(vim.api.nvim_buf_get_name(0))
+			end, { desc = "Open file explorer" })
+
+			local show_dotfiles = true
+			local filter_show = function(fs_entry)
+				return true
+			end
+			local filter_hide = function(fs_entry)
+				return not vim.startswith(fs_entry.name, ".")
+			end
+
+			local toggle_dotfiles = function()
+				show_dotfiles = not show_dotfiles
+				local new_filter = show_dotfiles and filter_show or filter_hide
+				require("mini.files").refresh({ content = { filter = new_filter } })
+			end
+
+			local files_set_cwd = function()
+				local cur_entry_path = MiniFiles.get_fs_entry().path
+				local cur_directory = vim.fs.dirname(cur_entry_path)
+				if cur_directory ~= nil then
+					vim.fn.chdir(cur_directory)
+				end
+			end
+
+			-- extra mappings for mini.files
+			vim.api.nvim_create_autocmd("User", {
+				pattern = "MiniFilesBufferCreate",
+				callback = function(args)
+					local map_buf = function(lhs, rhs, desc)
+						vim.keymap.set("n", lhs, rhs, { buffer = args.data.buf_id, desc = desc or "" })
+					end
+
+					map_buf("<leader>e", MiniFiles.close)
+					map_buf("<ESC>", MiniFiles.close)
+                    map_buf("g.", toggle_dotfiles, "Toggle hidden files")
+                    map_buf("gc", files_set_cwd, "Set cwd")
+
+					-- Add extra mappings from *MiniFiles-examples*
+				end,
+			})
+
 			-- local statusline = require("mini.statusline")
 			-- statusline.setup({ use_icons = vim.g.have_nerd_font })
 
@@ -122,7 +224,12 @@ return {
 			modes = {
 				char = {
 					jump_labels = true,
+					label = { exclude = "hjkliardcxK" },
+					-- keys = { "f", "F", ";", "," },
 				},
+			},
+			label = {
+				exclude = "xK",
 			},
 		},
         -- stylua: ignore
@@ -164,6 +271,10 @@ return {
 				desc = "Search and Replace",
 			},
 		},
+		config = function()
+			require("grug-far").setup()
+			vim.g.maplocalleader = "."
+		end,
 	},
 	{
 		"folke/snacks.nvim",
@@ -218,20 +329,23 @@ return {
 				},
 			},
 			notifier = {
-				enabled = false,
+				enabled = true,
 				timeout = 3000,
 			},
 			quickfile = { enabled = true },
 			statuscolumn = { enabled = true },
 			words = { enabled = true },
+			scratch = {
+				enabled = true,
+			},
 		},
 		keys = {
 			{
-				"<leader>bd",
+				"<leader>W",
 				function()
 					Snacks.bufdelete()
 				end,
-				desc = "Delete Buffer",
+				desc = "Close buffer",
 			},
 			{
 				"<leader>gg",
@@ -303,6 +417,20 @@ return {
 				end,
 				desc = "Prev Reference",
 			},
+			{
+				"<C-.>",
+				function()
+					Snacks.scratch()
+				end,
+				desc = "Toggle Scratch Buffer",
+			},
+			{
+				"<leader>fS",
+				function()
+					Snacks.scratch.select()
+				end,
+				desc = "Select Scratch Buffer",
+			},
 		},
 		init = function()
 			vim.api.nvim_create_autocmd("User", {
@@ -355,16 +483,151 @@ return {
 		end,
 	},
 	{
-		"oskarrrrrrr/symbols.nvim",
+		"hedyhli/outline.nvim",
+		enabled = true,
 		lazy = true,
-		event = "VeryLazy",
-		config = function()
-			local r = require("symbols.recipes")
-			require("symbols").setup(r.DefaultFilters, r.AsciiSymbols, {
-				-- custom settings here
-				-- e.g. hide_cursor = false
-			})
-			vim.keymap.set("n", "<leader>ts", ":SymbolsToggle<CR>")
+		cmd = { "Outline", "OutlineOpen" },
+		keys = { -- Example mapping to toggle outline
+			{ "<leader>o", "<cmd>Outline<CR>", desc = "Toggle outline" },
+		},
+		opts = {
+			-- Your setup opts here
+		},
+	},
+	{
+		"danymat/neogen",
+		enabled = true,
+		lazy = true,
+		keys = {
+			{
+				"<leader>ag",
+				":Neogen<cr>",
+				desc = "Generate annotations",
+				silent = true,
+			},
+		},
+		config = true,
+		-- Uncomment next line if you want to follow only stable versions
+		-- version = "*"
+	},
+	{
+		"ThePrimeagen/refactoring.nvim",
+		enabled = true,
+		event = { "BufReadPre", "BufNewFile" },
+		dependencies = {
+			"nvim-lua/plenary.nvim",
+			"nvim-treesitter/nvim-treesitter",
+		},
+		keys = {
+			{ "<leader>r", "", desc = "+refactor", mode = { "n", "v" } },
+			{
+				"<leader>rs",
+				pick,
+				mode = "v",
+				desc = "Refactor",
+			},
+			{
+				"<leader>ri",
+				function()
+					require("refactoring").refactor("Inline Variable")
+				end,
+				mode = { "n", "v" },
+				desc = "Inline Variable",
+			},
+			{
+				"<leader>rb",
+				function()
+					require("refactoring").refactor("Extract Block")
+				end,
+				desc = "Extract Block",
+			},
+			{
+				"<leader>rf",
+				function()
+					require("refactoring").refactor("Extract Block To File")
+				end,
+				desc = "Extract Block To File",
+			},
+			{
+				"<leader>rP",
+				function()
+					require("refactoring").debug.printf({ below = false })
+				end,
+				desc = "Debug Print",
+			},
+			{
+				"<leader>rp",
+				function()
+					require("refactoring").debug.print_var({ normal = true })
+				end,
+				desc = "Debug Print Variable",
+			},
+			{
+				"<leader>rc",
+				function()
+					require("refactoring").debug.cleanup({})
+				end,
+				desc = "Debug Cleanup",
+			},
+			{
+				"<leader>rf",
+				function()
+					require("refactoring").refactor("Extract Function")
+				end,
+				mode = "v",
+				desc = "Extract Function",
+			},
+			{
+				"<leader>rF",
+				function()
+					require("refactoring").refactor("Extract Function To File")
+				end,
+				mode = "v",
+				desc = "Extract Function To File",
+			},
+			{
+				"<leader>rx",
+				function()
+					require("refactoring").refactor("Extract Variable")
+				end,
+				mode = "v",
+				desc = "Extract Variable",
+			},
+			{
+				"<leader>rp",
+				function()
+					require("refactoring").debug.print_var()
+				end,
+				mode = "v",
+				desc = "Debug Print Variable",
+			},
+		},
+		opts = {
+			prompt_func_return_type = {
+				go = false,
+				java = false,
+				cpp = false,
+				c = false,
+				h = false,
+				hpp = false,
+				cxx = false,
+			},
+			prompt_func_param_type = {
+				go = false,
+				java = false,
+				cpp = false,
+				c = false,
+				h = false,
+				hpp = false,
+				cxx = false,
+			},
+			printf_statements = {},
+			print_var_statements = {},
+			show_success_message = true, -- shows a message with information about the refactor on success
+			-- i.e. [Refactor] Inlined 3 variable occurrences
+		},
+		config = function(_, opts)
+			require("refactoring").setup(opts)
 		end,
 	},
 }

@@ -33,17 +33,17 @@ return {
 				},
 				extra_groups = {}, -- table: additional groups that should be cleared
 				exclude_groups = {}, -- table: groups you don't want to clear
-                on_clear = function ()
-                    require("transparent").clear_prefix("NeoTree")
-                    -- require("transparent").clear_prefix("lualine")
-                    require("transparent").clear_prefix("Bufferline")
-                end
+				on_clear = function()
+					require("transparent").clear_prefix("NeoTree")
+					-- require("transparent").clear_prefix("lualine")
+					require("transparent").clear_prefix("Bufferline")
+				end,
 			})
 
 			vim.keymap.set("n", "<leader>tp", function()
-                -- require("transparent").clear_prefix("lualine")
+				-- require("transparent").clear_prefix("lualine")
 				vim.cmd("TransparentToggle")
-			end, {desc = "Toggle transparent background"})
+			end, { desc = "Toggle transparent background" })
 		end,
 	},
 	{
@@ -61,12 +61,23 @@ return {
 			integrations = {
 				telescope = {
 					enabled = true,
-					style = "nvchad",
+					-- style = "nvchad",
+				},
+				blink_cmp = true,
+				grug_far = true,
+				noice = true,
+				notify = true,
+				snacks = true,
+				lsp_trouble = true,
+				which_key = true,
+				dropbar = {
+					enabled = true,
+					color_mode = true, -- enable color for kind's texts, not just kind's icons
 				},
 			},
 		},
 		config = function()
-			require("catppuccin").setup({term_colors = true})
+			require("catppuccin").setup({ term_colors = true })
 			-- vim.cmd.colorscheme "catppuccin"
 		end,
 	},
@@ -149,15 +160,15 @@ return {
 		"luisiacc/the-matrix.nvim",
 		priority = 1000,
 	},
-	{
-		"diegoulloao/neofusion.nvim",
-		priority = 1000,
-		config = function()
-			require("neofusion").setup({
-				transparent_mode = true,
-			})
-		end,
-	},
+	-- {
+	-- 	"diegoulloao/neofusion.nvim",
+	-- 	priority = 1000,
+	-- 	config = function()
+	-- 		require("neofusion").setup({
+	-- 			transparent_mode = true,
+	-- 		})
+	-- 	end,
+	-- },
 	{
 		"folke/tokyonight.nvim",
 		lazy = false,
@@ -172,37 +183,40 @@ return {
 		},
 	},
 	{ "ellisonleao/gruvbox.nvim", priority = 1000, config = true },
-	{ "marko-cerovac/material.nvim", priority = 1000 },
-	-- {
-	-- 	"scottmckendry/cyberdream.nvim",
-	-- 	lazy = false,
-	-- 	priority = 1000,
-	-- 	config = function()
-	-- 		local cyberdream = require("cyberdream")
-	-- 		cyberdream.setup()
-	--
-	-- 		-- Add a custom keybinding to toggle the colorscheme
-	-- 		vim.api.nvim_set_keymap("n", "<leader>tm", ":CyberdreamToggleMode<CR>", { noremap = true, silent = true })
-	-- 		-- The event data property will contain a string with either "default" or "light" respectively
-	-- 		vim.api.nvim_create_autocmd("User", {
-	-- 			pattern = "CyberdreamToggleMode",
-	-- 			callback = function(event)
-	-- 				-- Your custom code here!
-	-- 				-- For example, notify the user that the colorscheme has been toggled
-	-- 				print("Switched to " .. event.data .. " mode!")
-	-- 			end,
-	-- 		})
-	-- 	end,
-	-- },
+	{ "marko-cerovac/material.nvim", enabled = vim.g.opt_themes, priority = 1000 },
+	{
+		"scottmckendry/cyberdream.nvim",
+        enabled = vim.g.opt_themes,
+		lazy = false,
+		priority = 1000,
+		config = function()
+			local cyberdream = require("cyberdream")
+			cyberdream.setup()
+
+			-- Add a custom keybinding to toggle the colorscheme
+			vim.api.nvim_set_keymap("n", "<leader>tm", ":CyberdreamToggleMode<CR>", { noremap = true, silent = true })
+			-- The event data property will contain a string with either "default" or "light" respectively
+			vim.api.nvim_create_autocmd("User", {
+				pattern = "CyberdreamToggleMode",
+				callback = function(event)
+					-- Your custom code here!
+					-- For example, notify the user that the colorscheme has been toggled
+					print("Switched to " .. event.data .. " mode!")
+				end,
+			})
+		end,
+	},
 	{
 		"projekt0n/github-nvim-theme",
+        enabled = vim.g.opt_themes,
 		name = "github-theme",
 		lazy = false, -- make sure we load this during startup if it is your main colorscheme
 		priority = 1000, -- make sure to load this before all the other start plugins
 	},
-	{ "rose-pine/neovim", lazy = false, priority = 1000, name = "rose-pine" },
+	{ "rose-pine/neovim", enabled = vim.g.opt_themes, lazy = false, priority = 1000, name = "rose-pine" },
 	{
 		"AlexvZyl/nordic.nvim",
+        enabled = vim.g.opt_themes,
 		lazy = true,
 		event = "VeryLazy",
 		priority = 1000,
@@ -212,14 +226,11 @@ return {
 	},
 	{
 		"Mofiqul/vscode.nvim",
+        enabled = vim.g.opt_themes,
 		priority = 1000,
 	},
 	{
 		"shaunsingh/nord.nvim",
 		priority = 1000,
 	},
-    {
-        "EdenEast/nightfox.nvim",
-        priority = 1000,
-    }
 }

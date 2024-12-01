@@ -31,22 +31,27 @@
   },
   "math definition": {
     "prefix": "defnition",
-    "body": ["#definition(\"$1\")[", "$2", "]$0"],
+    "body": ["#definition(\"$1\")[", "${2:Here}", "]$0"],
     "description": "Math definition"
   },
   "math theorem": {
     "prefix": "theorem",
-    "body": ["#theorem(\"$1\")[", "$2", "]$0"],
+    "body": ["#theorem(\"$1\")[", "${2:Here}", "]$0"],
     "description": "Math theorem"
   },
   "math proposition": {
     "prefix": "proposition",
-    "body": ["#proposition()[", "$1", "]$0"],
+    "body": ["#proposition($1)[", "${2:Here}", "]$0"],
     "description": "Math proposition"
   },
   "math proof": {
     "prefix": "proof",
     "body": ["#proof()[", "$1", "]$0"],
     "description": "Math proof"
+  },
+  "limit": {
+    "prefix": "lim",
+    "body": ["lim_($1)$0"],
+    "description": "Math limit"
   }
 }

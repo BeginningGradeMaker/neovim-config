@@ -8,8 +8,8 @@ vim.wo.relativenumber = false
 local keymap = vim.keymap
 
 vim.keymap.set("n", "<leader>tr", function()
-   vim.wo.relativenumber = not vim.wo.relativenumber
-end, {desc = "Toggle relative numberline"})
+	vim.wo.relativenumber = not vim.wo.relativenumber
+end, { desc = "Toggle relative numberline" })
 
 vim.opt.swapfile = false
 
@@ -106,8 +106,8 @@ keymap.set("n", "<C-S-j>", "<C-w><C-j>", { desc = "Go down split" })
 -- Standard Operations
 vim.keymap.set("n", "<leader>s", "<cmd>w<cr>", { desc = "Save", silent = true })
 -- vim.keymap.set('n', "<leader>x", "<cmd>bd<cr>", { desc = "Close current buffer" })
-vim.keymap.set("n", "<leader>w", "<cmd>bd<cr>", { desc = "Close current buffer", silent = true })
-vim.keymap.set("n", "<leader>W", "<cmd>wqa<cr>", { desc = "Save All and quit" })
+vim.keymap.set("n", "<leader>w", "<cmd>bd<cr>", { desc = "Close buffer/split", silent = true })
+-- vim.keymap.set("n", "<leader>W", "<cmd>wqa<cr>", { desc = "Save All and quit" })
 vim.keymap.set("n", "<leader>q", "<cmd>confirm q<cr>", { desc = "Quit" })
 vim.keymap.set("n", "<leader>Q", "<cmd>confirm qall<cr>", { desc = "Quit all" })
 vim.keymap.set("n", "<leader>n", "<<cmd>enew<cr>", { desc = "New File" })
@@ -137,7 +137,7 @@ vim.opt.fillchars = { eob = " " }
 -- Copy all content of buffer
 vim.keymap.set("n", "yaa", "<cmd>%y+<cr>", { desc = "Yank entire file" })
 vim.keymap.set("n", "dad", "<cmd>%d<cr>", { desc = "Delete entire file" })
-vim.keymap.set("n", "<leader>ab", ":%bd|e#|bd#", { noremap = true, desc = "Clean non-active buffers" })
+vim.keymap.set("n", "<leader>ab", ":%bd|e#|bd# <cr>", { noremap = true, desc = "Clean non-active buffers" })
 
 vim.api.nvim_create_autocmd("TextYankPost", {
 	desc = "Highlight when yanking (copying) text",
@@ -162,14 +162,14 @@ vim.keymap.set("n", "U", "<C-r>", { noremap = true })
 vim.o.background = "dark"
 
 -- Don't skip wrapped lines
-keymap.set({"n", "v"}, "j", "v:count == 0 ? 'gj' : 'j'", { noremap = true, expr = true, silent = true })
-keymap.set({"n", "v"}, "k", "v:count == 0 ? 'gk' : 'k'", { noremap = true, expr = true, silent = true })
+keymap.set({ "n", "v" }, "j", "v:count == 0 ? 'gj' : 'j'", { noremap = true, expr = true, silent = true })
+keymap.set({ "n", "v" }, "k", "v:count == 0 ? 'gk' : 'k'", { noremap = true, expr = true, silent = true })
 keymap.set("n", "0", "g0", { noremap = true, silent = true })
 keymap.set("n", "$", "g$", { noremap = true, silent = true })
-vim.keymap.set({ "n", "v", "o" }, "H", "g^", { desc = "End of line", noremap = true, silent = true })
-vim.keymap.set({ "n", "v", "o" }, "L", "g$", { desc = "Start of line", noremap = true, silent = true })
+vim.keymap.set({ "n", "x" }, "H", "g^", { desc = "End of line", noremap = true, silent = true })
+vim.keymap.set({ "n", "x" }, "L", "g$", { desc = "Start of line", noremap = true, silent = true })
 
-keymap.set("n", "s", "<Nop>", {noremap = true})
+keymap.set("n", "s", "<Nop>", { noremap = true })
 
 -- Make change/delete/select whole word default
 -- keymap.set("n", "cw", "ciw", { noremap = true, silent = true, desc = "Change word" })
@@ -178,8 +178,15 @@ keymap.set("n", "s", "<Nop>", {noremap = true})
 
 vim.g.disable_autoformat = true
 vim.g.copilot_enabled = 0
-vim.opt.showtabline = 2
+vim.opt.showtabline = 0
 
 -- views can only be fully collapsed with the global statusline
 vim.opt.laststatus = 3
 
+-- grug-far.nvim
+-- vim.g.maplocalleader = ";"
+
+-- vim.o.winbar = ""
+
+-- optional themes
+vim.g.opt_themes = false

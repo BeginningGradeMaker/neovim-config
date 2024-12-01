@@ -1,6 +1,7 @@
 return {
 	"nvim-neo-tree/neo-tree.nvim",
 	lazy = true,
+    enabled = true,
 	cmd = "Neotree",
 	branch = "v3.x",
 	dependencies = {
@@ -10,16 +11,16 @@ return {
 		"3rd/image.nvim", -- Optional image support in preview window: See `# Preview Mode` for more information
 	},
 	keys = {
+		-- {
+		-- 	"<leader>E",
+		-- 	function()
+		-- 		require("neo-tree.command").execute({ toggle = true, dir = vim.fn.expand("%:p:h") })
+		-- 	end,
+		-- 	desc = "Toggle explorer (cb)",
+		-- 	remap = true,
+		-- },
 		{
-			"<leader>E",
-			function()
-				require("neo-tree.command").execute({ toggle = true, dir = vim.fn.expand("%:p:h") })
-			end,
-			desc = "Toggle explorer (cb)",
-			remap = true,
-		},
-		{
-			"<leader>e",
+			"<leader>ue",
 			function()
 				require("neo-tree.command").execute({ toggle = true, dir = vim.loop.cwd() })
 			end,
@@ -49,7 +50,7 @@ return {
 			auto_clean_after_session_restore = true,
 			sources = { "filesystem", "buffers", "git_status" },
 			source_selector = {
-				winbar = true,
+				winbar = false,
 				content_layout = "center",
 				sources = {
 					{ source = "filesystem", display_name = get_icon("FolderClosed", 1, true) .. "File" },

@@ -3,6 +3,7 @@ return {
 	{
 		"nvim-lualine/lualine.nvim",
 		lazy = true,
+		enabled = true,
 		event = "BufReadPre",
 		-- dependencies = { "nvim-tree/nvim-web-devicons" },
 		config = function()
@@ -43,16 +44,26 @@ return {
 						-- },
 						-- { "filetype", icon_only = true, separator = "", padding = { left = 1, right = 0 } },
 						{
-                            function()
-                                local statusline = require("arrow.statusline")
-                                return statusline.text_for_statusline_with_icons()
-                            end
+							function()
+								local statusline = require("arrow.statusline")
+								return statusline.text_for_statusline_with_icons()
+							end,
 						},
-						"filename",
+						-- { "filename", path = 1 },
 						{
 							require("lazy.status").updates,
 							cond = require("lazy.status").has_updates,
 							color = "white",
+						},
+						{
+							function()
+								for _, buf in ipairs(vim.api.nvim_list_bufs()) do
+									if vim.api.nvim_buf_get_option(buf, "modified") then
+										return "Unsaved buffers" -- any message or icon
+									end
+								end
+								return ""
+							end,
 						},
 					},
 					lualine_x = {
@@ -71,6 +82,27 @@ return {
 						"filetype",
 					},
 				},
+				-- winbar = {
+				-- 	lualine_a = {},
+				-- 	lualine_b = { "filename"},
+				-- 	lualine_c = { "filename" },
+				-- 	lualine_x = {},
+				-- 	lualine_y = {},
+				-- 	lualine_z = {},
+				-- },
+
+				-- inactive_winbar = {
+				-- 	lualine_a = {},
+				-- 	lualine_b = {},
+				-- 	lualine_c = { {"filename", path = 1} },
+				-- 	lualine_x = {},
+				-- 	lualine_y = {},
+				-- 	lualine_z = {},
+				-- },
+                refresh = {
+                    -- statusline = 50,
+                    -- tabline = 10,
+                }
 			})
 		end,
 	},

@@ -20,6 +20,9 @@ return {
 				"andrew-george/telescope-themes",
 			},
 			-- { 'nvim-tree/nvim-web-devicons',            enabled = vim.g.have_nerd_font },
+			-- {
+			-- 	"tristone13th/lspmark.nvim",
+			-- },
 		},
 		config = function()
 			local actions = require("telescope.actions")
@@ -45,7 +48,7 @@ return {
 					git_worktrees = vim.g.git_worktrees,
 					prompt_prefix = get_icon("Selected", 1, true),
 					selection_caret = get_icon("Selected", 1, true),
-					path_display = { "truncate" },
+					path_display = { "smart" },
 					sorting_strategy = "ascending",
 					layout_config = {
 						horizontal = { prompt_position = "bottom", preview_width = 0.55 },
@@ -84,37 +87,37 @@ return {
 			pcall(require("telescope").load_extension, "fzf")
 			pcall(require("telescope").load_extension, "ui-select")
 			pcall(require("telescope").load_extension, "themes")
+			-- pcall(require("telescope").load_extension, "lspmark")
 
 			local builtin = require("telescope.builtin")
 			-- vim.keymap.set("n", "<leader>ff", builtin.find_files, { desc = "Find files" })
-			vim.keymap.set("n", "<leader><leader>", builtin.find_files, { desc = "Find files" })
-			vim.keymap.set("n", "<leader>fw", builtin.live_grep, { desc = "Find live grep" })
-			vim.keymap.set("n", "<leader>fh", builtin.help_tags, { desc = "Find help" })
-			vim.keymap.set("n", "<leader>fk", builtin.keymaps, { desc = "Find keymaps" })
-			vim.keymap.set("n", "<leader>fS", builtin.builtin, { desc = "Find select telescope" })
-			vim.keymap.set("n", "<leader>fC", builtin.grep_string, { desc = "Find current word" })
-			vim.keymap.set("n", "<leader>fd", builtin.diagnostics, { desc = "Find diagnostics" })
+			vim.keymap.set("n", "<leader><leader>", builtin.find_files, { desc = "Files" })
+			vim.keymap.set("n", "?", builtin.live_grep, { desc = "Live grep" })
+			vim.keymap.set("n", "<leader>fh", builtin.help_tags, { desc = "Help" })
+			vim.keymap.set("n", "<leader>fk", builtin.keymaps, { desc = "Keymaps" })
+			vim.keymap.set("n", "<leader>fH", builtin.builtin, { desc = "Select telescope" })
+			vim.keymap.set("n", "<leader>fW", builtin.grep_string, { desc = "Current word" })
+			vim.keymap.set("n", "<leader>fd", builtin.diagnostics, { desc = "Diagnostics" })
 			vim.keymap.set("n", "<leader>fl", builtin.resume, { desc = "Resume last search" })
-			vim.keymap.set("n", "<leader>f.", builtin.oldfiles, { desc = 'Find recent files ("." for repeat)' })
-			vim.keymap.set("n", "<leader>b", builtin.buffers, { desc = "Find existing buffers" })
+			vim.keymap.set("n", "<leader>f.", builtin.oldfiles, { desc = "Recent files" })
+			vim.keymap.set("n", "<leader>b", builtin.buffers, { desc = "Existing buffers" })
 			vim.keymap.set("n", "<leader>ff", function()
 				return builtin.lsp_document_symbols({ symbols = { "function", "method" } })
-			end, { desc = "Find methods" })
-			vim.keymap.set("n", "<leader>fa", function()
-				return builtin.lsp_document_symbols()
-			end, { desc = "Find all symbols" })
+			end, { desc = "Methods" })
 			vim.keymap.set("n", "<leader>fs", function()
-				return builtin.lsp_document_symbols({ symbols = { "struct", "class" } })
-			end, { desc = "Find struct" })
+				return builtin.lsp_document_symbols({ symbols = { "struct", "class", "typeparameter", "enum" } })
+			end, { desc = "Structs" })
+
 			vim.keymap.set("n", "<leader>fc", function()
 				return builtin.lsp_document_symbols({ symbols = { "constant" } })
-			end, { desc = "Find constant" })
+			end, { desc = "Constants" })
+
 			vim.keymap.set("n", "<leader>fm", function()
-				return builtin.marks()
-			end, { desc = "Find marks" })
+				return builtin.marks({ defaults = {path_display = { "hidden" }} })
+			end, { desc = "Marks" })
 			vim.keymap.set("n", "<leader>fp", function()
 				return builtin.registers()
-			end, { desc = "Find registers" })
+			end, { desc = "Registers" })
 
 			-- Change colorschemes
 			vim.keymap.set("n", "<leader>ft", builtin.colorscheme, { desc = "Change colorscheme" })
@@ -130,7 +133,7 @@ return {
 			)
 
 			-- Slightly advanced example of overriding default behavior and theme
-			vim.keymap.set("n", "<leader>f/", function()
+			vim.keymap.set("n", "<leader>/", function()
 				-- You can pass additional configuration to telescope to change theme, layout, etc.
 				builtin.current_buffer_fuzzy_find(require("telescope.themes").get_dropdown({
 					winblend = 10,
@@ -141,7 +144,21 @@ return {
 			-- Shortcut for searching your neovim configuration files
 			vim.keymap.set("n", "<leader>fn", function()
 				builtin.find_files({ cwd = vim.fn.stdpath("config") })
-			end, { desc = "Find NeoVim files" })
+			end, { desc = "NeoVim files" })
+
+			-- Lsp marks
+			-- vim.keymap.set("n", "m", function()
+			-- 	require("lspmark.bookmarks").toggle_bookmark({ with_comment = false })
+			-- end, { desc = "Toogle bookmark" })
+			-- vim.keymap.set("n", "<leader>m", function()
+			-- 	vim.cmd("Telescope lspmark")
+			-- end, { desc = "Show Lsp marks" })
+			-- -- <new_dir> can be nil, by default it is cwd.
+			-- require("lspmark.bookmarks").load_bookmarks()
+			-- vim.api.nvim_create_autocmd({ "DirChanged" }, {
+			-- 	callback = require("lspmark.bookmarks").load_bookmarks,
+			-- 	pattern = { "*" },
+			-- })
 		end,
 	},
 }

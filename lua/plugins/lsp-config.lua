@@ -3,7 +3,7 @@ return {
 	{
 		"neovim/nvim-lspconfig",
 		lazy = true,
-		event = { "BufReadPre", "BufNewFile" },
+		event = { "BufReadPost", "BufNewFile", "BufWritePost" },
 		dependencies = {
 			"williamboman/mason.nvim",
 			"williamboman/mason-lspconfig.nvim",
@@ -84,15 +84,15 @@ return {
 					-- Jump to the type of the word under your cursor.
 					--  Useful when you're not sure what type a variable is and you want to see
 					--  the definition of its *type*, not where it was *defined*.
-					map("gt", require("telescope.builtin").lsp_type_definitions, "Type definition")
+					map("gT", require("telescope.builtin").lsp_type_definitions, "Type definition")
 
 					-- Fuzzy find all the symbols in your current document.
 					--  Symbols are things like variables, functions, types, etc.
-					map("gs", require("telescope.builtin").lsp_document_symbols, "Document symbols")
+					map("<leader>fa", require("telescope.builtin").lsp_document_symbols, "Document symbols")
 
 					-- Fuzzy find all the symbols in your current workspace
 					--  Similar to document symbols, except searches over your whole project.
-					map("gS", require("telescope.builtin").lsp_dynamic_workspace_symbols, "Workspace symbols")
+					map("<leader>fA", require("telescope.builtin").lsp_dynamic_workspace_symbols, "Workspace symbols")
 
 					-- map("<leader>ti", function()
 					-- 	vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({ 0 }), { 0 })
@@ -100,7 +100,8 @@ return {
 
 					-- Rename the variable under your cursor
 					--  Most Language Servers support renaming across files, etc.
-					map("<leader>cn", ":IncRename ", "Rename")
+					map("<leader>cn", vim.lsp.buf.rename, "Rename")
+					-- map("<leader>cn", ":IncRename ", "Rename")
 
 					-- Execute a code action, usually your cursor needs to be on top of an error
 					-- or a suggestion from your LSP for this to activate.
@@ -157,6 +158,7 @@ return {
 			--  So, we create new capabilities with nvim cmp, and then broadcast that to the servers.
 			local capabilities = vim.lsp.protocol.make_client_capabilities()
 			capabilities = vim.tbl_deep_extend("force", capabilities, require("cmp_nvim_lsp").default_capabilities())
+			-- local capabilities = require('blink.cmp').get_lsp_capabilities()
 
 			vim.diagnostic.config({
 				float = { border = "rounded" },

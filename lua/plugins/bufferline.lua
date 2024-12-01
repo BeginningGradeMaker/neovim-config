@@ -31,7 +31,7 @@ return {
 				TabLineFill = { bg = bufferline.line_bg },
 			},
 		})
-		local show = true
+		local show = false
 		vim.keymap.set("n", "<leader>tl", function()
 			if show then
 				vim.opt.showtabline = 0

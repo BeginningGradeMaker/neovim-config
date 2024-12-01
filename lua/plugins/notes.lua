@@ -1,6 +1,40 @@
 -- lazy.nvim
 return {
 	{
+		"chomosuke/typst-preview.nvim",
+		ft = "typst",
+		-- version = "0.3.*",
+		keys = {
+			{
+				"<leader>tp",
+				":TypstPreviewToggle<cr>",
+				desc = "Typst preview",
+			},
+			{
+				"<leader>tf",
+				":TypstPreviewFollowCursorToggle<cr>",
+				desc = "Typst cursor follow",
+			},
+			{
+				"<leader>tt",
+				":TypstPreviewSyncCursor<cr>",
+				desc = "Typst cursor sync",
+			},
+		},
+		build = function()
+			require("typst-preview").update()
+		end,
+		opts = {
+			open_cmd = "open -a 'Google Chrome' %s",
+			-- open_cmd = "open"
+			dependencies_bin = {
+				-- if you are using tinymist, just set ['typst-preview'] = "tinymist".
+				["typst-preview"] = "tinymist",
+				["websocat"] = nil,
+			},
+		},
+	},
+	{
 		"lervag/vimtex",
 		ft = "tex",
 		config = function()

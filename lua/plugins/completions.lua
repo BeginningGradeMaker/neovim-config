@@ -1,7 +1,85 @@
 return {
+	-- {
+	-- 	"saghen/blink.cmp",
+	-- 	opts_extend = {
+	-- 		"sources.completion.enabled_providers",
+	-- 		"sources.compat",
+	-- 	},
+	-- 	dependencies = {
+	-- 		"rafamadriz/friendly-snippets",
+	-- 		-- add blink.compat to dependencies
+	-- 		{
+	-- 			"saghen/blink.compat",
+	-- 			optional = true, -- make optional so it's only enabled if any extras need it
+	-- 			opts = {},
+	-- 		},
+	-- 	},
+	-- 	event = "InsertEnter",
+	--
+	-- 	---@module 'blink.cmp'
+	-- 	---@type blink.cmp.Config
+	-- 	opts = {
+	-- 		highlight = {
+	-- 			-- sets the fallback highlight groups to nvim-cmp's highlight groups
+	-- 			-- useful for when your theme doesn't support blink.cmp
+	-- 			-- will be removed in a future release, assuming themes add support
+	-- 			use_nvim_cmp_as_default = false,
+	-- 		},
+	-- 		-- set to 'mono' for 'Nerd Font Mono' or 'normal' for 'Nerd Font'
+	-- 		-- adjusts spacing to ensure icons are aligned
+	-- 		nerd_font_variant = "mono",
+	-- 		completion = {
+	-- 			menu = {
+	-- 				winblend = vim.o.pumblend,
+	-- 			},
+	-- 			documentation = {
+	-- 				auto_show = true,
+	-- 				auto_show_delay_ms = 200,
+	-- 			},
+	-- 			ghost_text = {
+	-- 				enabled = vim.g.ai_cmp,
+	-- 			},
+	-- 		},
+	--
+	-- 		-- experimental auto-brackets support
+	-- 		accept = { auto_brackets = { enabled = true } },
+	--
+	-- 		-- experimental signature help support
+	-- 		-- trigger = { signature_help = { enabled = true } }
+	-- 		sources = {
+	-- 			-- adding any nvim-cmp sources here will enable them
+	-- 			-- with blink.compat
+	-- 			compat = {},
+	-- 			completion = {
+	-- 				-- remember to enable your providers here
+	-- 				enabled_providers = { "lsp", "path", "snippets", "buffer" },
+	-- 			},
+	-- 		},
+	--
+	-- 		keymap = {
+	-- 			preset = "super-tab",
+	-- 		},
+	-- 	},
+	-- 	---@param opts blink.cmp.Config | { sources: { compat: string[] } }
+	-- 	config = function(_, opts)
+	-- 		-- setup compat sources
+	-- 		local enabled = opts.sources.completion.enabled_providers
+	-- 		for _, source in ipairs(opts.sources.compat or {}) do
+	-- 			opts.sources.providers[source] = vim.tbl_deep_extend(
+	-- 				"force",
+	-- 				{ name = source, module = "blink.compat.source" },
+	-- 				opts.sources.providers[source] or {}
+	-- 			)
+	-- 			if type(enabled) == "table" and not vim.tbl_contains(enabled, source) then
+	-- 				table.insert(enabled, source)
+	-- 			end
+	-- 		end
+	-- 		require("blink.cmp").setup(opts)
+	-- 	end,
+	-- },
 	{ -- Autocompletion
 		"hrsh7th/nvim-cmp",
-        lazy = true,
+	       lazy = true,
 		event = "InsertEnter",
 		dependencies = {
 			-- Snippet Engine & its associated nvim-cmp source
@@ -29,7 +107,7 @@ return {
 			--    you can use this plugin to help you. It even has snippets
 			--    for various frameworks/libraries/etc. but you will have to
 			--    set up the ones that are useful for you.
-			-- 'rafamadriz/friendly-snippets',
+			'rafamadriz/friendly-snippets',
 		},
 		config = function()
 			-- See `:help cmp`
@@ -46,11 +124,11 @@ return {
 				{ "└", "FloatBorder" },
 				{ "│", "FloatBorder" },
 			}
-			luasnip.config.setup({ update_events = "TextChanged,TextChangedI" })
+			luasnip.config.setup({ update_events = "TextChanged,TextChangedI", border = border })
 
 			-- load snippets from path/of/your/nvim/config/my-cool-snippets
-			require("luasnip.loaders.from_vscode").load({ paths = { "~/.config/nvim/snippets" } })
-			require("luasnip.loaders.from_lua").load({ paths = { "~/.config/nvim/snippets" } })
+			require("luasnip.loaders.from_vscode").lazy_load({ paths = { "~/.config/nvim/snippets" } })
+			require("luasnip.loaders.from_lua").lazy_load({ paths = { "~/.config/nvim/snippets" } })
 
 			cmp.setup({
 				snippet = {
@@ -59,9 +137,9 @@ return {
 					end,
 				},
 				completion = { completeopt = "menu,menuone,noinsert" },
-                view = {
-                    docs = { auto_open = false }
-                },
+	               view = {
+	                   docs = { auto_open = false }
+	               },
 
 				-- For an understanding of why these mappings were
 				-- chosen, you will need to read `:help ins-completion`
@@ -177,7 +255,8 @@ return {
 		config = function()
 			require("nvim-autopairs").setup({
 				ignored_next_char = "[%w%.]",
-				enable_check_bracket_line = false,
+				enable_check_bracket_line = true,
+                enable_afterquote = true
 			})
 			local Rule = require("nvim-autopairs.rule")
 			local npairs = require("nvim-autopairs")
@@ -186,11 +265,11 @@ return {
 			npairs.add_rules({
 				Rule("$", "$", { "typ", "typst", "markdown" }),
 			})
-            npairs.get_rules("`")[1].not_filetypes = { "typ", "typst" }
-            -- vim.keymap.set("v", ")", "sa)", { noremap = true, silent = true })
-            -- vim.keymap.set("v", '"', 'sa"', { noremap = true, silent = true })
-            -- vim.keymap.set("v", "'", "sa'", { noremap = true, silent = true })
-            -- vim.keymap.set("v", "$", "sa$", { noremap = true, silent = true })
+			npairs.get_rules("`")[1].not_filetypes = { "typ", "typst" }
+			-- vim.keymap.set("v", ")", "sa)", { noremap = true, silent = true })
+			-- vim.keymap.set("v", '"', 'sa"', { noremap = true, silent = true })
+			-- vim.keymap.set("v", "'", "sa'", { noremap = true, silent = true })
+			-- vim.keymap.set("v", "$", "sa$", { noremap = true, silent = true })
 		end,
 		-- use opts = {} for passing setup options
 		-- this is equivalent to setup({}) function

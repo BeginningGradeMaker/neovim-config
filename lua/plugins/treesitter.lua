@@ -33,14 +33,18 @@ return {
 							-- Below example nvim-treesitter's `locals.scm` and `folds.scm`. They also provide highlights.scm and indent.scm.
 							["]s"] = { query = "@scope", query_group = "locals", desc = "Next scope" },
 							["]z"] = { query = "@fold", query_group = "folds", desc = "Next fold" },
-						},
-						goto_next_end = {
-							["]F"] = "@function.outer",
-							["]["] = "@class.outer",
+							["]a"] = "@parameter.inner",
+							["]e"] = "@return.inner",
 						},
 						goto_previous_start = {
 							["[f"] = "@function.outer",
 							["[["] = "@class.outer",
+							["[a"] = "@parameter.inner",
+							["[e"] = "@return.inner",
+						},
+						goto_next_end = {
+							["]F"] = "@function.outer",
+							["]["] = "@class.outer",
 						},
 						goto_previous_end = {
 							["[F"] = "@function.outer",
@@ -50,14 +54,35 @@ return {
 						-- Use if you want more granular movements
 						-- Make it even more gradual by adding multiple queries and regex.
 						goto_next = {
-							["]c"] =  "@conditional.outer",
+							["]c"] = "@conditional.outer",
 						},
 						goto_previous = {
-							["[c"] =  "@conditional.outer",
+							["[c"] = "@conditional.outer",
 						},
 					},
 				},
 			})
+		end,
+	},
+	{
+		"nvim-treesitter/nvim-treesitter-context",
+        lazy = true,
+		event = "VeryLazy",
+		config = function()
+			local tsc = require("treesitter-context")
+			tsc.setup({
+                enable = false,
+				mode = "cursor",
+				max_lines = 3,
+			})
+
+			vim.keymap.set("n", "<leader>ut", tsc.toggle, { desc = "Toggle Treesitter context" })
+			vim.cmd("hi TreesitterContext gui=underline guisp=background")
+			vim.cmd("hi TreesitterContextLineNumber guibg=background")
+			-- vim.cmd("hi TreesitterContextSeparator gui=underline")
+			vim.cmd("hi TreesitterContextBottom gui=underline")
+			-- vim.cmd("hi clear TreesitterContextSeparator")
+			-- vim.cmd("hi clear TreesitterContextBottom")
 		end,
 	},
 }
