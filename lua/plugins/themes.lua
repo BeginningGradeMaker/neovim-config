@@ -82,93 +82,16 @@ return {
 		end,
 	},
 	{
-		"AstroNvim/astrotheme",
-		priority = 1000,
-		config = function()
-			require("astrotheme").setup({
-				style = {
-					transparent = false, -- Bool value, toggles transparency.
-					inactive = true, -- Bool value, toggles inactive window color.
-					float = true, -- Bool value, toggles floating windows background colors.
-					neotree = true, -- Bool value, toggles neo-trees background color.
-					border = true, -- Bool value, toggles borders.
-					title_invert = true, -- Bool value, swaps text and background colors.
-					italic_comments = true, -- Bool value, toggles italic comments.
-					-- simple_syntax_colors = true, -- Bool value, simplifies the amounts of colors used for syntax highlighting.
-				},
-				plugins = { -- Allows for individual plugin overrides using plugin name and value from above.
-					["bufferline.nvim"] = true,
-					["lualine.nvim"] = true,
-					["nvim-treesitter"] = true,
-					["dashboard-nvim"] = true,
-					["telescope.nvim"] = true,
-				},
-				integrations = {
-					telescope = {
-						enabled = true,
-						style = "nvchad",
-					},
-				},
-				-- palettes = {
-				-- 	global = { -- Globally accessible palettes, theme palettes take priority.
-				-- 		my_grey = "#ebebeb",
-				-- 		my_color = "#ffffff",
-				-- 	},
-				-- 	astrodark = { -- Extend or modify astrodarks palette colors
-				-- 		ui = {
-				-- 			red = "#800010", -- Overrides astrodarks red UI color
-				-- 			accent = "#CC83E3", -- Changes the accent color of astrodark.
-				-- 		},
-				-- 		syntax = {
-				-- 			cyan = "#800010", -- Overrides astrodarks cyan syntax color
-				-- 			comments = "#CC83E3", -- Overrides astrodarks comment color.
-				-- 		},
-				-- 		my_color = "#000000", -- Overrides global.my_color
-				-- 	},
-				-- },
-				-- highlights = {
-				--   global = { -- Add or modify hl groups globally, theme specific hl groups take priority.
-				--     modify_hl_groups = function(hl, c)
-				--       hl.PluginColor4 = { fg = c.my_grey, bg = c.none }
-				--     end,
-				--     ["@String"] = { fg = "#ff00ff", bg = "NONE" },
-				--   },
-				--   astrodark = {
-				--     -- first parameter is the highlight table and the second parameter is the color palette table
-				--     modify_hl_groups = function(hl, c) -- modify_hl_groups function allows you to modify hl groups,
-				--       hl.Comment.fg = c.my_color
-				--       hl.Comment.italic = true
-				--     end,
-				--     ["@String"] = { fg = "#ff00ff", bg = "NONE" },
-				--   },
-				-- },
-			})
-		end,
-	},
-	-- {
-	-- 	"olimorris/onedarkpro.nvim",
-	-- 	priority = 1000, -- ensure it loads first
-	-- 	-- config = function()
-	-- 	-- 	-- somewhere in your config:
-	-- 	-- end,
-	-- },
-	{
-		"navarasu/onedark.nvim",
-		priority = 1000,
+		"olimorris/onedarkpro.nvim",
+		priority = 1000, -- ensure it loads first
+		-- config = function()
+		-- 	-- somewhere in your config:
+		-- end,
 	},
 	{
 		"luisiacc/the-matrix.nvim",
 		priority = 1000,
 	},
-	-- {
-	-- 	"diegoulloao/neofusion.nvim",
-	-- 	priority = 1000,
-	-- 	config = function()
-	-- 		require("neofusion").setup({
-	-- 			transparent_mode = true,
-	-- 		})
-	-- 	end,
-	-- },
 	{
 		"folke/tokyonight.nvim",
 		lazy = false,
@@ -183,7 +106,6 @@ return {
 		},
 	},
 	{ "ellisonleao/gruvbox.nvim", priority = 1000, config = true },
-	{ "marko-cerovac/material.nvim", enabled = vim.g.opt_themes, priority = 1000 },
 	{
 		"scottmckendry/cyberdream.nvim",
         enabled = vim.g.opt_themes,
@@ -206,29 +128,7 @@ return {
 			})
 		end,
 	},
-	{
-		"projekt0n/github-nvim-theme",
-        enabled = vim.g.opt_themes,
-		name = "github-theme",
-		lazy = false, -- make sure we load this during startup if it is your main colorscheme
-		priority = 1000, -- make sure to load this before all the other start plugins
-	},
 	{ "rose-pine/neovim", enabled = vim.g.opt_themes, lazy = false, priority = 1000, name = "rose-pine" },
-	{
-		"AlexvZyl/nordic.nvim",
-        enabled = vim.g.opt_themes,
-		lazy = true,
-		event = "VeryLazy",
-		priority = 1000,
-		-- config = function()
-		-- 	require("nordic").load()
-		-- end,
-	},
-	{
-		"Mofiqul/vscode.nvim",
-        enabled = vim.g.opt_themes,
-		priority = 1000,
-	},
 	{
 		"shaunsingh/nord.nvim",
 		priority = 1000,

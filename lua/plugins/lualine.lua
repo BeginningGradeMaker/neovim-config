@@ -5,7 +5,6 @@ return {
 		lazy = true,
 		enabled = true,
 		event = "BufReadPre",
-		-- dependencies = { "nvim-tree/nvim-web-devicons" },
 		config = function()
 			local hl = vim.api.nvim_get_hl(0, { name = "lualine_a_normal", create = true })
 
@@ -50,21 +49,21 @@ return {
 							end,
 						},
 						-- { "filename", path = 1 },
-						{
-							require("lazy.status").updates,
-							cond = require("lazy.status").has_updates,
-							color = "white",
-						},
-						{
-							function()
-								for _, buf in ipairs(vim.api.nvim_list_bufs()) do
-									if vim.api.nvim_buf_get_option(buf, "modified") then
-										return "Unsaved buffers" -- any message or icon
-									end
-								end
-								return ""
-							end,
-						},
+						-- {
+						-- 	require("lazy.status").updates,
+						-- 	cond = require("lazy.status").has_updates,
+						-- 	color = "white",
+						-- },
+						-- {
+						-- 	function()
+						-- 		for _, buf in ipairs(vim.api.nvim_list_bufs()) do
+						-- 			if vim.api.nvim_buf_get_option(buf, "modified") then
+						-- 				return "Unsaved buffers" -- any message or icon
+						-- 			end
+						-- 		end
+						-- 		return ""
+						-- 	end,
+						-- },
 					},
 					lualine_x = {
 						{

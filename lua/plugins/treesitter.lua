@@ -23,7 +23,8 @@ return {
 						set_jumps = true, -- whether to set jumps in the jumplist
 						goto_next_start = {
 							["]f"] = "@function.outer",
-							["]]"] = { query = "@class.outer", desc = "Next class start" },
+							[")"] = "@function.outer",
+							["}"] = { query = "@class.outer", desc = "Next class start" },
 							--
 							-- You can use regex matching (i.e. lua pattern) and/or pass a list in a "query" key to group multiple queries.
 							["]o"] = "@loop.*",
@@ -31,24 +32,26 @@ return {
 							--
 							-- You can pass a query group to use query from `queries/<lang>/<query_group>.scm file in your runtime path.
 							-- Below example nvim-treesitter's `locals.scm` and `folds.scm`. They also provide highlights.scm and indent.scm.
-							["]s"] = { query = "@scope", query_group = "locals", desc = "Next scope" },
+							["]s"] = { query = "@local.scope", query_group = "locals", desc = "Next scope" },
 							["]z"] = { query = "@fold", query_group = "folds", desc = "Next fold" },
 							["]a"] = "@parameter.inner",
 							["]e"] = "@return.inner",
 						},
 						goto_previous_start = {
 							["[f"] = "@function.outer",
-							["[["] = "@class.outer",
+							["("] = "@function.outer",
+							["{"] = "@class.outer",
 							["[a"] = "@parameter.inner",
 							["[e"] = "@return.inner",
+							["M"] = { query = "@local.scope", query_group = "locals", desc = "Prev scope" },
 						},
 						goto_next_end = {
 							["]F"] = "@function.outer",
-							["]["] = "@class.outer",
+							["]]"] = "@class.outer",
 						},
 						goto_previous_end = {
 							["[F"] = "@function.outer",
-							["[]"] = "@class.outer",
+							["[["] = "@class.outer",
 						},
 						-- Below will go to either the start or the end, whichever is closer.
 						-- Use if you want more granular movements
@@ -62,16 +65,19 @@ return {
 					},
 				},
 			})
+			-- local ts_repeat_move = require("nvim-treesitter.textobjects.repeatable_move")
+			-- vim.keymap.set({ "n", "x", "o" }, ";", ts_repeat_move.repeat_last_move_next)
+			--          vim.keymap.set({ "n", "x", "o" }, ",", ts_repeat_move.repeat_last_move_previous)
 		end,
 	},
 	{
 		"nvim-treesitter/nvim-treesitter-context",
-        lazy = true,
+		lazy = true,
 		event = "VeryLazy",
 		config = function()
 			local tsc = require("treesitter-context")
 			tsc.setup({
-                enable = false,
+				enable = false,
 				mode = "cursor",
 				max_lines = 3,
 			})

@@ -144,22 +144,27 @@ return {
 			end, { desc = "Dimiss notification" })
 		end,
 	},
-	{
-		"nvchad/volt",
-		lazy = true,
-	},
-	{
-		"nvchad/menu",
-		lazy = false,
-		config = function()
-			vim.keymap.set("n", "<RightMouse>", function()
-				vim.cmd.exec('"normal! \\<RightMouse>"')
-
-				local options = vim.bo.ft == "NvimTree" and "nvimtree" or "default"
-				require("menu").open(options, { mouse = true })
-			end, {})
-		end,
-	},
+    -- Enable these if you want mosue support with pretty UI
+	-- {
+	-- 	"nvchad/volt",
+	-- 	lazy = true,
+	-- },
+	-- {
+	-- 	"nvzone/minty",
+	-- 	cmd = { "Shades", "Huefy" },
+	-- },
+	-- {
+	-- 	"nvchad/menu",
+	-- 	lazy = false,
+	-- 	config = function()
+	-- 		vim.keymap.set("n", "<RightMouse>", function()
+	-- 			vim.cmd.exec('"normal! \\<RightMouse>"')
+	--
+	-- 			local options = vim.bo.ft == "NvimTree" and "nvimtree" or "default"
+	-- 			require("menu").open(options, { mouse = true })
+	-- 		end, {})
+	-- 	end,
+	-- },
 	{
 		"Bekaboo/dropbar.nvim",
 		-- optional, but required for fuzzy finder support
@@ -168,9 +173,22 @@ return {
 			build = "make",
 		},
 		opts = {
+			-- bar = {
+			-- 	sources = function(buf, _)
+			-- 		local sources = require("dropbar.sources")
+			-- 		local utils = require("dropbar.utils")
+			-- 		if vim.bo[buf].ft == "markdown" then
+			-- 			return { sources.markdown }
+			-- 		end
+			-- 		if vim.bo[buf].buftype == "terminal" then
+			-- 			return { sources.terminal }
+			-- 		end
+			-- 		return { utils.source.fallback({ sources.lsp, sources.treesitter }) }
+			-- 	end,
+			-- },
 			sources = {
 				path = {
-                    -- Change winbar status when file is modified
+					-- Change winbar status when file is modified
 					modified = function(sym)
 						return sym:merge({
 							name = sym.name .. "[+]",
@@ -181,80 +199,56 @@ return {
 						})
 					end,
 				},
+				treesitter = {
+					-- valid_types = {
+					-- 	-- "array",
+					-- 	-- "boolean",
+					-- 	-- "call",
+					-- 	-- "class",
+					-- 	-- "constant",
+					-- 	-- "constructor",
+					-- 	-- "delete",
+					-- 	-- "do_statement",
+					-- 	-- "element",
+					-- 	-- "enum",
+					-- 	-- "enum_member",
+					-- 	-- "event",
+					-- 	-- "function",
+					-- 	-- "h1_marker",
+					-- 	-- "h2_marker",
+					-- 	-- "h3_marker",
+					-- 	-- "h4_marker",
+					-- 	-- "h5_marker",
+					-- 	-- "h6_marker",
+					-- 	-- "interface",
+					-- 	-- "macro",
+					-- 	-- "method",
+					-- 	-- "module",
+					-- 	-- "namespace",
+					-- 	-- "null",
+					-- 	-- "number",
+					-- 	-- "operator",
+					-- 	-- "package",
+					-- 	-- "pair",
+					-- 	-- "property",
+					-- 	-- "reference",
+					-- 	-- "repeat",
+					-- 	-- "rule_set",
+					-- 	-- "scope",
+					-- 	-- "specifier",
+					-- 	-- "struct",
+					-- 	-- "type",
+					-- 	-- "type_parameter",
+					-- 	-- "unit",
+					-- 	-- "value",
+					-- 	"declaration",
+					-- 	-- "identifier",
+					-- 	-- "object",
+					-- 	"statement",
+					-- },
+				},
 			},
 		},
 	},
-	-- {
-	-- 	"akinsho/toggleterm.nvim",
-	-- 	lazy = true,
-	-- 	cmd = { "ToggleTerm", "TermExec" },
-	-- 	keys = {
-	-- 		{ "<c-\\>" },
-	-- 	},
-	-- 	config = function()
-	-- 		local get_height = function()
-	-- 			return math.floor(vim.o.lines * 0.70)
-	-- 		end
-	-- 		local get_width = function()
-	-- 			return math.floor(vim.o.columns * 0.80 - 1)
-	-- 		end
-	-- 		require("toggleterm").setup({
-	-- 			-- size can be a number or function which is passed the current terminal
-	-- 			size = get_height,
-	-- 			open_mapping = [[<c-\>]],
-	-- 			hide_numbers = true, -- hide the number column in toggleterm buffers
-	-- 			shade_terminals = true,
-	-- 			-- shading_factor = 1,       -- the degree by which to darken to terminal colour, default: 1 for dark backgrounds, 3 for light
-	-- 			start_in_insert = true,
-	-- 			insert_mappings = true, -- whether or not the open mapping applies in insert mode
-	-- 			autochdir = true, -- when neovim changes it current directory the terminal will change it's own when next it's opened
-	-- 			terminal_mappings = true, -- whether or not the open mapping applies in the opened terminals
-	-- 			-- persist_size = true,
-	-- 			direction = "float",
-	-- 			close_on_exit = true, -- close the terminal window when the process exits
-	-- 			shell = vim.o.shell, -- change the default shell
-	-- 			float_opts = {
-	-- 				width = get_width,
-	-- 				height = get_height,
-	-- 				border = "rounded",
-	-- 			},
-	-- 			highlights = {
-	-- 				-- highlights which map to a highlight group name and a table of it's values
-	-- 				-- NOTE: this is only a subset of values, any group placed here will be set for the terminal window split
-	-- 				-- Normal = {
-	-- 				--   link = 'Pmenu'
-	-- 				-- },
-	-- 				-- NormalFloat = {
-	-- 				--   link = 'Pmenu'
-	-- 				-- },
-	-- 				-- FloatBorder = {
-	-- 				--   link = 'Pmenu'
-	-- 				-- },
-	-- 			},
-	-- 			winbar = {
-	-- 				enabled = true,
-	-- 				name_formatter = function(term) --  term: Terminal
-	-- 					local buf_name = vim.api.nvim_buf_get_name(term.bufnr)
-	-- 					if not buf_name then
-	-- 						return term.name
-	-- 					end
-	-- 					local buf_len = string.len(buf_name)
-	-- 					local colon_index = buf_name:match("^.*():")
-	-- 					local slash_index = buf_name:match("^.*()/")
-	-- 					local sub_index
-	-- 					if colon_index then
-	-- 						sub_index = colon_index
-	-- 					elseif slash_index then
-	-- 						sub_index = slash_index
-	-- 					end
-	-- 					if sub_index then
-	-- 						buf_name = buf_name:sub(sub_index + 1, buf_len)
-	-- 					end
-	-- 					term.name = buf_name
-	-- 					return buf_name
-	-- 				end,
-	-- 			},
-	-- 		})
-	-- 	end,
-	-- },
+	{ "lukas-reineke/indent-blankline.nvim", event = "VeryLazy", main = "ibl", opts = {} },
 }

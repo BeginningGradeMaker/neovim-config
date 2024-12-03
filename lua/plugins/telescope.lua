@@ -10,19 +10,11 @@ return {
 				build = "make",
 				-- `cond` is a condition used to determine whether this plugin should be
 				-- installed and loaded.
-
 				cond = function()
 					return vim.fn.executable("make") == 1
 				end,
 			},
 			{ "nvim-telescope/telescope-ui-select.nvim" },
-			{
-				"andrew-george/telescope-themes",
-			},
-			-- { 'nvim-tree/nvim-web-devicons',            enabled = vim.g.have_nerd_font },
-			-- {
-			-- 	"tristone13th/lspmark.nvim",
-			-- },
 		},
 		config = function()
 			local actions = require("telescope.actions")
@@ -30,18 +22,13 @@ return {
 			require("telescope").setup({
 				pickers = {
 					colorscheme = { enable_preview = true },
-					-- find_files = {
-					--     find_command = {"rg", "--files", "--sortr=modified"}
-					-- }
+					find_files = {
+						find_command = { "rg", "--files", "--sortr=modified" },
+					},
 				},
 				extensions = {
 					["ui-select"] = {
 						require("telescope.themes").get_dropdown(),
-					},
-					["themes"] = {
-						enable_live_preview = true,
-						enable_previewer = true,
-						persist = { enabled = true, path = vim.fn.stdpath("config") .. "/lua/colorscheme.lua" },
 					},
 				},
 				defaults = {
@@ -49,7 +36,7 @@ return {
 					prompt_prefix = get_icon("Selected", 1, true),
 					selection_caret = get_icon("Selected", 1, true),
 					path_display = { "smart" },
-					sorting_strategy = "ascending",
+					-- sorting_strategy = "ascending",
 					layout_config = {
 						horizontal = { prompt_position = "bottom", preview_width = 0.55 },
 						vertical = { mirror = false },
@@ -86,13 +73,11 @@ return {
 
 			pcall(require("telescope").load_extension, "fzf")
 			pcall(require("telescope").load_extension, "ui-select")
-			pcall(require("telescope").load_extension, "themes")
-			-- pcall(require("telescope").load_extension, "lspmark")
 
 			local builtin = require("telescope.builtin")
 			-- vim.keymap.set("n", "<leader>ff", builtin.find_files, { desc = "Find files" })
-			vim.keymap.set("n", "<leader><leader>", builtin.find_files, { desc = "Files" })
-			vim.keymap.set("n", "?", builtin.live_grep, { desc = "Live grep" })
+			vim.keymap.set("n", "<leader><leader>", builtin.find_files, { desc = "Find files" })
+			vim.keymap.set("n", "<leader>fw", builtin.live_grep, { desc = "Live grep" })
 			vim.keymap.set("n", "<leader>fh", builtin.help_tags, { desc = "Help" })
 			vim.keymap.set("n", "<leader>fk", builtin.keymaps, { desc = "Keymaps" })
 			vim.keymap.set("n", "<leader>fH", builtin.builtin, { desc = "Select telescope" })
@@ -113,7 +98,7 @@ return {
 			end, { desc = "Constants" })
 
 			vim.keymap.set("n", "<leader>fm", function()
-				return builtin.marks({ defaults = {path_display = { "hidden" }} })
+				return builtin.marks({ defaults = { path_display = { "hidden" } } })
 			end, { desc = "Marks" })
 			vim.keymap.set("n", "<leader>fp", function()
 				return builtin.registers()
@@ -121,7 +106,6 @@ return {
 
 			-- Change colorschemes
 			vim.keymap.set("n", "<leader>ft", builtin.colorscheme, { desc = "Change colorscheme" })
-			-- vim.keymap.set("n", "<leader>ft", require("telescope").extensions.themes.themes, { desc = "Change colorscheme" })
 			vim.keymap.set(
 				"n",
 				"<leader>fT",
@@ -145,20 +129,6 @@ return {
 			vim.keymap.set("n", "<leader>fn", function()
 				builtin.find_files({ cwd = vim.fn.stdpath("config") })
 			end, { desc = "NeoVim files" })
-
-			-- Lsp marks
-			-- vim.keymap.set("n", "m", function()
-			-- 	require("lspmark.bookmarks").toggle_bookmark({ with_comment = false })
-			-- end, { desc = "Toogle bookmark" })
-			-- vim.keymap.set("n", "<leader>m", function()
-			-- 	vim.cmd("Telescope lspmark")
-			-- end, { desc = "Show Lsp marks" })
-			-- -- <new_dir> can be nil, by default it is cwd.
-			-- require("lspmark.bookmarks").load_bookmarks()
-			-- vim.api.nvim_create_autocmd({ "DirChanged" }, {
-			-- 	callback = require("lspmark.bookmarks").load_bookmarks,
-			-- 	pattern = { "*" },
-			-- })
 		end,
 	},
 }

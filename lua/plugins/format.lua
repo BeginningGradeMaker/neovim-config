@@ -13,6 +13,7 @@ return {
 				-- Conform will run the first available formatter
                 json = { "prettier" },
 				javascript = { "prettierd", "prettier", stop_after_first = true },
+                -- typst = { "typstfmt" }
 			},
 			format_on_save = function(bufnr)
 				-- Disable with a global or buffer-local variable

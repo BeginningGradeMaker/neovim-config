@@ -3,7 +3,7 @@ vim.cmd("set tabstop=4")
 vim.cmd("set softtabstop=4")
 vim.cmd("set shiftwidth=4")
 vim.g.mapleader = " "
-vim.wo.relativenumber = false
+vim.wo.relativenumber = true
 
 local keymap = vim.keymap
 
@@ -88,6 +88,8 @@ end, { desc = "Previosu buffer", silent = true })
 vim.keymap.set("n", "<C-l>", function()
 	vim.cmd("bn")
 end, { desc = "Next buffer", silent = true })
+-- vim.keymap.set("n", "<C-h>", "<C-w><C-h>", { desc = "Previosu buffer", silent = true })
+-- vim.keymap.set("n", "<C-l>", "<C-w><C-l>", { desc = "Next buffer", silent = true })
 vim.keymap.set({ "n", "v" }, "<C-j>", "<C-d>", { desc = "Move half screen down." })
 vim.keymap.set({ "n", "v" }, "<C-k>", "<C-u>", { desc = "Move half screen up." })
 vim.keymap.set({ "i", "c", "o" }, "<C-j>", "<C-n>", { desc = "Select next item" })
@@ -178,15 +180,17 @@ keymap.set("n", "s", "<Nop>", { noremap = true })
 
 vim.g.disable_autoformat = true
 vim.g.copilot_enabled = 0
-vim.opt.showtabline = 0
+vim.opt.showtabline = 2
 
 -- views can only be fully collapsed with the global statusline
-vim.opt.laststatus = 3
+vim.opt.laststatus = 2
 
 -- grug-far.nvim
--- vim.g.maplocalleader = ";"
+vim.g.maplocalleader = "."
 
 -- vim.o.winbar = ""
 
 -- optional themes
 vim.g.opt_themes = false
+
+vim.opt.sessionoptions = { "buffers", "curdir", "tabpages", "winsize", "help", "globals", "skiprtp", "folds", "blank" }

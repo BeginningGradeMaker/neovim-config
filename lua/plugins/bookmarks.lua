@@ -9,15 +9,14 @@ return {
 			{ "]m", "<cmd>Arrow next_buffer_bookmark<cr>", desc = "Goto next buffer bookmark" },
 		},
 		dependencies = {
-			{ "nvim-tree/nvim-web-devicons" },
 			-- or if using `mini.icons`
-			-- { "echasnovski/mini.icons" },
+			{ "echasnovski/mini.icons" },
 		},
 		opts = {
 			show_icons = true,
 			leader_key = "'", -- Recommended to be a single key
 			index_keys = "1234qweradfzxcv56789bnmZXVBNM,ghjklAFGHJKLtyuiopWRTYUIOP", -- keys mapped to bookmark index, i.e. 1st bookmark will be accessible by 1, and 12th - by c
-			buffer_leader_key = ",", -- Per Buffer Mappings
+			buffer_leader_key = "<leader>m", -- Per Buffer Mappings
 			mappings = {
 				edit = "E",
 				delete_mode = "d",

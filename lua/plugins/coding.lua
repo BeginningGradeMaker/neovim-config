@@ -69,8 +69,6 @@ return {
 			--     },
 			-- })
 
-			require("mini.icons").setup()
-
 			require("mini.surround").setup({
 				-- Number of lines within which surrounding is searched
 				n_lines = 20,
@@ -178,15 +176,18 @@ return {
 
 					map_buf("<leader>e", MiniFiles.close)
 					map_buf("<ESC>", MiniFiles.close)
-                    map_buf("g.", toggle_dotfiles, "Toggle hidden files")
-                    map_buf("gc", files_set_cwd, "Set cwd")
+					map_buf("g.", toggle_dotfiles, "Toggle hidden files")
+					map_buf("gc", files_set_cwd, "Set cwd")
 
 					-- Add extra mappings from *MiniFiles-examples*
 				end,
 			})
 
 			-- local statusline = require("mini.statusline")
-			-- statusline.setup({ use_icons = vim.g.have_nerd_font })
+			-- statusline.setup({
+			-- 	use_icons = vim.g.have_nerd_font,
+			-- })
+			-- vim.opt.laststatus = 3
 
 			-- You can configure sections in the statusline by overriding their
 			-- default behavior. For example, here we set the section for
@@ -214,7 +215,6 @@ return {
 			vim.keymap.set("n", "<leader>ru", "<cmd>CompetiTest show_ui<cr>", { desc = "Show UI" })
 		end,
 	},
-	{ "lukas-reineke/indent-blankline.nvim", event = "VeryLazy", main = "ibl", opts = {} },
 	{
 
 		"folke/flash.nvim",
@@ -420,7 +420,7 @@ return {
 			{
 				"<C-.>",
 				function()
-					Snacks.scratch()
+					Snacks.scratch({ft = "markdown"})
 				end,
 				desc = "Toggle Scratch Buffer",
 			},

@@ -29,7 +29,7 @@ return {
 						else
 							gitsigns.nav_hunk("next")
 						end
-					end, {desc = "Next hunk"})
+					end, { desc = "Next hunk" })
 
 					map("n", "[h", function()
 						if vim.wo.diff then
@@ -37,7 +37,7 @@ return {
 						else
 							gitsigns.nav_hunk("prev")
 						end
-					end, {desc = "Prev hunk"})
+					end, { desc = "Prev hunk" })
 
 					-- Actions
 					-- map("n", "<leader>hs", gitsigns.stage_hunk, { desc = "Stage hunk" })
@@ -56,11 +56,11 @@ return {
 					-- 	gitsigns.blame_line({ full = true })
 					-- end, { desc = "Blame line" })
 					map("n", "<leader>tb", gitsigns.toggle_current_line_blame, { desc = "Git blame line" })
-                    map("n", "<leader>gd", gitsigns.diffthis, { desc = "Diff this" })
-					map("n", "<leader>gD", function()
-						gitsigns.diffthis("~")
-					end, {desc = "Diff this ~"})
-					map("n", "<leader>td", gitsigns.toggle_deleted, {desc = "Git deleted"})
+					-- map("n", "<leader>gd", gitsigns.diffthis, { desc = "Diff this" })
+					-- map("n", "<leader>gD", function()
+					-- 	gitsigns.diffthis("~")
+					-- end, { desc = "Diff this ~" })
+					map("n", "<leader>td", gitsigns.toggle_deleted, { desc = "Git deleted" })
 
 					-- Text object
 					map({ "o", "x" }, "ih", ":<C-U>Gitsigns select_hunk<CR>", { desc = "Git select hunk" })
@@ -68,19 +68,24 @@ return {
 			})
 		end,
 	},
-    -- Replace this with snack.nvim
-	-- {
-	-- 	"kdheepak/lazygit.nvim",
-	-- 	lazy = true,
-	-- 	event = "VeryLazy",
-	-- 	-- optional for floating window border decoration
-	-- 	dependencies = {
-	-- 		"nvim-lua/plenary.nvim",
-	-- 	},
-	-- 	config = function()
-	-- 		-- nvim v0.8.0
-	-- 		-- require("lazygit").setup()
-	-- 		vim.keymap.set("n", "<leader>gp", "<cmd>LazyGit<cr>", { desc = "LazyGit" })
-	-- 	end,
-	-- },
+	{
+		"sindrets/diffview.nvim",
+		lazy = true,
+		event = "VeryLazy",
+		config = function()
+			require("diffview").setup()
+			vim.keymap.set("n", "<leader>gd", function()
+			    -- local last_tabpage = vim.api.nvim_get_current_tabpage()
+				local lib = require("diffview.lib")
+				local view = lib.get_current_view()
+				if view then
+					-- Current tabpage is a Diffview; close it
+					vim.cmd(":DiffviewClose")
+				else
+					-- No open Diffview exists: open a new one
+					vim.cmd(":DiffviewOpen")
+				end
+			end)
+		end,
+	},
 }

@@ -8,11 +8,17 @@ return {
 	config = function()
 		local bufferline = require("bufferline")
 		bufferline.setup({
+			highlights = {
+				fill = {
+					bg = "bg"
+				},
+			},
 			options = {
 				auto_toggle_bufferline = false,
 				style_preset = bufferline.style_preset.minimal, -- or bufferline.style_preset.minimal,
 				close_command = "bdelete %d",
 				indicator = {
+                    icon = '▎', -- this should be omitted if indicator style is not 'icon'
 					style = "none",
 				},
 				-- name_formatter = function(buf)
@@ -29,9 +35,10 @@ return {
 				enforce_regular_tabs = true,
 				tab_size = 12,
 				TabLineFill = { bg = bufferline.line_bg },
+                separator_style = "slant"
 			},
 		})
-		local show = false
+		local show = true
 		vim.keymap.set("n", "<leader>tl", function()
 			if show then
 				vim.opt.showtabline = 0

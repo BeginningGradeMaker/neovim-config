@@ -170,7 +170,7 @@ return {
 						-- elseif vim.treesitter.highlighter.active[vim.api.nvim_get_current_buf()] then
 						-- 	luasnip.expand_or_jump()
 						else
-						    require("neotab").tabout()
+                            require("tabout").tabout()
 						end
 					end),
 
