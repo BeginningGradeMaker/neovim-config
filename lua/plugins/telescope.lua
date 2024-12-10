@@ -1,8 +1,8 @@
 return {
 	{
 		"nvim-telescope/telescope.nvim",
-		event = "VeryLazy",
-		tag = "0.1.6",
+		lazy = true,
+		-- tag = "0.1.6",
 		dependencies = {
 			"nvim-lua/plenary.nvim",
 			{
@@ -16,6 +16,179 @@ return {
 			},
 			{ "nvim-telescope/telescope-ui-select.nvim" },
 		},
+		cmd = "Telescope",
+		keys = {
+			{
+				"<leader><leader>",
+				function()
+					return require("telescope.builtin").find_files()
+				end,
+				desc = "Find files",
+			},
+			{
+				"<leader>fw",
+				function()
+					return require("telescope.builtin").live_grep()
+				end,
+				desc = "Live grep",
+			},
+			{
+				"<leader>fh",
+				function()
+					return require("telescope.builtin").help_tags({cache_picker = false})
+				end,
+				desc = "Help",
+			},
+			{
+				"<leader>fk",
+				function()
+					return require("telescope.builtin").keymaps({cache_picker = false})
+				end,
+				desc = "Keymaps",
+			},
+			{
+				"<leader>ft",
+				function()
+					return require("telescope.builtin").builtin({cache_picker = false})
+				end,
+				desc = "Select",
+			},
+			{
+				"<leader>fH",
+				function()
+					return require("telescope.builtin").highlights({cache_picker = false})
+				end,
+				desc = "Highlight",
+			},
+			{
+				"<leader>fW",
+				function()
+					return require("telescope.builtin").grep_string()
+				end,
+				desc = "Current word",
+			},
+			{
+				"<leader>fd",
+				function()
+					return require("telescope.builtin").diagnostics()
+				end,
+				desc = "Diagnostics",
+			},
+			{
+				"<leader>l",
+				function()
+					return require("telescope.builtin").resume()
+				end,
+				desc = "Resume last search",
+			},
+			{
+				"<leader>f.",
+				function()
+					return require("telescope.builtin").oldfiles({cache_picker = false})
+				end,
+				desc = "Recent files",
+			},
+			-- { "<leader>b", "<cmd>Telescope buffers sort_mru=true sort_lastused=true previewer=false<cr>", desc = "Existing buffers", silent = true },
+			{
+				"<leader>b",
+				function()
+					require("telescope.builtin").buffers(require("telescope.themes").get_dropdown({
+						winblend = 10,
+						previewer = false,
+					}))
+				end,
+				desc = "Existing buffers",
+				silent = true,
+			},
+			{ "<leader>fo", "<cmd>Telescope vim_options<cr>", desc = "Options", silent = true },
+			{
+				"<leader>ff",
+				function()
+					return require("telescope.builtin").lsp_document_symbols({ symbols = { "function", "method" } })
+				end,
+				desc = "Methods",
+			},
+			{
+				"<leader>fs",
+				function()
+					return require("telescope.builtin").lsp_document_symbols({
+						symbols = { "struct", "class", "typeparameter", "enum" },
+					})
+				end,
+				desc = "Structs",
+			},
+
+			{
+				"<leader>fc",
+				function()
+					return require("telescope.builtin").lsp_document_symbols({ symbols = { "constant" } })
+				end,
+				desc = "Constants",
+			},
+
+			{
+				"<leader>m",
+				function()
+					return require("telescope.builtin").marks(require("telescope.themes").get_dropdown({
+						winblend = 10,
+						previewer = true,
+						path_display = "hidden",
+                        initial_mode = "normal",
+                        cache_picker = false,
+					}))
+				end,
+				desc = "Marks",
+			},
+			{
+				"<leader>fp",
+				function()
+					return require("telescope.builtin").registers({cache_picker = false})
+				end,
+				desc = "Registers",
+			},
+
+			-- Change colorschemes
+			{
+				"<leader>uT",
+				function()
+					return require("telescope.builtin").colorscheme({cache_picker = false})
+				end,
+				desc = "Find colorschemes",
+			},
+			-- {
+			-- 	"<leader>fT",
+			-- 	function()
+			-- 		vim.cmd("Telescope themes")
+			-- 	end,
+			-- 	-- ":Telescope themes<CR>",
+			-- 	noremap = true,
+			-- 	silent = true,
+			-- 	desc = "Change persistent colorscheme",
+			-- },
+			-- Slightly advanced example of overriding default behavior and theme
+			{
+				"<leader>/",
+				function()
+					-- You can pass additional configuration to telescope to change theme, layout, etc.
+					require("telescope.builtin").current_buffer_fuzzy_find(require("telescope.themes").get_dropdown({
+						winblend = 10,
+						previewer = true,
+					}))
+				end,
+				desc = "Fuzzily search",
+			},
+
+			-- Shortcut for searching your neovim configuration files
+			{
+				"<leader>fn",
+				function()
+					require("telescope.builtin").find_files({ cwd = vim.fn.stdpath("config"), cache_picker = false })
+				end,
+				desc = "NeoVim files",
+			},
+
+			{ "<leader>fu", "<cmd>Telescope undo<cr>", desc = "Undo history", silent = true },
+		},
 		config = function()
 			local actions = require("telescope.actions")
 			local get_icon = require("utils").get_icon
@@ -23,6 +196,7 @@ return {
 				pickers = {
 					colorscheme = { enable_preview = true },
 					find_files = {
+                        theme = "ivy",
 						find_command = { "rg", "--files", "--sortr=modified" },
 					},
 				},
@@ -36,12 +210,13 @@ return {
 					prompt_prefix = get_icon("Selected", 1, true),
 					selection_caret = get_icon("Selected", 1, true),
 					path_display = { "smart" },
-					-- sorting_strategy = "ascending",
+					sorting_strategy = "ascending",
+                    layout_strategy = "bottom_pane",
 					layout_config = {
-						horizontal = { prompt_position = "bottom", preview_width = 0.55 },
+						horizontal = { prompt_position = "top", preview_width = 0.55 },
 						vertical = { mirror = false },
 						width = 0.87,
-						height = 0.80,
+						height = 0.60,
 						preview_cutoff = 120,
 					},
 					mappings = {
@@ -73,62 +248,7 @@ return {
 
 			pcall(require("telescope").load_extension, "fzf")
 			pcall(require("telescope").load_extension, "ui-select")
-
-			local builtin = require("telescope.builtin")
-			-- vim.keymap.set("n", "<leader>ff", builtin.find_files, { desc = "Find files" })
-			vim.keymap.set("n", "<leader><leader>", builtin.find_files, { desc = "Find files" })
-			vim.keymap.set("n", "<leader>fw", builtin.live_grep, { desc = "Live grep" })
-			vim.keymap.set("n", "<leader>fh", builtin.help_tags, { desc = "Help" })
-			vim.keymap.set("n", "<leader>fk", builtin.keymaps, { desc = "Keymaps" })
-			vim.keymap.set("n", "<leader>fH", builtin.builtin, { desc = "Select telescope" })
-			vim.keymap.set("n", "<leader>fW", builtin.grep_string, { desc = "Current word" })
-			vim.keymap.set("n", "<leader>fd", builtin.diagnostics, { desc = "Diagnostics" })
-			vim.keymap.set("n", "<leader>fl", builtin.resume, { desc = "Resume last search" })
-			vim.keymap.set("n", "<leader>f.", builtin.oldfiles, { desc = "Recent files" })
-			vim.keymap.set("n", "<leader>b", builtin.buffers, { desc = "Existing buffers" })
-			vim.keymap.set("n", "<leader>ff", function()
-				return builtin.lsp_document_symbols({ symbols = { "function", "method" } })
-			end, { desc = "Methods" })
-			vim.keymap.set("n", "<leader>fs", function()
-				return builtin.lsp_document_symbols({ symbols = { "struct", "class", "typeparameter", "enum" } })
-			end, { desc = "Structs" })
-
-			vim.keymap.set("n", "<leader>fc", function()
-				return builtin.lsp_document_symbols({ symbols = { "constant" } })
-			end, { desc = "Constants" })
-
-			vim.keymap.set("n", "<leader>fm", function()
-				return builtin.marks({ defaults = { path_display = { "hidden" } } })
-			end, { desc = "Marks" })
-			vim.keymap.set("n", "<leader>fp", function()
-				return builtin.registers()
-			end, { desc = "Registers" })
-
-			-- Change colorschemes
-			vim.keymap.set("n", "<leader>ft", builtin.colorscheme, { desc = "Change colorscheme" })
-			vim.keymap.set(
-				"n",
-				"<leader>fT",
-				function()
-					vim.cmd("Telescope themes")
-				end,
-				-- ":Telescope themes<CR>",
-				{ noremap = true, silent = true, desc = "Change persistent colorscheme" }
-			)
-
-			-- Slightly advanced example of overriding default behavior and theme
-			vim.keymap.set("n", "<leader>/", function()
-				-- You can pass additional configuration to telescope to change theme, layout, etc.
-				builtin.current_buffer_fuzzy_find(require("telescope.themes").get_dropdown({
-					winblend = 10,
-					previewer = true,
-				}))
-			end, { desc = "[/] Fuzzily search in current buffer" })
-
-			-- Shortcut for searching your neovim configuration files
-			vim.keymap.set("n", "<leader>fn", function()
-				builtin.find_files({ cwd = vim.fn.stdpath("config") })
-			end, { desc = "NeoVim files" })
+			pcall(require("telescope").load_extension, "undo")
 		end,
 	},
 }

@@ -3,7 +3,7 @@ if vim.g.neovide then
 vim.o.guifont = "JetBrainsMono Nerd Font:h15" -- text below applies for VimScript
 vim.g.neovide_window_blurred = false
 -- vim.g.neovide_transparency = 0.96
-vim.g.neovide_transparency = 0.99
+vim.g.neovide_transparency = 0.95
 vim.g.neovide_floating_shadow = true
 vim.g.neovide_floating_z_height = 10
 vim.g.neovide_light_angle_degrees = 45
@@ -18,7 +18,7 @@ vim.g.neovide_fullscreen = false
 vim.g.neovide_remember_window_size = true
 vim.g.neovide_profiler = false
 vim.g.neovide_cursor_animation_length = 0.03
--- vim.g.neovide_cursor_trail_size = 0.8
+vim.g.neovide_cursor_trail_size = 0.8
 vim.g.neovide_cursor_animate_command_line = true
 -- vim.g.neovide_cursor_unfocused_outline_width = 0.125
 vim.g.neovide_show_border = true

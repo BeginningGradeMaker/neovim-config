@@ -3,7 +3,8 @@ return {
 	{
 		"mikavilpas/yazi.nvim",
 		lazy = true,
-		event = "VeryLazy",
+		-- event = "VeryLazy",
+        cmd = "Yazi",
 		keys = {
 			-- 👇 in this section, choose your own keymappings!
 			-- {
@@ -15,7 +16,7 @@ return {
 				-- Open in the current working directory
 				"<leader>.",
 				"<cmd>Yazi cwd<cr>",
-				desc = "Open the file manager in nvim's working directory",
+				desc = "Yazi",
 			},
 			{
 				-- NOTE: this requires a version of yazi that includes

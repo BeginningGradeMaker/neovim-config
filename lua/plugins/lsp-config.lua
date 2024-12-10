@@ -7,7 +7,6 @@ return {
 		dependencies = {
 			"williamboman/mason.nvim",
 			-- Useful status updates for LSP.
-			-- NOTE: `opts = {}` is the same as calling `require('fidget').setup({})`
 			{ "j-hui/fidget.nvim", opts = {} },
 			{
 				"smjonas/inc-rename.nvim",
@@ -65,27 +64,27 @@ return {
 					-- Jump to the definition of the word under your cursor.
 					--  This is where a variable was first declared, or where a function is defined, etc.
 					--  To jump back, press <C-t>.
-					map("gd", require("telescope.builtin").lsp_definitions, "Goto definition")
+					map("gd", function() return require("telescope.builtin").lsp_definitions() end, "Goto definition")
 
 					-- Find references for the word under your cursor.
-					map("gr", require("telescope.builtin").lsp_references, "Goto references")
+					map("gr", function() return require("telescope.builtin").lsp_references() end, "Goto references")
 
 					-- Jump to the implementation of the word under your cursor.
 					--  Useful when your language has ways of declaring types without an actual implementation.
-					map("gI", require("telescope.builtin").lsp_implementations, "Goto implementation")
+					map("gI", function() return require("telescope.builtin").lsp_implementations() end, "Goto implementation")
 
 					-- Jump to the type of the word under your cursor.
 					--  Useful when you're not sure what type a variable is and you want to see
 					--  the definition of its *type*, not where it was *defined*.
-					map("gT", require("telescope.builtin").lsp_type_definitions, "Type definition")
+					map("gT", function() return require("telescope.builtin").lsp_type_definitions() end, "Type definition")
 
 					-- Fuzzy find all the symbols in your current document.
 					--  Symbols are things like variables, functions, types, etc.
-					map("<leader>fa", require("telescope.builtin").lsp_document_symbols, "Document symbols")
+					map("<leader>fa", function() return require("telescope.builtin").lsp_document_symbols() end, "Document symbols")
 
 					-- Fuzzy find all the symbols in your current workspace
 					--  Similar to document symbols, except searches over your whole project.
-					map("<leader>fA", require("telescope.builtin").lsp_dynamic_workspace_symbols, "Workspace symbols")
+					map("<leader>fA", function() return require("telescope.builtin").lsp_dynamic_workspace_symbols() end, "Workspace symbols")
 
 					-- map("<leader>ti", function()
 					-- 	vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({ 0 }), { 0 })
@@ -153,17 +152,17 @@ return {
 			capabilities = vim.tbl_deep_extend("force", capabilities, require("cmp_nvim_lsp").default_capabilities())
 			-- local capabilities = require('blink.cmp').get_lsp_capabilities()
 
-			vim.diagnostic.config({
-				float = { border = "rounded" },
-				-- signs = {
-				--     text = {
-				--         [vim.diagnostic.severity.ERROR] = icons.DiagnosticError,
-				--         [vim.diagnostic.severity.WARN] = icons.DiagnosticWarn,
-				--         [vim.diagnostic.severity.HINT] = icons.DiagnosticHint,
-				--         [vim.diagnostic.severity.INFO] = icons.DiagnosticInfo,
-				--     },
-				-- }
-			})
+			-- vim.diagnostic.config({
+			-- 	float = { border = "rounded" },
+			-- 	signs = {
+			-- 	    text = {
+			-- 	        [vim.diagnostic.severity.ERROR] = icons.DiagnosticError,
+			-- 	        [vim.diagnostic.severity.WARN] = icons.DiagnosticWarn,
+			-- 	        [vim.diagnostic.severity.HINT] = icons.DiagnosticHint,
+			-- 	        [vim.diagnostic.severity.INFO] = icons.DiagnosticInfo,
+			-- 	    },
+			-- 	}
+			-- })
 
 			-- Enable the following language servers
 			--  Feel free to add/remove any LSPs that you want here. They will automatically be installed.
@@ -193,6 +192,7 @@ return {
 					end,
 					cmd = {
 						"clangd",
+                        "--fallback-style=webkit",
 						"--offset-encoding=utf-16",
 						-- "--clang-tidy",
 						"--all-scopes-completion=false",
@@ -308,5 +308,66 @@ return {
 				dap = {},
 			}
 		end,
+	},
+	{
+		"scalameta/nvim-metals",
+        lazy = true,
+		ft = { "scala", "sbt", "java" },
+		opts = function()
+			local metals_config = require("metals").bare_config()
+			metals_config.on_attach = function(client, bufnr)
+				-- your on_attach function
+			end
+
+			return metals_config
+		end,
+		config = function(self, metals_config)
+			local nvim_metals_group = vim.api.nvim_create_augroup("nvim-metals", { clear = true })
+			vim.api.nvim_create_autocmd("FileType", {
+				pattern = self.ft,
+				callback = function()
+					require("metals").initialize_or_attach(metals_config)
+				end,
+				group = nvim_metals_group,
+			})
+		end,
+	},
+	{
+		"folke/trouble.nvim",
+		opts = {}, -- for default options, refer to the configuration section for custom setup.
+        lazy = true,
+		cmd = "Trouble",
+		keys = {
+			{
+				"<leader>xx",
+				"<cmd>Trouble diagnostics toggle<cr>",
+				desc = "Diagnostics (Trouble)",
+			},
+			{
+				"<leader>xX",
+				"<cmd>Trouble diagnostics toggle filter.buf=0<cr>",
+				desc = "Buffer Diagnostics (Trouble)",
+			},
+			{
+				"<leader>xs",
+				"<cmd>Trouble symbols toggle focus=false<cr>",
+				desc = "Symbols (Trouble)",
+			},
+			{
+				"<leader>xl",
+				"<cmd>Trouble lsp toggle focus=false win.position=right<cr>",
+				desc = "LSP Definitions / references / ... (Trouble)",
+			},
+			{
+				"<leader>xL",
+				"<cmd>Trouble loclist toggle<cr>",
+				desc = "Location List (Trouble)",
+			},
+			{
+				"<leader>xQ",
+				"<cmd>Trouble qflist toggle<cr>",
+				desc = "Quickfix List (Trouble)",
+			},
+		},
 	},
 }

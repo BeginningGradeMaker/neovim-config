@@ -64,6 +64,15 @@ return {
 						},
 					},
 				},
+				incremental_selection = {
+					enable = true,
+					keymaps = {
+						-- init_selection = "gnn", -- set to `false` to disable one of the mappings
+						node_incremental = "v",
+						-- scope_incremental = "grc",
+						node_decremental = "V",
+					},
+				},
 			})
 			-- local ts_repeat_move = require("nvim-treesitter.textobjects.repeatable_move")
 			-- vim.keymap.set({ "n", "x", "o" }, ";", ts_repeat_move.repeat_last_move_next)
@@ -82,7 +91,21 @@ return {
 				max_lines = 3,
 			})
 
-			vim.keymap.set("n", "<leader>ut", tsc.toggle, { desc = "Toggle Treesitter context" })
+			vim.g.toggle
+				.new({
+					name = "Treesitter Context",
+					get = function()
+						return tsc.enabled()
+					end,
+					set = function(state)
+						if state then
+							tsc.enable()
+						else
+							tsc.disable()
+						end
+					end,
+				})
+				:map("<leader>uC")
 			vim.cmd("hi TreesitterContext gui=underline guisp=background")
 			vim.cmd("hi TreesitterContextLineNumber guibg=background")
 			-- vim.cmd("hi TreesitterContextSeparator gui=underline")

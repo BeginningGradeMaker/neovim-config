@@ -3,7 +3,8 @@ return {
 		"xiyaowong/transparent.nvim",
 		lazy = false,
 		config = function()
-			require("transparent").setup({
+			local transparent = require("transparent")
+			transparent.setup({
 				groups = { -- table: default groups
 					"Normal",
 					"NormalNC",
@@ -40,10 +41,17 @@ return {
 				end,
 			})
 
-			vim.keymap.set("n", "<leader>tp", function()
-				-- require("transparent").clear_prefix("lualine")
-				vim.cmd("TransparentToggle")
-			end, { desc = "Toggle transparent background" })
+			vim.g.toggle
+				.new({
+					name = "Transparent Background",
+					get = function()
+						return vim.g.transparent_enabled
+					end,
+					set = function(state)
+						transparent.toggle(state)
+					end,
+				})
+				:map("<leader>up")
 		end,
 	},
 	{
@@ -51,13 +59,6 @@ return {
 		name = "catppuccin",
 		priority = 1000,
 		opts = {
-			color_overrides = {
-				mocha = {
-					base = "#000000",
-					mantle = "#000000",
-					crust = "#000000",
-				},
-			},
 			integrations = {
 				telescope = {
 					enabled = true,
@@ -74,11 +75,14 @@ return {
 					enabled = true,
 					color_mode = true, -- enable color for kind's texts, not just kind's icons
 				},
+				mini = {
+					enabled = true,
+					indentscope_color = "",
+				},
 			},
 		},
 		config = function()
 			require("catppuccin").setup({ term_colors = true })
-			-- vim.cmd.colorscheme "catppuccin"
 		end,
 	},
 	{
@@ -90,8 +94,10 @@ return {
 	},
 	{
 		"luisiacc/the-matrix.nvim",
+        enabled = vim.g.opt_themes,
 		priority = 1000,
 	},
+    { "diegoulloao/neofusion.nvim", enabled = vim.g.opt_themes, priority = 1000 , config = true, },
 	{
 		"folke/tokyonight.nvim",
 		lazy = false,
@@ -105,10 +111,11 @@ return {
 			sections = {},
 		},
 	},
-	{ "ellisonleao/gruvbox.nvim", priority = 1000, config = true },
+    { "projekt0n/github-nvim-theme", enabled = vim.g.opt_themes, priority = 1000, },
+	{ "sainnhe/gruvbox-material", enabled = vim.g.opt_themes, priority = 1000, },
 	{
 		"scottmckendry/cyberdream.nvim",
-        enabled = vim.g.opt_themes,
+		enabled = vim.g.opt_themes,
 		lazy = false,
 		priority = 1000,
 		config = function()
@@ -131,6 +138,12 @@ return {
 	{ "rose-pine/neovim", enabled = vim.g.opt_themes, lazy = false, priority = 1000, name = "rose-pine" },
 	{
 		"shaunsingh/nord.nvim",
+        enabled = vim.g.opt_themes,
+		priority = 1000,
+	},
+	{
+		"rebelot/kanagawa.nvim",
+        enabled = vim.g.opt_themes,
 		priority = 1000,
 	},
 }

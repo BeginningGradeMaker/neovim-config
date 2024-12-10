@@ -2,7 +2,8 @@ local get_icon = require("utils").get_icon
 return {
 	{ -- Adds git related signs to the gutter, as well as utilities for managing changes
 		"lewis6991/gitsigns.nvim",
-		lazy = false,
+		lazy = true,
+		event = "VeryLazy",
 		config = function()
 			require("gitsigns").setup({
 				signs = {
@@ -55,12 +56,34 @@ return {
 					-- map("n", "<leader>hb", function()
 					-- 	gitsigns.blame_line({ full = true })
 					-- end, { desc = "Blame line" })
-					map("n", "<leader>tb", gitsigns.toggle_current_line_blame, { desc = "Git blame line" })
+
+					local config = require("gitsigns.config").config
+					vim.g.toggle
+						.new({
+							name = "Git Deleted",
+							get = function()
+								return config.show_deleted
+							end,
+							set = function(state)
+								gitsigns.toggle_deleted(state)
+							end,
+						})
+						:map("<leader>uD")
+					vim.g.toggle
+						.new({
+							name = "Git Blame",
+							get = function()
+								return config.current_line_blame
+							end,
+							set = function(state)
+								gitsigns.toggle_current_line_blame(state)
+							end,
+						})
+						:map("<leader>uB")
 					-- map("n", "<leader>gd", gitsigns.diffthis, { desc = "Diff this" })
 					-- map("n", "<leader>gD", function()
 					-- 	gitsigns.diffthis("~")
 					-- end, { desc = "Diff this ~" })
-					map("n", "<leader>td", gitsigns.toggle_deleted, { desc = "Git deleted" })
 
 					-- Text object
 					map({ "o", "x" }, "ih", ":<C-U>Gitsigns select_hunk<CR>", { desc = "Git select hunk" })
@@ -71,21 +94,37 @@ return {
 	{
 		"sindrets/diffview.nvim",
 		lazy = true,
-		event = "VeryLazy",
+        cmd = {"DiffviewOpen", "DiffviewFileHistory", "DiffviewLog" },
+		keys = {
+			{
+				"<leader>gd",
+				function()
+					-- local last_tabpage = vim.api.nvim_get_current_tabpage()
+					local lib = require("diffview.lib")
+					local view = lib.get_current_view()
+					if view then
+						-- Current tabpage is a Diffview; close it
+						vim.cmd(":DiffviewClose")
+					else
+						-- No open Diffview exists: open a new one
+						vim.cmd(":DiffviewOpen")
+					end
+				end,
+				desc = "Diff view",
+			},
+		},
 		config = function()
 			require("diffview").setup()
-			vim.keymap.set("n", "<leader>gd", function()
-			    -- local last_tabpage = vim.api.nvim_get_current_tabpage()
-				local lib = require("diffview.lib")
-				local view = lib.get_current_view()
-				if view then
-					-- Current tabpage is a Diffview; close it
-					vim.cmd(":DiffviewClose")
-				else
-					-- No open Diffview exists: open a new one
-					vim.cmd(":DiffviewOpen")
-				end
-			end)
 		end,
 	},
+	-- Use Lazygit instead of this
+	-- {
+	-- 	"NeogitOrg/neogit",
+	--        lazy = true,
+	--        event = "VeryLazy",
+	-- 	dependencies = {
+	-- 		"nvim-lua/plenary.nvim", -- required
+	-- 	},
+	-- 	config = true,
+	-- },
 }

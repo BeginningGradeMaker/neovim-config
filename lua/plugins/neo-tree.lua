@@ -1,7 +1,7 @@
 return {
 	"nvim-neo-tree/neo-tree.nvim",
 	lazy = true,
-    enabled = true,
+	enabled = true,
 	cmd = "Neotree",
 	branch = "v3.x",
 	dependencies = {
@@ -9,6 +9,26 @@ return {
 		"MunifTanjim/nui.nvim",
 		"3rd/image.nvim", -- Optional image support in preview window: See `# Preview Mode` for more information
 	},
+	-- init = function()
+	--        local show = false
+	-- 	require("snacks.toggle")
+	-- 		.new({
+	-- 			name = "NeoTree",
+	-- 			get = function()
+	-- 				return show
+	-- 			end,
+	-- 			set = function(state)
+	--                    if state then
+	--                        show = true
+	-- 	    		    require("neo-tree.command").execute({ action = "show", dir = vim.loop.cwd() })
+	--                    else
+	--                        show = false
+	-- 	    		    require("neo-tree.command").execute({ action = "close", dir = vim.loop.cwd() })
+	--                    end
+	-- 			end,
+	-- 		})
+	-- 		:map("<leader>ue")
+	--    end,
 	keys = {
 		-- {
 		-- 	"<leader>E",
@@ -23,7 +43,7 @@ return {
 			function()
 				require("neo-tree.command").execute({ toggle = true, dir = vim.loop.cwd() })
 			end,
-			desc = "Toggle explorer (cwd)",
+			desc = "NeoTree",
 			remap = true,
 		},
 		{

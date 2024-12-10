@@ -4,7 +4,7 @@ return {
 		"folke/tokyonight.nvim",
 	},
 	lazy = true,
-	event = "VeryLazy",
+	event = { "BufReadPost", "BufNewFile", "BufWritePost" },
 	config = function()
 		local bufferline = require("bufferline")
 		bufferline.setup({
@@ -38,15 +38,22 @@ return {
                 separator_style = "slant"
 			},
 		})
-		local show = true
-		vim.keymap.set("n", "<leader>tl", function()
-			if show then
-				vim.opt.showtabline = 0
-				show = false
-			else
-				vim.opt.showtabline = 2
-				show = true
-			end
-		end, { desc = "Toggle bufferline" })
+		local show = false
+        local snacks = require("snacks.toggle")
+        snacks.new({
+            name = "Bufferline",
+            get = function()
+                return show
+            end,
+            set = function(state)
+                if state then
+                    vim.opt.showtabline = 2
+                    show = true
+                else
+                    vim.opt.showtabline = 0
+                    show = false
+                end
+            end
+        }):map("<leader>ut")
 	end,
 }

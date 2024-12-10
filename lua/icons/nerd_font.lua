@@ -58,4 +58,7 @@ return {
 	Window = "",
 	WordFile = "󰈭",
     Spark = "",
+    Notes = "",
+    Find = "",
+    Task = "",
 }

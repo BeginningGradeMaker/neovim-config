@@ -113,26 +113,26 @@ return {
 	{
 		"olimorris/codecompanion.nvim",
 		lazy = true,
-		event = "VeryLazy",
+        cmd = {"CodeCompanion"},
 		dependencies = {
 			"nvim-lua/plenary.nvim",
-			"nvim-treesitter/nvim-treesitter",
-			"nvim-telescope/telescope.nvim", -- Optional: For using slash commands
 			{
 				"github/copilot.vim",
-				keys = {
-					{
-						"<leader>ta",
-						function()
-							if require("copilot.client").is_disabled() then
-								require("copilot.command").enable()
-							else
-								require("copilot.command").disable()
-							end
-						end,
-						desc = "Toggle Copilot",
-					},
-				},
+							    --      config = function()
+							    --          vim.g.toggle.new({
+							    --              name = "Transparent Background",
+							    --              get = function()
+							    --                  return not require("copilot.client").is_disabled()
+							    --              end,
+							    --              set = function(state)
+							    --                  if state then
+							    -- require("copilot.command").enable()
+							    --                  else
+							    -- require("copilot.command").disable()
+							    --                  end
+							    --              end
+							    --          }):map("<leader>uT")
+							    --      end,
 			},
 		},
 		opts = {

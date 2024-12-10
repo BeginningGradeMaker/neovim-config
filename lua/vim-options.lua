@@ -7,9 +7,10 @@ vim.wo.relativenumber = true
 
 local keymap = vim.keymap
 
-vim.keymap.set("n", "<leader>tr", function()
-	vim.wo.relativenumber = not vim.wo.relativenumber
-end, { desc = "Toggle relative numberline" })
+-- Handled by Snacks.nvim
+-- vim.keymap.set("n", "<leader>tr", function()
+-- 	vim.wo.relativenumber = not vim.wo.relativenumber
+-- end, { desc = "Toggle relative numberline" })
 
 vim.opt.swapfile = false
 
@@ -139,7 +140,7 @@ vim.opt.fillchars = { eob = " " }
 -- Copy all content of buffer
 vim.keymap.set("n", "yaa", "<cmd>%y+<cr>", { desc = "Yank entire file" })
 vim.keymap.set("n", "dad", "<cmd>%d<cr>", { desc = "Delete entire file" })
-vim.keymap.set("n", "<leader>ab", ":%bd|e#|bd# <cr>", { noremap = true, desc = "Clean non-active buffers" })
+vim.keymap.set("n", "<leader>ab", ":%bd|e#|bd# <cr><c-o>", { noremap = true, desc = "Clean non-active buffers" })
 
 vim.api.nvim_create_autocmd("TextYankPost", {
 	desc = "Highlight when yanking (copying) text",
@@ -171,7 +172,7 @@ keymap.set("n", "$", "g$", { noremap = true, silent = true })
 vim.keymap.set({ "n", "x" }, "H", "g^", { desc = "End of line", noremap = true, silent = true })
 vim.keymap.set({ "n", "x" }, "L", "g$", { desc = "Start of line", noremap = true, silent = true })
 
-keymap.set("n", "s", "<Nop>", { noremap = true })
+keymap.set({"n", "v"}, "s", "<Nop>", { noremap = true })
 
 -- Make change/delete/select whole word default
 -- keymap.set("n", "cw", "ciw", { noremap = true, silent = true, desc = "Change word" })
@@ -180,10 +181,10 @@ keymap.set("n", "s", "<Nop>", { noremap = true })
 
 vim.g.disable_autoformat = true
 vim.g.copilot_enabled = 0
-vim.opt.showtabline = 2
 
 -- views can only be fully collapsed with the global statusline
-vim.opt.laststatus = 2
+vim.opt.laststatus = 3
+vim.opt.showtabline = 0
 
 -- grug-far.nvim
 vim.g.maplocalleader = "."
@@ -194,3 +195,10 @@ vim.g.maplocalleader = "."
 vim.g.opt_themes = false
 
 vim.opt.sessionoptions = { "buffers", "curdir", "tabpages", "winsize", "help", "globals", "skiprtp", "folds", "blank" }
+
+-- Duplicate a line and comment out the first line
+vim.keymap.set("n", "yc", "<cmd>norm yygcc<cr>p", { noremap = true, desc = "Duplicate line and comment original", silent = true })
+
+-- Move selected lines with shift+j or shift+k
+vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv", { silent = true })
+vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv", { silent = true })
