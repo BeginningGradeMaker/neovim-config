@@ -64,27 +64,39 @@ return {
 					-- Jump to the definition of the word under your cursor.
 					--  This is where a variable was first declared, or where a function is defined, etc.
 					--  To jump back, press <C-t>.
-					map("gd", function() return require("telescope.builtin").lsp_definitions() end, "Goto definition")
+					map("gd", function()
+						return require("telescope.builtin").lsp_definitions()
+					end, "Goto definition")
 
 					-- Find references for the word under your cursor.
-					map("gr", function() return require("telescope.builtin").lsp_references() end, "Goto references")
+					map("gr", function()
+						return require("telescope.builtin").lsp_references()
+					end, "Goto references")
 
 					-- Jump to the implementation of the word under your cursor.
 					--  Useful when your language has ways of declaring types without an actual implementation.
-					map("gI", function() return require("telescope.builtin").lsp_implementations() end, "Goto implementation")
+					map("gI", function()
+						return require("telescope.builtin").lsp_implementations()
+					end, "Goto implementation")
 
 					-- Jump to the type of the word under your cursor.
 					--  Useful when you're not sure what type a variable is and you want to see
 					--  the definition of its *type*, not where it was *defined*.
-					map("gT", function() return require("telescope.builtin").lsp_type_definitions() end, "Type definition")
+					map("gT", function()
+						return require("telescope.builtin").lsp_type_definitions()
+					end, "Type definition")
 
 					-- Fuzzy find all the symbols in your current document.
 					--  Symbols are things like variables, functions, types, etc.
-					map("<leader>fa", function() return require("telescope.builtin").lsp_document_symbols() end, "Document symbols")
+					map("<leader>fa", function()
+						return require("telescope.builtin").lsp_document_symbols()
+					end, "Document symbols")
 
 					-- Fuzzy find all the symbols in your current workspace
 					--  Similar to document symbols, except searches over your whole project.
-					map("<leader>fA", function() return require("telescope.builtin").lsp_dynamic_workspace_symbols() end, "Workspace symbols")
+					map("<leader>fA", function()
+						return require("telescope.builtin").lsp_dynamic_workspace_symbols()
+					end, "Workspace symbols")
 
 					-- map("<leader>ti", function()
 					-- 	vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({ 0 }), { 0 })
@@ -148,9 +160,9 @@ return {
 			--  By default, Neovim doesn't support everything that is in the LSP Specification.
 			--  When you add nvim-cmp, luasnip, etc. Neovim now has *more* capabilities.
 			--  So, we create new capabilities with nvim cmp, and then broadcast that to the servers.
-			local capabilities = vim.lsp.protocol.make_client_capabilities()
-			capabilities = vim.tbl_deep_extend("force", capabilities, require("cmp_nvim_lsp").default_capabilities())
-			-- local capabilities = require('blink.cmp').get_lsp_capabilities()
+			-- local capabilities = vim.lsp.protocol.make_client_capabilities()
+			-- capabilities = require("blink.cmp").get_lsp_capabilities_capabilities(capabilities)
+			local capabilities = require('blink.cmp').get_lsp_capabilities()
 
 			-- vim.diagnostic.config({
 			-- 	float = { border = "rounded" },
@@ -192,7 +204,7 @@ return {
 					end,
 					cmd = {
 						"clangd",
-                        "--fallback-style=webkit",
+						"--fallback-style=webkit",
 						"--offset-encoding=utf-16",
 						-- "--clang-tidy",
 						"--all-scopes-completion=false",
@@ -311,7 +323,7 @@ return {
 	},
 	{
 		"scalameta/nvim-metals",
-        lazy = true,
+		lazy = true,
 		ft = { "scala", "sbt", "java" },
 		opts = function()
 			local metals_config = require("metals").bare_config()
@@ -335,7 +347,7 @@ return {
 	{
 		"folke/trouble.nvim",
 		opts = {}, -- for default options, refer to the configuration section for custom setup.
-        lazy = true,
+		lazy = true,
 		cmd = "Trouble",
 		keys = {
 			{
@@ -367,6 +379,36 @@ return {
 				"<leader>xQ",
 				"<cmd>Trouble qflist toggle<cr>",
 				desc = "Quickfix List (Trouble)",
+			},
+			{
+				"[q",
+				function()
+					if require("trouble").is_open() then
+						require("trouble").prev({ skip_groups = true, jump = true })
+					else
+						local ok, err = pcall(vim.cmd.cprev)
+						if not ok then
+							vim.notify(err, vim.log.levels.ERROR)
+						end
+					end
+				end,
+				desc = "Previous Trouble/Quickfix Item",
+                silent = true,
+			},
+			{
+				"]q",
+				function()
+					if require("trouble").is_open() then
+						require("trouble").next({ skip_groups = true, jump = true })
+					else
+						local ok, err = pcall(vim.cmd.cnext)
+						if not ok then
+							vim.notify(err, vim.log.levels.ERROR)
+						end
+					end
+				end,
+				desc = "Next Trouble/Quickfix Item",
+                silent = true,
 			},
 		},
 	},

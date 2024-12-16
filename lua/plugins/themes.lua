@@ -1,59 +1,59 @@
 return {
-	{
-		"xiyaowong/transparent.nvim",
-		lazy = false,
-		config = function()
-			local transparent = require("transparent")
-			transparent.setup({
-				groups = { -- table: default groups
-					"Normal",
-					"NormalNC",
-					"Comment",
-					"Constant",
-					"Special",
-					"Identifier",
-					"Statement",
-					"PreProc",
-					"Type",
-					"Underlined",
-					"Todo",
-					"String",
-					"Function",
-					"Conditional",
-					"Repeat",
-					"Operator",
-					"Structure",
-					"LineNr",
-					"NonText",
-					"SignColumn",
-					"CursorLine",
-					"CursorLineNr",
-					"StatusLine",
-					"StatusLineNC",
-					"EndOfBuffer",
-				},
-				extra_groups = {}, -- table: additional groups that should be cleared
-				exclude_groups = {}, -- table: groups you don't want to clear
-				on_clear = function()
-					require("transparent").clear_prefix("NeoTree")
-					-- require("transparent").clear_prefix("lualine")
-					require("transparent").clear_prefix("Bufferline")
-				end,
-			})
-
-			vim.g.toggle
-				.new({
-					name = "Transparent Background",
-					get = function()
-						return vim.g.transparent_enabled
-					end,
-					set = function(state)
-						transparent.toggle(state)
-					end,
-				})
-				:map("<leader>up")
-		end,
-	},
+	-- {
+	-- 	"xiyaowong/transparent.nvim",
+	-- 	lazy = false,
+	-- 	config = function()
+	-- 		local transparent = require("transparent")
+	-- 		transparent.setup({
+	-- 			groups = { -- table: default groups
+	-- 				"Normal",
+	-- 				"NormalNC",
+	-- 				"Comment",
+	-- 				"Constant",
+	-- 				"Special",
+	-- 				"Identifier",
+	-- 				"Statement",
+	-- 				"PreProc",
+	-- 				"Type",
+	-- 				"Underlined",
+	-- 				"Todo",
+	-- 				"String",
+	-- 				"Function",
+	-- 				"Conditional",
+	-- 				"Repeat",
+	-- 				"Operator",
+	-- 				"Structure",
+	-- 				"LineNr",
+	-- 				"NonText",
+	-- 				"SignColumn",
+	-- 				"CursorLine",
+	-- 				"CursorLineNr",
+	-- 				"StatusLine",
+	-- 				"StatusLineNC",
+	-- 				"EndOfBuffer",
+	-- 			},
+	-- 			extra_groups = {}, -- table: additional groups that should be cleared
+	-- 			exclude_groups = {}, -- table: groups you don't want to clear
+	-- 			on_clear = function()
+	-- 				require("transparent").clear_prefix("NeoTree")
+	-- 				-- require("transparent").clear_prefix("lualine")
+	-- 				require("transparent").clear_prefix("Bufferline")
+	-- 			end,
+	-- 		})
+	--
+	-- 		vim.g.toggle
+	-- 			.new({
+	-- 				name = "Transparent Background",
+	-- 				get = function()
+	-- 					return vim.g.transparent_enabled
+	-- 				end,
+	-- 				set = function(state)
+	-- 					transparent.toggle(state)
+	-- 				end,
+	-- 			})
+	-- 			:map("<leader>up")
+	-- 	end,
+	-- },
 	{
 		"catppuccin/nvim",
 		name = "catppuccin",
@@ -146,4 +146,14 @@ return {
         enabled = vim.g.opt_themes,
 		priority = 1000,
 	},
+	{
+		"Mofiqul/vscode.nvim",
+        enabled = vim.g.opt_themes,
+		priority = 1000,
+	},
+    {
+        "loctvl842/monokai-pro.nvim",
+        enabled = vim.g.opt_themes,
+		priority = 1000,
+    }
 }

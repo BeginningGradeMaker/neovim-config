@@ -26,6 +26,15 @@ return {
 			vim.keymap.set("n", "<leader>Sd", function()
 				require("persistence").stop()
 			end, { desc = "Stop session save" })
+
+
+			vim.api.nvim_create_autocmd("User", {
+                pattern = "PersistenceSavePre",
+				callback = function()
+                    -- Close neo-tree before session is saved.
+				    require("neo-tree.command").execute({ action = "close" })
+				end,
+			})
 		end,
 	},
 	-- {

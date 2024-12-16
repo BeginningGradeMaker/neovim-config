@@ -4,13 +4,13 @@ return {
 		lazy = true,
 		enabled = true,
 		event = "VeryLazy",
-        keys = {
-            {
-                "<leader>h",
-                "<cmd>NoiceHistory<cr>",
-                desc = "Notification history",
-            }
-        },
+		keys = {
+			{
+				"<leader>h",
+				"<cmd>NoiceHistory<cr>",
+				desc = "Notification history",
+			},
+		},
 		opts = {
 			cmdline = {
 				view = "cmdline_popup",
@@ -76,12 +76,13 @@ return {
 	},
 	{
 		"dstein64/nvim-scrollview",
-        enabled = not vim.g.neovide, -- existing bug with neovide
+		enabled = not vim.g.neovide, -- existing bug with neovide
 		lazy = true,
 		event = "VeryLazy",
-	       opts = {
-	           signs_on_startup = {},
-	       },
+		opts = {
+			signs_on_startup = {},
+            excluded_filetypes = {"neo-tree"}
+		},
 	},
 	-- Enable these if you want mosue support with pretty UI
 	-- {
@@ -108,6 +109,7 @@ return {
 	-- },
 	{
 		"Bekaboo/dropbar.nvim",
+        enabled = true,
 		lazy = false,
 		event = { "BufReadPost", "BufNewFile", "BufWritePost" },
 		opts = {

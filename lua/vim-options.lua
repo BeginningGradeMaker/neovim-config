@@ -192,7 +192,7 @@ vim.g.maplocalleader = "."
 -- vim.o.winbar = ""
 
 -- optional themes
-vim.g.opt_themes = false
+vim.g.opt_themes = true
 
 vim.opt.sessionoptions = { "buffers", "curdir", "tabpages", "winsize", "help", "globals", "skiprtp", "folds", "blank" }
 
@@ -200,5 +200,5 @@ vim.opt.sessionoptions = { "buffers", "curdir", "tabpages", "winsize", "help", "
 vim.keymap.set("n", "yc", "<cmd>norm yygcc<cr>p", { noremap = true, desc = "Duplicate line and comment original", silent = true })
 
 -- Move selected lines with shift+j or shift+k
-vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv", { silent = true })
-vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv", { silent = true })
+-- vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv", { silent = true })
+-- vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv", { silent = true })

@@ -4,7 +4,7 @@ local get_icon = utils.get_icon
 return {
 	"folke/which-key.nvim",
 	lazy = true,
-	event = "VeryLazy",
+	event = "UIEnter",
 	keys = {
 		{
 			"<leader>?",
