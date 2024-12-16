@@ -1,7 +1,104 @@
 return {
+	{
+		"saghen/blink.cmp",
+		-- event = "InsertEnter",
+		-- optional: provides snippets for the snippet source
+		dependencies = "rafamadriz/friendly-snippets",
+
+		-- use a release tag to download pre-built binaries
+		version = "*",
+
+		---@module 'blink.cmp'
+		---@type blink.cmp.Config
+		opts = {
+			-- 'default' for mappings similar to built-in completion
+			-- 'super-tab' for mappings similar to vscode (tab to accept, arrow keys to navigate)
+			-- 'enter' for mappings similar to 'super-tab' but with 'enter' to accept
+			-- see the "default configuration" section below for full documentation on how to define
+			-- your own keymap.
+			keymap = {
+				preset = "default",
+				["<Tab>"] = { "select_and_accept", "fallback" },
+				["<C-k>"] = { "select_prev", "fallback" },
+				["<C-j>"] = { "select_next", "fallback" },
+				["<C-l>"] = { "snippet_forward", "fallback" },
+				["<C-h>"] = { "snippet_backward", "fallback" },
+				["<C-u>"] = { "scroll_documentation_up", "fallback" },
+				["<C-d>"] = { "scroll_documentation_down", "fallback" },
+			},
+
+			appearance = {
+				-- Sets the fallback highlight groups to nvim-cmp's highlight groups
+				-- Useful for when your theme doesn't support blink.cmp
+				-- will be removed in a future release
+				use_nvim_cmp_as_default = false,
+				-- Set to 'mono' for 'Nerd Font Mono' or 'normal' for 'Nerd Font'
+				-- Adjusts spacing to ensure icons are aligned
+				nerd_font_variant = "mono",
+			},
+
+			-- default list of enabled providers defined so that you can extend it
+			-- elsewhere in your config, without redefining it, via `opts_extend`
+			sources = {
+				default = { "lsp", "path", "snippets", "buffer" },
+				-- optionally disable cmdline completions
+				-- cmdline = {},
+			},
+
+			-- experimental signature help support
+			-- signature = {
+			--              enabled = true,
+			--          },
+
+			completion = {
+				accept = {
+					-- experimental auto-brackets support
+					auto_brackets = {
+						enabled = true,
+					},
+				},
+				menu = {
+					draw = {
+						treesitter = { "lsp" },
+					},
+					border = "rounded",
+                    winhighlight = 'Normal:BlinkCmpMenu,FloatBorder:FloatBorder,CursorLine:BlinkCmpMenuSelection,Search:None',
+				},
+				documentation = {
+					auto_show = true,
+					auto_show_delay_ms = 0,
+					window = {
+						border = "rounded",
+                        winhighlight = 'Normal:BlinkCmpMenu,FloatBorder:FloatBorder,CursorLine:BlinkCmpMenuSelection,Search:None',
+					},
+				},
+				ghost_text = {
+					enabled = vim.g.ai_cmp,
+				},
+				sources = {
+					-- Static list of providers to enable, or a function to dynamically enable/disable providers based on the context
+					default = { "lsp", "path", "snippets", },
+				},
+			},
+		},
+		-- allows extending the providers array elsewhere in your config
+		-- without having to redefine it
+		opts_extend = { "sources.default" },
+		config = function(_, opts)
+			-- Change border highlgiht
+			vim.api.nvim_set_hl(0, "BlinkCmpMenu", { link = "FloatBorder" })
+			vim.api.nvim_set_hl(0, "BlinkCmpDocBorder", { link = "FloatBorder" })
+			vim.api.nvim_set_hl(0, "BlinkCmpMenuBorder", { link = "FloatBorder" })
+			-- vim.api.nvim_set_hl(0, "BlinkCmpSignatureHelpBorder", { link = "FloatBorder" })
+			require("blink.cmp").setup(opts)
+		end,
+	},
 	{ -- Autocompletion
+		-- TODO: Replace it with blink.cmp
 		"hrsh7th/nvim-cmp",
 		lazy = true,
+		optional = true,
+		enabled = false,
 		event = "InsertEnter",
 		dependencies = {
 			-- Snippet Engine & its associated nvim-cmp source
@@ -195,7 +292,5 @@ return {
 			-- vim.keymap.set("v", "'", "sa'", { noremap = true, silent = true })
 			-- vim.keymap.set("v", "$", "sa$", { noremap = true, silent = true })
 		end,
-		-- use opts = {} for passing setup options
-		-- this is equivalent to setup({}) function
 	},
 }
