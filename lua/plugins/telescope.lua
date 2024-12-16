@@ -2,7 +2,6 @@ return {
 	{
 		"nvim-telescope/telescope.nvim",
 		lazy = true,
-		-- tag = "0.1.6",
 		dependencies = {
 			"nvim-lua/plenary.nvim",
 			{
@@ -35,33 +34,33 @@ return {
 			{
 				"<leader>fh",
 				function()
-					return require("telescope.builtin").help_tags({cache_picker = false})
+					return require("telescope.builtin").help_tags({ cache_picker = false })
 				end,
 				desc = "Help",
 			},
 			{
 				"<leader>fk",
 				function()
-					return require("telescope.builtin").keymaps({cache_picker = false})
+					return require("telescope.builtin").keymaps({ cache_picker = false })
 				end,
 				desc = "Keymaps",
 			},
 			{
-				"<leader>ft",
+				"<leader>fb",
 				function()
-					return require("telescope.builtin").builtin({cache_picker = false})
+					return require("telescope.builtin").builtin({ cache_picker = false })
 				end,
 				desc = "Select",
 			},
 			{
 				"<leader>fH",
 				function()
-					return require("telescope.builtin").highlights({cache_picker = false})
+					return require("telescope.builtin").highlights({ cache_picker = false })
 				end,
 				desc = "Highlight",
 			},
 			{
-				"<leader>fW",
+				"<leader>fC",
 				function()
 					return require("telescope.builtin").grep_string()
 				end,
@@ -84,7 +83,7 @@ return {
 			{
 				"<leader>f.",
 				function()
-					return require("telescope.builtin").oldfiles({cache_picker = false})
+					return require("telescope.builtin").oldfiles({ cache_picker = false })
 				end,
 				desc = "Recent files",
 			},
@@ -133,38 +132,38 @@ return {
 						winblend = 10,
 						previewer = true,
 						path_display = "hidden",
-                        initial_mode = "normal",
-                        cache_picker = false,
+						initial_mode = "normal",
+						cache_picker = false,
 					}))
 				end,
 				desc = "Marks",
 			},
 			{
-				"<leader>fp",
+				"<leader>fR",
 				function()
-					return require("telescope.builtin").registers({cache_picker = false})
+					return require("telescope.builtin").registers({ cache_picker = false })
 				end,
 				desc = "Registers",
+			},
+			{
+				"<leader>fq",
+				function()
+					return require("telescope.builtin").quickfix()
+				end,
 			},
 
 			-- Change colorschemes
 			{
 				"<leader>uT",
 				function()
-					return require("telescope.builtin").colorscheme({cache_picker = false})
+					return require("telescope.builtin").colorscheme(require("telescope.themes").get_dropdown({
+						cache_picker = false,
+						winblend = 10,
+						previwer = false,
+					}))
 				end,
 				desc = "Find colorschemes",
 			},
-			-- {
-			-- 	"<leader>fT",
-			-- 	function()
-			-- 		vim.cmd("Telescope themes")
-			-- 	end,
-			-- 	-- ":Telescope themes<CR>",
-			-- 	noremap = true,
-			-- 	silent = true,
-			-- 	desc = "Change persistent colorscheme",
-			-- },
 			-- Slightly advanced example of overriding default behavior and theme
 			{
 				"<leader>/",
@@ -186,7 +185,24 @@ return {
 				end,
 				desc = "NeoVim files",
 			},
-
+			-- Search for plugin source code
+			{
+				"<leader>fp",
+				function()
+					require("telescope.builtin").find_files({
+						cwd = vim.fs.joinpath(vim.fn.stdpath("data"), "lazy"),
+						cache_picker = false,
+					})
+				end,
+				desc = "Plugin files",
+			},
+			{
+				"<leader>fp",
+				function()
+					require("config.telescope.mutligrep").live_multigrep({})
+				end,
+				desc = "Plugin files",
+			},
 			{ "<leader>fu", "<cmd>Telescope undo<cr>", desc = "Undo history", silent = true },
 		},
 		config = function()
@@ -196,7 +212,6 @@ return {
 				pickers = {
 					colorscheme = { enable_preview = true },
 					find_files = {
-                        theme = "ivy",
 						find_command = { "rg", "--files", "--sortr=modified" },
 					},
 				},
@@ -211,7 +226,7 @@ return {
 					selection_caret = get_icon("Selected", 1, true),
 					path_display = { "smart" },
 					sorting_strategy = "ascending",
-                    layout_strategy = "bottom_pane",
+					layout_strategy = "bottom_pane",
 					layout_config = {
 						horizontal = { prompt_position = "top", preview_width = 0.55 },
 						vertical = { mirror = false },
@@ -227,6 +242,7 @@ return {
 							["<C-h>"] = actions.cycle_history_prev,
 							["<C-j>"] = actions.move_selection_next,
 							["<C-k>"] = actions.move_selection_previous,
+							["<C-t>"] = require("trouble.sources.telescope").open,
 							["<RightMouse>"] = actions.close,
 							["<LeftMouse>"] = actions.select_default,
 							["<ScrollWheelDown>"] = actions.move_selection_next,
@@ -236,6 +252,7 @@ return {
 							q = actions.close,
 							["<C-j>"] = actions.results_scrolling_up,
 							["<C-k>"] = actions.results_scrolling_down,
+							["<C-t>"] = require("trouble.sources.telescope").open,
 							["<RightMouse>"] = actions.close,
 							["<LeftMouse>"] = actions.select_default,
 							-- ["<ScrollWheelDown>"] = actions.move_selection_next,
@@ -249,6 +266,17 @@ return {
 			pcall(require("telescope").load_extension, "fzf")
 			pcall(require("telescope").load_extension, "ui-select")
 			pcall(require("telescope").load_extension, "undo")
+		end,
+	},
+	{ -- TODO: replace telescope with fzf-lua
+		"ibhagwan/fzf-lua",
+        optional = true,
+        enabled = false,
+		-- optional for icon support
+		dependencies = { "nvim-tree/nvim-web-devicons" },
+		config = function()
+			-- calling `setup` is optional for customization
+			require("fzf-lua").setup({})
 		end,
 	},
 }
