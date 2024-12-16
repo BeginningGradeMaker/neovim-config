@@ -9,37 +9,36 @@ return {
 		"MunifTanjim/nui.nvim",
 		"3rd/image.nvim", -- Optional image support in preview window: See `# Preview Mode` for more information
 	},
-	-- init = function()
-	--        local show = false
-	-- 	require("snacks.toggle")
-	-- 		.new({
-	-- 			name = "NeoTree",
-	-- 			get = function()
-	-- 				return show
-	-- 			end,
-	-- 			set = function(state)
-	--                    if state then
-	--                        show = true
-	-- 	    		    require("neo-tree.command").execute({ action = "show", dir = vim.loop.cwd() })
-	--                    else
-	--                        show = false
-	-- 	    		    require("neo-tree.command").execute({ action = "close", dir = vim.loop.cwd() })
-	--                    end
-	-- 			end,
-	-- 		})
-	-- 		:map("<leader>ue")
-	--    end,
+	init = function()
+		-- FIX: use `autocmd` for lazy-loading neo-tree instead of directly requiring it,
+		-- because `cwd` is not set up properly.
+		vim.api.nvim_create_autocmd("BufEnter", {
+			group = vim.api.nvim_create_augroup("Neotree_start_directory", { clear = true }),
+			desc = "Start Neo-tree with directory",
+			once = true,
+			callback = function()
+				if package.loaded["neo-tree"] then
+					return
+				else
+					local stats = vim.uv.fs_stat(vim.fn.argv(0))
+					if stats and stats.type == "directory" then
+						require("neo-tree")
+					end
+				end
+			end,
+		})
+	end,
 	keys = {
-		-- {
-		-- 	"<leader>E",
-		-- 	function()
-		-- 		require("neo-tree.command").execute({ toggle = true, dir = vim.fn.expand("%:p:h") })
-		-- 	end,
-		-- 	desc = "Toggle explorer (cb)",
-		-- 	remap = true,
-		-- },
 		{
-			"<leader>ue",
+			"<leader>E",
+			function()
+				require("neo-tree.command").execute({ toggle = true, dir = vim.fn.expand("%:p:h") })
+			end,
+			desc = "Toggle explorer (cb)",
+			remap = true,
+		},
+		{
+			"<leader>e",
 			function()
 				require("neo-tree.command").execute({ toggle = true, dir = vim.loop.cwd() })
 			end,
@@ -69,7 +68,7 @@ return {
 			auto_clean_after_session_restore = true,
 			sources = { "filesystem", "buffers", "git_status" },
 			source_selector = {
-				winbar = false,
+				winbar = true,
 				content_layout = "center",
 				sources = {
 					{ source = "filesystem", display_name = get_icon("FolderClosed", 1, true) .. "File" },
@@ -200,14 +199,6 @@ return {
 				follow_current_file = { enabled = true },
 				hijack_netrw_behavior = "open_current",
 				use_libuv_file_watcher = vim.fn.has("win32") ~= 1,
-			},
-			event_handlers = {
-				{
-					event = "neo_tree_buffer_enter",
-					handler = function(_)
-						vim.opt_local.signcolumn = "auto"
-					end,
-				},
 			},
 		})
 	end,

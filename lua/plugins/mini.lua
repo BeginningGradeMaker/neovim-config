@@ -154,8 +154,8 @@ return {
 				width_preview = 30,
 			},
 		})
-		vim.keymap.set("n", "<leader>e", MiniFiles.open, { desc = "File explorer" })
-		vim.keymap.set("n", "<leader>E", function()
+		vim.keymap.set("n", "<leader>ue", MiniFiles.open, { desc = "File explorer" })
+		vim.keymap.set("n", "<leader>uE", function()
 			MiniFiles.open(vim.api.nvim_buf_get_name(0))
 		end, { desc = "Current file explorer" })
 
