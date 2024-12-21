@@ -82,12 +82,12 @@ return {
 			-- Number of lines within which surrounding is searched
 			n_lines = 20,
 		})
-		vim.keymap.set("v", ")", "sa)", { remap = true })
-		vim.keymap.set("v", "]", "sa]", { remap = true })
-		vim.keymap.set("v", '"', 'sa"', { remap = true })
-		vim.keymap.set("v", "'", "sa'", { remap = true })
-		vim.keymap.set("v", "}", "sa}", { remap = true })
-		vim.keymap.set("v", "$", "sa}", { remap = true })
+		vim.keymap.set("x", ")", "sa)", { remap = true })
+		vim.keymap.set("x", "]", "sa]", { remap = true })
+		vim.keymap.set("x", '"', 'sa"', { remap = true })
+		vim.keymap.set("x", "'", "sa'", { remap = true })
+		vim.keymap.set("x", "}", "sa}", { remap = true })
+		vim.keymap.set("x", "$", "sa}", { remap = true })
 		-- vim.keymap.set("v", ">", "sa>", { remap = true })
 		-- vim.keymap.set("n", "s", "<Nop>", { silent = true })
 		vim.keymap.set("n", "sa)", "saiw)", { remap = true })
@@ -113,7 +113,7 @@ return {
 
 			-- Exchange text regions
 			exchange = {
-				prefix = "gx",
+				prefix = "gr",
 
 				-- Whether to reindent new text to match previous indent
 				reindent_linewise = true,
@@ -129,7 +129,7 @@ return {
 
 			-- Replace text with register
 			replace = {
-				prefix = "gt",
+				prefix = "r",
 
 				-- Whether to reindent new text to match previous indent
 				reindent_linewise = true,
@@ -154,8 +154,8 @@ return {
 				width_preview = 30,
 			},
 		})
-		vim.keymap.set("n", "<leader>ue", MiniFiles.open, { desc = "File explorer" })
-		vim.keymap.set("n", "<leader>uE", function()
+		vim.keymap.set("n", "<leader>e", MiniFiles.open, { desc = "File explorer" })
+		vim.keymap.set("n", "<leader>E", function()
 			MiniFiles.open(vim.api.nvim_buf_get_name(0))
 		end, { desc = "Current file explorer" })
 
@@ -192,13 +192,24 @@ return {
 				map_buf("<leader>e", MiniFiles.close)
 				map_buf("<ESC>", MiniFiles.close)
 				map_buf("<leader>s", MiniFiles.synchronize, "Synchronize")
-				map_buf("<CR>", function() MiniFiles.go_in({close_on_file = true}) end, "Open file")
+				map_buf("<CR>", function()
+					MiniFiles.go_in({ close_on_file = true })
+				end, "Open file")
 				map_buf("g.", toggle_dotfiles, "Toggle hidden files")
 				map_buf("gc", files_set_cwd, "Set cwd")
 
 				-- Add extra mappings from *MiniFiles-examples*
 			end,
 		})
+
+		require("mini.pick").setup({
+			-- Keys for performing actions. See `:h MiniPick-actions`.
+			mappings = {
+				move_down = "<C-j>",
+				move_up = "<C-k>",
+			},
+		})
+		vim.keymap.set("n", "<leader>fm", MiniPick.builtin.files, { desc = "Find files" })
 
 		-- local statusline = require("mini.statusline")
 		-- statusline.setup({
@@ -214,7 +225,7 @@ return {
 		-- 	return "%2l:%-2v"
 		-- end
 
-        -- animated indentscope
+		-- animated indentscope
 		-- require("mini.indentscope").setup({
 		-- 	symbol = "│",
 		-- 	options = { try_as_border = true },

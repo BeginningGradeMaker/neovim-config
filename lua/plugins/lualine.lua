@@ -5,6 +5,7 @@ return {
 		enabled = true,
 		event = "VeryLazy",
 		init = function()
+			vim.o.laststatus = 0
 			vim.g.lualine_laststatus = vim.o.laststatus
 			if vim.fn.argc(-1) > 0 then
 				-- set an empty statusline till lualine loads
@@ -38,16 +39,16 @@ return {
 						},
 					},
 					lualine_x = {
-						-- { -- macro recording
-						-- 	require("noice").api.status.mode.get,
-						-- 	cond = require("noice").api.status.mode.has,
-						-- 	color = { fg = "#ff9e64" },
-						-- },
-						-- { -- key strokes
-						-- 	require("noice").api.status.command.get,
-						-- 	cond = require("noice").api.status.command.has,
-						-- 	color = { fg = "#ff9e64" },
-						-- },
+						{ -- macro recording
+							require("noice").api.status.mode.get,
+							cond = require("noice").api.status.mode.has,
+							color = { fg = "#ff9e64" },
+						},
+						{ -- key strokes
+							require("noice").api.status.command.get,
+							cond = require("noice").api.status.command.has,
+							color = { fg = "#ff9e64" },
+						},
 						"encoding",
 						"fileformat",
 						"filetype",

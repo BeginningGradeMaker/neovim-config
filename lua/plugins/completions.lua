@@ -1,7 +1,7 @@
 return {
 	{
 		"saghen/blink.cmp",
-		-- event = "InsertEnter",
+		event = "InsertEnter",
 		-- optional: provides snippets for the snippet source
 		dependencies = "rafamadriz/friendly-snippets",
 
@@ -41,14 +41,28 @@ return {
 			-- elsewhere in your config, without redefining it, via `opts_extend`
 			sources = {
 				default = { "lsp", "path", "snippets", "buffer" },
-				-- optionally disable cmdline completions
-				-- cmdline = {},
+				providers = {
+					lsp = {
+						transform_items = function(ctx, items)
+							-- Remove the "Text" source from lsp autocomplete
+							return vim.tbl_filter(function(item)
+								return item.kind ~= vim.lsp.protocol.CompletionItemKind.Text
+							end, items)
+						end,
+					},
+				},
+				cmdline = {},
 			},
 
 			-- experimental signature help support
-			-- signature = {
-			--              enabled = true,
-			--          },
+			signature = {
+				enabled = true,
+                window = {
+                    winblend = 10,
+					border = "rounded",
+					winhighlight = "Normal:Normal,FloatBorder:FloatBorder,CursorLine:BlinkCmpMenuSelection,Search:None",
+                }
+			},
 
 			completion = {
 				accept = {
@@ -62,22 +76,21 @@ return {
 						treesitter = { "lsp" },
 					},
 					border = "rounded",
-                    winhighlight = 'Normal:BlinkCmpMenu,FloatBorder:FloatBorder,CursorLine:BlinkCmpMenuSelection,Search:None',
+					winhighlight = "Normal:Normal,FloatBorder:FloatBorder,CursorLine:BlinkCmpMenuSelection,Search:None",
 				},
 				documentation = {
 					auto_show = true,
 					auto_show_delay_ms = 0,
 					window = {
 						border = "rounded",
-                        winhighlight = 'Normal:BlinkCmpMenu,FloatBorder:FloatBorder,CursorLine:BlinkCmpMenuSelection,Search:None',
+						winhighlight = "Normal:Normal,FloatBorder:FloatBorder,CursorLine:BlinkCmpMenuSelection,Search:None,NormalFloat:Normal",
 					},
 				},
 				ghost_text = {
 					enabled = vim.g.ai_cmp,
 				},
-				sources = {
-					-- Static list of providers to enable, or a function to dynamically enable/disable providers based on the context
-					default = { "lsp", "path", "snippets", },
+				trigger = {
+					show_on_insert_on_trigger_character = false,
 				},
 			},
 		},
@@ -85,11 +98,6 @@ return {
 		-- without having to redefine it
 		opts_extend = { "sources.default" },
 		config = function(_, opts)
-			-- Change border highlgiht
-			vim.api.nvim_set_hl(0, "BlinkCmpMenu", { link = "FloatBorder" })
-			vim.api.nvim_set_hl(0, "BlinkCmpDocBorder", { link = "FloatBorder" })
-			vim.api.nvim_set_hl(0, "BlinkCmpMenuBorder", { link = "FloatBorder" })
-			-- vim.api.nvim_set_hl(0, "BlinkCmpSignatureHelpBorder", { link = "FloatBorder" })
 			require("blink.cmp").setup(opts)
 		end,
 	},

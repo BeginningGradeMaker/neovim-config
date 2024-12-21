@@ -1,6 +1,15 @@
 return {
 	"stevearc/conform.nvim",
-	event = "VeryLazy",
+    cmd = "ConformInfo",
+    keys = {
+        {
+            "<leader>cf",
+            function()
+			    require("conform").format({ timeout_ms = 500, lsp_format = "fallback", bufnr = vim.api.nvim_get_current_buf() })
+            end,
+            desc = "Code format",
+        }
+    },
 	config = function()
 		local conform = require("conform")
 		conform.setup({
@@ -24,9 +33,6 @@ return {
 			end,
 		})
 
-		vim.keymap.set("n", "<leader>cf", function()
-			conform.format({ timeout_ms = 500, lsp_format = "fallback", bufnr = vim.api.nvim_get_current_buf() })
-		end, { desc = "Code format" })
 
 		-- vim.api.nvim_create_autocmd("BufWritePre", {
 		--   pattern = "*",

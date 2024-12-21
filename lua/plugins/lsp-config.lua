@@ -14,6 +14,7 @@ return {
 					require("inc_rename").setup({})
 				end,
 			},
+			"saghen/blink.cmp",
 		},
 		opts = {
 			autoformat = false,
@@ -104,8 +105,8 @@ return {
 
 					-- Rename the variable under your cursor
 					--  Most Language Servers support renaming across files, etc.
-					map("<leader>cn", vim.lsp.buf.rename, "Rename")
-					-- map("<leader>cn", ":IncRename ", "Rename")
+					-- map("<leader>cn", vim.lsp.buf.rename, "Rename")
+					map("<leader>cn", ":IncRename ", "Rename")
 
 					-- Execute a code action, usually your cursor needs to be on top of an error
 					-- or a suggestion from your LSP for this to activate.
@@ -162,19 +163,19 @@ return {
 			--  So, we create new capabilities with nvim cmp, and then broadcast that to the servers.
 			-- local capabilities = vim.lsp.protocol.make_client_capabilities()
 			-- capabilities = require("blink.cmp").get_lsp_capabilities_capabilities(capabilities)
-			local capabilities = require('blink.cmp').get_lsp_capabilities()
+			local capabilities = require("blink.cmp").get_lsp_capabilities()
 
-			-- vim.diagnostic.config({
-			-- 	float = { border = "rounded" },
-			-- 	signs = {
-			-- 	    text = {
-			-- 	        [vim.diagnostic.severity.ERROR] = icons.DiagnosticError,
-			-- 	        [vim.diagnostic.severity.WARN] = icons.DiagnosticWarn,
-			-- 	        [vim.diagnostic.severity.HINT] = icons.DiagnosticHint,
-			-- 	        [vim.diagnostic.severity.INFO] = icons.DiagnosticInfo,
-			-- 	    },
-			-- 	}
-			-- })
+			vim.diagnostic.config({
+				float = { border = "rounded" },
+				-- signs = {
+				--     text = {
+				--         [vim.diagnostic.severity.ERROR] = icons.DiagnosticError,
+				--         [vim.diagnostic.severity.WARN] = icons.DiagnosticWarn,
+				--         [vim.diagnostic.severity.HINT] = icons.DiagnosticHint,
+				--         [vim.diagnostic.severity.INFO] = icons.DiagnosticInfo,
+				--     },
+				-- }
+			})
 
 			-- Enable the following language servers
 			--  Feel free to add/remove any LSPs that you want here. They will automatically be installed.
@@ -215,8 +216,6 @@ return {
 				},
 
 				lua_ls = {
-					-- cmd = {...},
-					-- filetypes { ...},
 					capabilities = {
 						textDocument = {
 							codeLens = {
@@ -246,23 +245,9 @@ return {
 						exportPdf = "onSave",
 						-- outputPath = "$root/target/$dir/$name",
 					},
-					-- handlers = {
-					-- 	["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
-					-- 		border = "rounded",
-					-- 	}),
-					-- },
 				},
 			}
 
-			-- vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
-			--     border = "rounded",
-			-- })
-			-- --
-			-- vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, {
-			--     border = "rounded",
-			-- })
-
-			-- Ensure the servers and tools above are installed
 			--  To check the current status of installed tools and/or manually install
 			--  other tools, you can run
 			--    :Mason
@@ -277,7 +262,6 @@ return {
 				"stylua", -- Used to format lua code
 				"pyright",
 			})
-			-- require("lspconfig")["tinymist"].setup({})
 			for server_name, server in pairs(servers) do
 				server.capabilities = vim.tbl_deep_extend("force", {}, capabilities, server.capabilities or {})
 				require("lspconfig")[server_name].setup(server)
@@ -393,7 +377,7 @@ return {
 					end
 				end,
 				desc = "Previous Trouble/Quickfix Item",
-                silent = true,
+				silent = true,
 			},
 			{
 				"]q",
@@ -408,7 +392,60 @@ return {
 					end
 				end,
 				desc = "Next Trouble/Quickfix Item",
-                silent = true,
+				silent = true,
+			},
+		},
+	},
+	{
+		"rachartier/tiny-inline-diagnostic.nvim",
+		optional = true,
+		enabled = false,
+		event = "VeryLazy", -- Or `LspAttach`
+		priority = 1000, -- needs to be loaded in first
+		config = function()
+			require("tiny-inline-diagnostic").setup()
+		end,
+	},
+	{ -- LSP Info Dropbar
+		"Bekaboo/dropbar.nvim",
+		enabled = true,
+		lazy = false,
+		event = { "BufReadPost", "BufNewFile", "BufWritePost" },
+		opts = {
+			sources = {
+				path = {
+					-- Change winbar status when file is modified
+					modified = function(sym)
+						return sym:merge({
+							name = sym.name .. "[+]",
+							icon = " ",
+							name_hl = "DiffAdded",
+							icon_hl = "DiffAdded",
+							-- ...
+						})
+					end,
+				},
+				lsp = {
+					valid_symbols = {
+						"File",
+						"Module",
+						"Namespace",
+						"Package",
+						"Class",
+						"Method",
+						"Property",
+						"Constructor",
+						"Enum",
+						"Interface",
+						"Function",
+						"Constant",
+						"Array",
+						"Object",
+						"EnumMember",
+						"Struct",
+						"Event",
+					},
+				},
 			},
 		},
 	},

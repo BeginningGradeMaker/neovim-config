@@ -1,8 +1,5 @@
 return {
 	"akinsho/bufferline.nvim",
-	dependencies = {
-		"folke/tokyonight.nvim",
-	},
 	lazy = true,
 	event = { "BufReadPost", "BufNewFile", "BufWritePost" },
 	config = function()
@@ -38,7 +35,7 @@ return {
                 separator_style = "slant"
 			},
 		})
-		local show = false
+		local show = true
         local snacks = require("snacks.toggle")
         snacks.new({
             name = "Bufferline",

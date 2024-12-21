@@ -2,6 +2,9 @@
 return {
 	{
 		"chomosuke/typst-preview.nvim",
+		dependencies = {
+			"3rd/image.nvim",
+		},
 		ft = "typst",
 		-- version = "0.3.*",
 		keys = {
@@ -60,6 +63,8 @@ return {
 	-- install with yarn or npm
 	{
 		"OXY2DEV/markview.nvim",
+        optional = true,
+        enabled = false,
 		lazy = true,
 		ft = "markdown", -- If you decide to lazy-load anyway
 	},

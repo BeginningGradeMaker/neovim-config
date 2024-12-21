@@ -19,6 +19,12 @@ vim.opt.autoread = true
 -- Set to true if you have a Nerd Font installed
 vim.g.have_nerd_font = true
 
+-- Set jumplist bahaviour to stacks, preserving views
+vim.opt.jumpoptions = "stack,view"
+vim.cmd [[
+set tagfunc=v:lua.vim.lsp.tagfunc
+]]
+
 -- [[ Setting options ]]
 -- See `:help vim.opt`
 -- NOTE: You can change these options as you wish!
@@ -140,7 +146,7 @@ vim.opt.fillchars = { eob = " " }
 -- Copy all content of buffer
 vim.keymap.set("n", "yaa", "<cmd>%y+<cr>", { desc = "Yank entire file" })
 vim.keymap.set("n", "dad", "<cmd>%d<cr>", { desc = "Delete entire file" })
-vim.keymap.set("n", "<leader>ab", ":%bd|e#|bd# <cr><c-o>", { noremap = true, desc = "Clean non-active buffers" })
+vim.keymap.set("n", "<leader>ab", ":%bd|e#|bd# <cr>bd", { noremap = true, desc = "Clean non-active buffers" })
 
 vim.api.nvim_create_autocmd("TextYankPost", {
 	desc = "Highlight when yanking (copying) text",
@@ -183,8 +189,9 @@ vim.g.disable_autoformat = true
 vim.g.copilot_enabled = 0
 
 -- views can only be fully collapsed with the global statusline
-vim.opt.laststatus = 3
-vim.opt.showtabline = 0
+vim.opt.laststatus = 3 -- set in lualine.nvim
+vim.opt.cmdheight = 0
+vim.opt.showtabline = 2
 
 -- grug-far.nvim
 vim.g.maplocalleader = "."
@@ -192,7 +199,7 @@ vim.g.maplocalleader = "."
 -- vim.o.winbar = ""
 
 -- optional themes
-vim.g.opt_themes = true
+vim.g.opt_themes = false
 
 vim.opt.sessionoptions = { "buffers", "curdir", "tabpages", "winsize", "help", "globals", "skiprtp", "folds", "blank" }
 
@@ -202,3 +209,16 @@ vim.keymap.set("n", "yc", "<cmd>norm yygcc<cr>p", { noremap = true, desc = "Dupl
 -- Move selected lines with shift+j or shift+k
 -- vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv", { silent = true })
 -- vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv", { silent = true })
+
+-- Complete till longest common string. If this doesn't result in a longer string, 
+-- use the next part.
+vim.opt.wildmode = "longest:full"
+
+-- Mkae popup window use normal background while keeping its border color
+vim.api.nvim_create_autocmd("ColorScheme", {
+    callback = function(_)
+        local fg = vim.api.nvim_get_hl(0, {name = "FloatBorder"}).fg
+		vim.api.nvim_set_hl(0, "NormalFloat", { link = "Normal" })
+		vim.api.nvim_set_hl(0, "FloatBorder", { fg = fg, bg = "bg"})
+    end
+})

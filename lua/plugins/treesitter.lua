@@ -106,10 +106,10 @@ return {
 					end,
 				})
 				:map("<leader>uC")
-			vim.cmd("hi TreesitterContext gui=underline guisp=background")
-			vim.cmd("hi TreesitterContextLineNumber guibg=background")
+			-- vim.cmd("hi TreesitterContext gui=underline guisp=background")
+			-- vim.cmd("hi TreesitterContextLineNumber guibg=background")
 			-- vim.cmd("hi TreesitterContextSeparator gui=underline")
-			vim.cmd("hi TreesitterContextBottom gui=underline")
+			-- vim.cmd("hi TreesitterContextBottom gui=underline")
 			-- vim.cmd("hi clear TreesitterContextSeparator")
 			-- vim.cmd("hi clear TreesitterContextBottom")
 		end,

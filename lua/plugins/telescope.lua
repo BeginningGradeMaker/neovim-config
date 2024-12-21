@@ -2,6 +2,7 @@ return {
 	{
 		"nvim-telescope/telescope.nvim",
 		lazy = true,
+		enabled = true,
 		dependencies = {
 			"nvim-lua/plenary.nvim",
 			{
@@ -17,59 +18,64 @@ return {
 		},
 		cmd = "Telescope",
 		keys = {
+			-- Use mini-pick or fzf-lua as backup when number of files is large
 			{
 				"<leader><leader>",
 				function()
-					return require("telescope.builtin").find_files()
+					require("telescope.builtin").find_files(require("telescope.themes").get_ivy({}))
 				end,
 				desc = "Find files",
 			},
 			{
 				"<leader>fw",
 				function()
-					return require("telescope.builtin").live_grep()
+					require("telescope.builtin").live_grep(require("telescope.themes").get_ivy({}))
 				end,
 				desc = "Live grep",
 			},
 			{
 				"<leader>fh",
 				function()
-					return require("telescope.builtin").help_tags({ cache_picker = false })
+					require("telescope.builtin").help_tags(
+						require("telescope.themes").get_ivy({ cache_picker = false })
+					)
 				end,
 				desc = "Help",
 			},
 			{
 				"<leader>fk",
 				function()
-					return require("telescope.builtin").keymaps({ cache_picker = false })
+					require("telescope.builtin").keymaps(require("telescope.themes").get_ivy({ cache_picker = false }))
 				end,
 				desc = "Keymaps",
 			},
 			{
 				"<leader>fb",
 				function()
-					return require("telescope.builtin").builtin({ cache_picker = false })
+					require("telescope.builtin").builtin(require("telescope.themes").get_ivy({ cache_picker = false }))
 				end,
 				desc = "Select",
 			},
 			{
 				"<leader>fH",
 				function()
-					return require("telescope.builtin").highlights({ cache_picker = false })
+					require("telescope.builtin").highlights(
+						require("telescope.themes").get_ivy({ cache_picker = false })
+					)
 				end,
 				desc = "Highlight",
 			},
 			{
 				"<leader>fC",
 				function()
-					return require("telescope.builtin").grep_string()
+					require("telescope.builtin").grep_string(require("telescope.themes").get_ivy({}))
 				end,
 				desc = "Current word",
 			},
 			{
 				"<leader>fd",
 				function()
-					return require("telescope.builtin").diagnostics()
+					return require("telescope.builtin").diagnostics(require("telescope.themes").get_ivy({}))
 				end,
 				desc = "Diagnostics",
 			},
@@ -83,7 +89,9 @@ return {
 			{
 				"<leader>f.",
 				function()
-					return require("telescope.builtin").oldfiles({ cache_picker = false })
+					return require("telescope.builtin").oldfiles(
+						require("telescope.themes").get_ivy({ cache_picker = false })
+					)
 				end,
 				desc = "Recent files",
 			},
@@ -103,16 +111,18 @@ return {
 			{
 				"<leader>ff",
 				function()
-					return require("telescope.builtin").lsp_document_symbols({ symbols = { "function", "method" } })
+					return require("telescope.builtin").lsp_document_symbols(
+						require("telescope.themes").get_ivy({ symbols = { "function", "method" } })
+					)
 				end,
 				desc = "Methods",
 			},
 			{
 				"<leader>fs",
 				function()
-					return require("telescope.builtin").lsp_document_symbols({
+					return require("telescope.builtin").lsp_document_symbols(require("telescope.themes").get_ivy({
 						symbols = { "struct", "class", "typeparameter", "enum" },
-					})
+					}))
 				end,
 				desc = "Structs",
 			},
@@ -120,7 +130,9 @@ return {
 			{
 				"<leader>fc",
 				function()
-					return require("telescope.builtin").lsp_document_symbols({ symbols = { "constant" } })
+					return require("telescope.builtin").lsp_document_symbols(
+						require("telescope.themes").get_ivy({ symbols = { "constant" } })
+					)
 				end,
 				desc = "Constants",
 			},
@@ -129,7 +141,20 @@ return {
 				"<leader>m",
 				function()
 					return require("telescope.builtin").marks(require("telescope.themes").get_dropdown({
+						-- attach_mappings = function(prompt_bufnr, map)
+						-- 	-- Bind normal-mode keys to jump to marks
+						-- 	for char = 97, 123 do -- a-z ASCII range
+						-- 		local key = string.char(char)
+						-- 		map("n", key, function()
+						--                               require("telescope.actions").close(prompt_bufnr)
+						--                               vim.cmd("normal! '" .. key)
+						-- 		end)
+						-- 	end
+						--
+						-- 	return true
+						-- end,
 						winblend = 10,
+						mark_type = "local",
 						previewer = true,
 						path_display = "hidden",
 						initial_mode = "normal",
@@ -141,15 +166,18 @@ return {
 			{
 				"<leader>fR",
 				function()
-					return require("telescope.builtin").registers({ cache_picker = false })
+					return require("telescope.builtin").registers(
+						require("telescope.themes").get_dropdown({ cache_picker = false })
+					)
 				end,
 				desc = "Registers",
 			},
 			{
 				"<leader>fq",
 				function()
-					return require("telescope.builtin").quickfix()
+					return require("telescope.builtin").quickfix(require("telescope.themes").get_dropdown({}))
 				end,
+				desc = "Quickfix",
 			},
 
 			-- Change colorschemes
@@ -181,7 +209,12 @@ return {
 			{
 				"<leader>fn",
 				function()
-					require("telescope.builtin").find_files({ cwd = vim.fn.stdpath("config"), cache_picker = false })
+					require("telescope.builtin").find_files(
+						require("telescope.themes").get_dropdown({
+							cwd = vim.fn.stdpath("config"),
+							cache_picker = false,
+						})
+					)
 				end,
 				desc = "NeoVim files",
 			},
@@ -189,21 +222,22 @@ return {
 			{
 				"<leader>fp",
 				function()
-					require("telescope.builtin").find_files({
+					require("telescope.builtin").find_files(require("telescope.themes").get_ivy({
 						cwd = vim.fs.joinpath(vim.fn.stdpath("data"), "lazy"),
 						cache_picker = false,
-					})
+					}))
 				end,
 				desc = "Plugin files",
 			},
 			{
 				"<leader>fp",
 				function()
-					require("config.telescope.mutligrep").live_multigrep({})
+					require("config.telescope.mutligrep").live_multigrep(require("telescope.themes").get_ivy({}))
 				end,
 				desc = "Plugin files",
 			},
-			{ "<leader>fu", "<cmd>Telescope undo<cr>", desc = "Undo history", silent = true },
+			-- Need extension for undo history
+			-- { "<leader>fu", function() require("telescope.builtin").undo { cache_picker = false } end, desc = "Undo history", silent = true },
 		},
 		config = function()
 			local actions = require("telescope.actions")
@@ -226,12 +260,12 @@ return {
 					selection_caret = get_icon("Selected", 1, true),
 					path_display = { "smart" },
 					sorting_strategy = "ascending",
-					layout_strategy = "bottom_pane",
+					-- layout_strategy = "bottom_pane",
 					layout_config = {
 						horizontal = { prompt_position = "top", preview_width = 0.55 },
 						vertical = { mirror = false },
-						width = 0.87,
-						height = 0.60,
+						-- width = 0.87,
+						height = 0.80,
 						preview_cutoff = 120,
 					},
 					mappings = {
@@ -260,6 +294,16 @@ return {
 						},
 					},
 					file_ignore_patterns = { "compile_commands.json", "lazy-lock.json" },
+					vimgrep_arguments = {
+						"rg",
+						"--color=never",
+						"--no-heading",
+						"--with-filename",
+						"--line-number",
+						"--column",
+						"--smart-case",
+                        "-u"
+					},
 				},
 			})
 
@@ -271,12 +315,61 @@ return {
 	{ -- TODO: replace telescope with fzf-lua
 		"ibhagwan/fzf-lua",
         optional = true,
-        enabled = false,
-		-- optional for icon support
-		dependencies = { "nvim-tree/nvim-web-devicons" },
-		config = function()
-			-- calling `setup` is optional for customization
-			require("fzf-lua").setup({})
-		end,
+		enabled = false,
+		keys = {
+			{
+				"<leader><leader>",
+				function()
+					require("fzf-lua").files({ header = false })
+				end,
+				desc = "Find files",
+			},
+		},
+		opts = {
+			previewers = { builtin = { toggle_behavior = "extend" } },
+			fzf_opts = { ["--layout"] = "reverse", ["--marker"] = "+" },
+			header = false,
+			winopts = {
+				height = 25,
+				width = 1,
+				row = 1,
+				backdrop = false,
+				preview = {
+					scrollbar = false,
+					hidden = "nohidden",
+					layout = "flex",
+					horizontal = "right:50%",
+					flip_columns = 120,
+					cursorline = false,
+				},
+			},
+			hls = {
+				normal = "NormalFloat",
+				border = "FloatBorder",
+				title = "FloatBorder",
+				help_normal = "Normal",
+				help_border = "FloatBorder",
+				preview_normal = "Normal",
+				preview_border = "FloatBorder",
+				preview_title = "FloatBorder",
+				cursor = "Normal",
+				search = "None",
+			},
+			fzf_colors = {
+				["fg"] = { "fg", "CursorLine" },
+				["bg"] = { "bg", "Normal" },
+				["hl"] = { "fg", "FloatBorder" },
+				["fg+"] = { "fg", "Normal" },
+				["bg+"] = { "bg", "CursorLine" },
+				["hl+"] = { "fg", "FloatBorder" },
+				["info"] = { "fg", "Normal" },
+				["prompt"] = { "fg", "FloatBorder" },
+				["pointer"] = { "fg", "FloatBorder" },
+				["marker"] = { "fg", "FloatBorder" },
+				["spinner"] = { "fg", "Label" },
+				["header"] = { "fg", "Comment" },
+				["gutter"] = { "bg", "Normal" },
+			},
+		},
 	},
 }

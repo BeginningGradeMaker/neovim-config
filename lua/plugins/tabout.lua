@@ -1,6 +1,8 @@
 return {
 	{
 		"kawre/neotab.nvim",
+        optional = true,
+        enabled = false,
 		event = "InsertEnter",
 		opts = {
 			-- configuration goes here

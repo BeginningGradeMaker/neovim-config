@@ -33,6 +33,11 @@ return {
 					["vim.lsp.util.stylize_markdown"] = true,
 					["cmp.entry.get_documentation"] = true, -- requires hrsh7th/nvim-cmp
 				},
+                hover = { enabled = true },
+                signature = { enabled = false }
+			},
+			popupmenu = {
+				backend = "nui",
 			},
 			-- you can enable a preset for easier configuration
 			presets = {
@@ -46,29 +51,25 @@ return {
 				{
 					filter = {
 						event = "msg_show",
-						kind = "",
-						find = "written",
+						any = {
+							{ find = "%d+L, %d+B" },
+							{ find = "; after #%d+" },
+							{ find = "; before #%d+" },
+						},
 					},
-					opts = { skip = true },
 				},
-				{
-					filter = {
-						event = "msg_show",
-						kind = "",
-						find = "change",
-					},
-					opts = { skip = true },
-				},
-				{
-					filter = {
-						event = "msg_show",
-						kind = "",
-						find = "line",
-					},
-					opts = { skip = true },
+			},
+			views = {
+				hover = {
+					border = { style = "rounded", highlight = "Normal:Normal,FloatBorder:FloatBorder,NormalFloat:None" },
+					size = { max_width = 80 },
 				},
 			},
 		},
+        config = function(_, opts)
+			vim.api.nvim_set_hl(0, "NormalFloat", { link = "Normal" })
+            require("noice").setup(opts)
+        end,
 		dependencies = {
 			-- if you lazy-load any plugin below, make sure to add proper `module="..."` entries
 			"MunifTanjim/nui.nvim",
@@ -76,58 +77,44 @@ return {
 	},
 	{
 		"dstein64/nvim-scrollview",
-		enabled = not vim.g.neovide, -- existing bug with neovide
+        optional = true,
+		-- enabled = not vim.g.neovide, -- existing bug with neovide
+		enabled = false, -- existing bug with neovide
 		lazy = true,
 		event = "VeryLazy",
 		opts = {
 			signs_on_startup = {},
-            excluded_filetypes = {"neo-tree"}
+			excluded_filetypes = { "neo-tree" },
 		},
 	},
 	-- Enable these if you want mosue support with pretty UI
-	-- {
-	--     "nvzone/typr",
-	--     dependencies = {
-	--         		"nvchad/volt",
-	--     }
-	-- },
-	-- {
-	-- 	"nvzone/minty",
-	-- 	cmd = { "Shades", "Huefy" },
-	-- },
-	-- {
-	-- 	"nvchad/menu",
-	-- 	lazy = false,
-	-- 	config = function()
-	-- 		vim.keymap.set("n", "<RightMouse>", function()
-	-- 			vim.cmd.exec('"normal! \\<RightMouse>"')
-	--
-	-- 			local options = vim.bo.ft == "NvimTree" and "nvimtree" or "default"
-	-- 			require("menu").open(options, { mouse = true })
-	-- 		end, {})
-	-- 	end,
-	-- },
 	{
-		"Bekaboo/dropbar.nvim",
-        enabled = true,
+	    "nvzone/typr",
+        optional = true,
+        enabled = false,
+	    dependencies = {
+	        		"nvchad/volt",
+	    }
+	},
+	{
+		"nvzone/minty",
+        optional = true,
+        enabled = false,
+		cmd = { "Shades", "Huefy" },
+	},
+	{
+		"nvchad/menu",
+        optional = true,
+        enabled = false,
 		lazy = false,
-		event = { "BufReadPost", "BufNewFile", "BufWritePost" },
-		opts = {
-			sources = {
-				path = {
-					-- Change winbar status when file is modified
-					modified = function(sym)
-						return sym:merge({
-							name = sym.name .. "[+]",
-							icon = " ",
-							name_hl = "DiffAdded",
-							icon_hl = "DiffAdded",
-							-- ...
-						})
-					end,
-				},
-			},
-		},
+		config = function()
+			vim.keymap.set("n", "<RightMouse>", function()
+				vim.cmd.exec('"normal! \\<RightMouse>"')
+
+				local options = vim.bo.ft == "NvimTree" and "nvimtree" or "default"
+				require("menu").open(options, { mouse = true })
+			end, {})
+		end,
 	},
 	{
 		"lukas-reineke/indent-blankline.nvim",
@@ -149,7 +136,8 @@ return {
 					char = "│",
 					tab_char = "│",
 				},
-				scope = { show_start = false, show_end = false, highlight = "Special" },
+				-- scope = { show_start = false, show_end = false, highlight = "Special" },
+				scope = { show_start = false, show_end = false, },
 				exclude = {
 					filetypes = {
 						"Trouble",
@@ -170,5 +158,38 @@ return {
 				},
 			}
 		end,
+	},
+	-- Highlight todo, notes, etc in comments
+	{
+		"folke/todo-comments.nvim",
+		event = "VeryLazy",
+		dependencies = { "nvim-lua/plenary.nvim" },
+		keys = {
+			{
+				"]t",
+				function()
+					require("todo-comments").jump_next()
+				end,
+				desc = "Next Todo Comment",
+			},
+			{
+				"[t",
+				function()
+					require("todo-comments").jump_prev()
+				end,
+				desc = "Previous Todo Comment",
+			},
+			{ "<leader>xt", "<cmd>Trouble todo toggle<cr>", desc = "Todo (Trouble)" },
+			{
+				"<leader>xT",
+				"<cmd>Trouble todo toggle filter = {tag = {TODO,FIX,FIXME}}<cr>",
+				desc = "Todo/Fix/Fixme (Trouble)",
+			},
+			{ "<leader>ft", "<cmd>TodoTelescope<cr>", desc = "Todo" },
+			{ "<leader>fT", "<cmd>TodoTelescope keywords=TODO,FIX,FIXME<cr>", desc = "Todo/Fix/Fixme" },
+		},
+		opts = {
+			signs = false,
+		},
 	},
 }

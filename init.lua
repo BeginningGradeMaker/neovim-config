@@ -20,6 +20,7 @@ require("lazy").setup("plugins", {
 	},
 })
 require("colorscheme")
+-- require("menu")
 
 for _, source in ipairs({
 	"autocmds",
