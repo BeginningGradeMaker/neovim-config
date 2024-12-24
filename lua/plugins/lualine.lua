@@ -5,7 +5,6 @@ return {
 		enabled = true,
 		event = "VeryLazy",
 		init = function()
-			vim.o.laststatus = 0
 			vim.g.lualine_laststatus = vim.o.laststatus
 			if vim.fn.argc(-1) > 0 then
 				-- set an empty statusline till lualine loads

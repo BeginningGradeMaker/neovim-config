@@ -4,6 +4,7 @@ return {
 	{
 		"xeluxee/competitest.nvim",
 		lazy = true,
+        enabled = true,
 		ft = { "cpp" },
 		dependencies = "MunifTanjim/nui.nvim",
 		config = function()

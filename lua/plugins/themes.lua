@@ -4,6 +4,11 @@ return {
 		name = "catppuccin",
 		priority = 1000,
 		opts = {
+			background = {
+				light = "frappe",
+				dark = "mocha",
+			},
+			term_colors = true,
 			integrations = {
 				telescope = {
 					enabled = true,
@@ -26,14 +31,14 @@ return {
 				},
 			},
 		},
-		config = function()
-			require("catppuccin").setup({ term_colors = true })
+		config = function(_, opts)
+			require("catppuccin").setup(opts)
 		end,
 	},
 	{
 		"olimorris/onedarkpro.nvim",
-        optional = true,
-        enabled = vim.g.opt_themes,
+		optional = not vim.g.opt_themes,
+		enabled = vim.g.opt_themes,
 		priority = 1000, -- ensure it loads first
 		-- config = function()
 		-- 	-- somewhere in your config:
@@ -41,21 +46,21 @@ return {
 	},
 	{
 		"luisiacc/the-matrix.nvim",
-        optional = true,
+		optional = not vim.g.opt_themes,
 		enabled = vim.g.opt_themes,
 		priority = 1000,
 	},
 	{
 		"diegoulloao/neofusion.nvim",
-        optional = true,
+		optional = not vim.g.opt_themes,
 		enabled = vim.g.opt_themes,
 		priority = 1000,
 		config = true,
 	},
 	{
 		"folke/tokyonight.nvim",
-        optional = true,
-        enabled = vim.g.opt_themes,
+		optional = not vim.g.opt_themes,
+		enabled = vim.g.opt_themes,
 		priority = 1000,
 		opts = {
 			transparent = false,
@@ -69,18 +74,18 @@ return {
 	{
 		"projekt0n/github-nvim-theme",
 		enabled = vim.g.opt_themes,
-		optional = true,
+		optional = not vim.g.opt_theme,
 		priority = 1000,
 	},
 	{
 		"sainnhe/gruvbox-material",
-        optional = true,
-		enabled = vim.g.opt_themes,
+		optional = not vim.g.opt_theme,
+		enabled = true,
 		priority = 1000,
 	},
 	{
 		"scottmckendry/cyberdream.nvim",
-		optional = true,
+		optional = not vim.g.opt_theme,
 		enabled = vim.g.opt_themes,
 		lazy = false,
 		priority = 1000,
@@ -103,7 +108,7 @@ return {
 	},
 	{
 		"rose-pine/neovim",
-		optional = true,
+		optional = not vim.g.opt_theme,
 		enabled = vim.g.opt_themes,
 		lazy = false,
 		priority = 1000,
@@ -111,25 +116,25 @@ return {
 	},
 	{
 		"shaunsingh/nord.nvim",
-		optional = true,
+		optional = not vim.g.opt_theme,
 		enabled = vim.g.opt_themes,
 		priority = 1000,
 	},
 	{
 		"rebelot/kanagawa.nvim",
-		optional = true,
+		optional = not vim.g.opt_theme,
 		enabled = vim.g.opt_themes,
 		priority = 1000,
 	},
 	{
 		"Mofiqul/vscode.nvim",
-		optional = true,
+		optional = not vim.g.opt_theme,
 		enabled = vim.g.opt_themes,
 		priority = 1000,
 	},
 	{
 		"loctvl842/monokai-pro.nvim",
-		optional = true,
+		optional = not vim.g.opt_theme,
 		enabled = vim.g.opt_themes,
 		priority = 1000,
 	},

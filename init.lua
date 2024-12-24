@@ -17,6 +17,7 @@ require("neovide")
 require("lazy").setup("plugins", {
 	ui = {
 		border = "rounded",
+        backdrop = 100,
 	},
 })
 require("colorscheme")

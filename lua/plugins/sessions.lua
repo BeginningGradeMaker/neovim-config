@@ -27,14 +27,15 @@ return {
 				require("persistence").stop()
 			end, { desc = "Stop session save" })
 
-
-			vim.api.nvim_create_autocmd("User", {
-                pattern = "PersistenceSavePre",
-				callback = function()
-                    -- Close neo-tree before session is saved.
-				    require("neo-tree.command").execute({ action = "close" })
-				end,
-			})
+			if require("utils").is_available("neo-tree") then
+				vim.api.nvim_create_autocmd("User", {
+					pattern = "PersistenceSavePre",
+					callback = function()
+						-- Close neo-tree before session is saved.
+						require("neo-tree.command").execute({ action = "close" })
+					end,
+				})
+			end
 		end,
 	},
 	-- {

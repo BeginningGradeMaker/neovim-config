@@ -145,7 +145,7 @@ vim.opt.fillchars = { eob = " " }
 
 -- Copy all content of buffer
 vim.keymap.set("n", "yaa", "<cmd>%y+<cr>", { desc = "Yank entire file" })
-vim.keymap.set("n", "dad", "<cmd>%d<cr>", { desc = "Delete entire file" })
+vim.keymap.set("n", "daa", "<cmd>%d<cr>", { desc = "Delete entire file" })
 vim.keymap.set("n", "<leader>ab", ":%bd|e#|bd# <cr>bd", { noremap = true, desc = "Clean non-active buffers" })
 
 vim.api.nvim_create_autocmd("TextYankPost", {
@@ -199,7 +199,7 @@ vim.g.maplocalleader = "."
 -- vim.o.winbar = ""
 
 -- optional themes
-vim.g.opt_themes = false
+vim.g.opt_themes = true
 
 vim.opt.sessionoptions = { "buffers", "curdir", "tabpages", "winsize", "help", "globals", "skiprtp", "folds", "blank" }
 

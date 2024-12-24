@@ -5,11 +5,6 @@ return {
 	config = function()
 		local bufferline = require("bufferline")
 		bufferline.setup({
-			highlights = {
-				fill = {
-					bg = "bg"
-				},
-			},
 			options = {
 				auto_toggle_bufferline = false,
 				style_preset = bufferline.style_preset.minimal, -- or bufferline.style_preset.minimal,

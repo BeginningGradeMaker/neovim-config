@@ -4,6 +4,11 @@ return {
 	lazy = false,
 	---@type snacks.Config
 	opts = {
+		styles = {
+			notification_history = {
+                backdrop = 100,
+			},
+		},
 		bigfile = { enabled = true },
 		dashboard = {
 			enabled = true,
@@ -153,6 +158,12 @@ return {
 			end,
 			desc = "Select Scratch Buffer",
 		},
+		{
+			"<leader>h",
+			function()
+				Snacks.notifier.show_history()
+			end,
+		},
 	},
 	init = function()
 		vim.api.nvim_create_autocmd("User", {
@@ -184,7 +195,7 @@ return {
 			end,
 		})
 		vim.g.toggle = require("snacks.toggle")
-        -- Hide cursor in dashboard
+		-- Hide cursor in dashboard
 		-- vim.api.nvim_create_autocmd("User", {
 		-- 	pattern = "SnacksDashboardOpened",
 		-- 	callback = function()

@@ -19,12 +19,13 @@ return {
 			keymap = {
 				preset = "default",
 				["<Tab>"] = { "select_and_accept", "fallback" },
-				["<C-k>"] = { "select_prev", "fallback" },
-				["<C-j>"] = { "select_next", "fallback" },
+				["<C-k>"] = { "select_prev" },
+				["<C-j>"] = { "select_next" },
 				["<C-l>"] = { "snippet_forward", "fallback" },
 				["<C-h>"] = { "snippet_backward", "fallback" },
 				["<C-u>"] = { "scroll_documentation_up", "fallback" },
 				["<C-d>"] = { "scroll_documentation_down", "fallback" },
+				["<C-n>"] = {},
 			},
 
 			appearance = {
@@ -51,17 +52,24 @@ return {
 						end,
 					},
 				},
-				cmdline = {},
+				cmdline = function()
+					local type = vim.fn.getcmdtype()
+					-- Commands
+					if type == ":" then
+						return { "cmdline" }
+					end
+					return {}
+				end,
 			},
 
 			-- experimental signature help support
 			signature = {
 				enabled = true,
-                window = {
-                    winblend = 10,
+				window = {
+					winblend = 10,
 					border = "rounded",
 					winhighlight = "Normal:Normal,FloatBorder:FloatBorder,CursorLine:BlinkCmpMenuSelection,Search:None",
-                }
+				},
 			},
 
 			completion = {

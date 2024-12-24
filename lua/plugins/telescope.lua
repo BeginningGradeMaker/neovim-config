@@ -22,7 +22,9 @@ return {
 			{
 				"<leader><leader>",
 				function()
-					require("telescope.builtin").find_files(require("telescope.themes").get_ivy({}))
+					require("telescope.builtin").find_files(require("telescope.themes").get_ivy({
+                        winblend = 5,
+                    }))
 				end,
 				desc = "Find files",
 			},

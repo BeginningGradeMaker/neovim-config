@@ -4,16 +4,9 @@ return {
 		lazy = true,
 		enabled = true,
 		event = "VeryLazy",
-		keys = {
-			{
-				"<leader>h",
-				"<cmd>NoiceHistory<cr>",
-				desc = "Notification history",
-			},
-		},
 		opts = {
 			cmdline = {
-				view = "cmdline_popup",
+				view = "cmdline",
 				-- view = "cmdline_popup",
 			},
 			messages = {

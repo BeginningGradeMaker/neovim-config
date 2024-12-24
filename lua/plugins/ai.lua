@@ -16,9 +16,9 @@ return {
 				-- Make sure to set this up properly if you have lazy=true
 				"MeanderingProgrammer/render-markdown.nvim",
 				opts = {
-					file_types = { "markdown", "Avante" },
+					file_types = { "markdown", "Avante", "snacks_notif_history" },
 				},
-				ft = { "markdown", "Avante" },
+				ft = { "markdown", "Avante", "snacks_notif_history" },
 			},
 		},
 	},

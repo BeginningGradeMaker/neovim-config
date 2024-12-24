@@ -113,7 +113,7 @@ return {
 
 			-- Exchange text regions
 			exchange = {
-				prefix = "gr",
+				prefix = "gX",
 
 				-- Whether to reindent new text to match previous indent
 				reindent_linewise = true,
@@ -129,7 +129,7 @@ return {
 
 			-- Replace text with register
 			replace = {
-				prefix = "r",
+				prefix = "R",
 
 				-- Whether to reindent new text to match previous indent
 				reindent_linewise = true,
@@ -190,7 +190,7 @@ return {
 				end
 
 				map_buf("<leader>e", MiniFiles.close)
-				map_buf("<ESC>", MiniFiles.close)
+				-- map_buf("<ESC>", MiniFiles.close)
 				map_buf("<leader>s", MiniFiles.synchronize, "Synchronize")
 				map_buf("<CR>", function()
 					MiniFiles.go_in({ close_on_file = true })
