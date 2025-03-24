@@ -54,9 +54,9 @@ return {
 	{
 		"nvim-neo-tree/neo-tree.nvim",
 		lazy = true,
+        optional = true,
 		enabled = false,
 		cmd = "Neotree",
-		branch = "v3.x",
 		dependencies = {
 			"nvim-lua/plenary.nvim",
 			"MunifTanjim/nui.nvim",
@@ -237,7 +237,7 @@ return {
 						},
 						["[b"] = "prev_source",
 						["]b"] = "next_source",
-						F = require("utils").is_available("telescope.nvim") and "find_in_dir" or nil,
+						-- F = require("utils").is_available("telescope.nvim") and "find_in_dir" or nil,
 						h = "parent_or_close",
 						l = "child_or_open",
 						o = "open",

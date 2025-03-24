@@ -2,7 +2,8 @@ return {
 	{
 		"nvim-telescope/telescope.nvim",
 		lazy = true,
-		enabled = true,
+        optional = true,
+		enabled = false,
 		dependencies = {
 			"nvim-lua/plenary.nvim",
 			{
@@ -19,15 +20,15 @@ return {
 		cmd = "Telescope",
 		keys = {
 			-- Use mini-pick or fzf-lua as backup when number of files is large
-			{
-				"<leader><leader>",
-				function()
-					require("telescope.builtin").find_files(require("telescope.themes").get_ivy({
-                        winblend = 5,
-                    }))
-				end,
-				desc = "Find files",
-			},
+			-- {
+			-- 	"<leader><leader>",
+			-- 	function()
+			-- 		require("telescope.builtin").find_files(require("telescope.themes").get_ivy({
+			--                      winblend = 5,
+			--                  }))
+			-- 	end,
+			-- 	desc = "Find files",
+			-- },
 			{
 				"<leader>fw",
 				function()
@@ -328,6 +329,9 @@ return {
 			},
 		},
 		opts = {
+            files = {
+                git_icons = false,
+            },
 			previewers = { builtin = { toggle_behavior = "extend" } },
 			fzf_opts = { ["--layout"] = "reverse", ["--marker"] = "+" },
 			header = false,

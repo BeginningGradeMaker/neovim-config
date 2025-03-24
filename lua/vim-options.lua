@@ -21,9 +21,9 @@ vim.g.have_nerd_font = true
 
 -- Set jumplist bahaviour to stacks, preserving views
 vim.opt.jumpoptions = "stack,view"
-vim.cmd [[
+vim.cmd([[
 set tagfunc=v:lua.vim.lsp.tagfunc
-]]
+]])
 
 -- [[ Setting options ]]
 -- See `:help vim.opt`
@@ -89,18 +89,25 @@ vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>")
 
 vim.opt.termguicolors = true
 
-vim.keymap.set("n", "<C-h>", function()
-	vim.cmd("bp")
-end, { desc = "Previosu buffer", silent = true })
-vim.keymap.set("n", "<C-l>", function()
+vim.keymap.set("n", "<C-d>", "<C-w><C-j>")
+vim.keymap.set("n", "<C-u>", "<C-w><C-k>")
+vim.keymap.set("n", "<C-h>", "<C-w><C-h>", { silent = true })
+vim.keymap.set("n", "<C-l>", "<C-w><C-l>", { silent = true })
+vim.keymap.set("n", "}", function()
 	vim.cmd("bn")
-end, { desc = "Next buffer", silent = true })
+end)
+vim.keymap.set("n", "{", function()
+	vim.cmd("bp")
+end)
 -- vim.keymap.set("n", "<C-h>", "<C-w><C-h>", { desc = "Previosu buffer", silent = true })
 -- vim.keymap.set("n", "<C-l>", "<C-w><C-l>", { desc = "Next buffer", silent = true })
-vim.keymap.set({ "n", "v" }, "<C-j>", "<C-d>", { desc = "Move half screen down." })
-vim.keymap.set({ "n", "v" }, "<C-k>", "<C-u>", { desc = "Move half screen up." })
+-- vim.keymap.set({ "n", "v" }, "<C-j>", "<C-d>", { desc = "Move half screen down." })
+-- vim.keymap.set({ "n", "v" }, "<C-k>", "<C-u>", { desc = "Move half screen up." })
 vim.keymap.set({ "i", "c", "o" }, "<C-j>", "<C-n>", { desc = "Select next item" })
 vim.keymap.set({ "i", "c", "o" }, "<C-k>", "<C-p>", { desc = "Select previous item" })
+
+vim.keymap.set("n", "<C-j>", "<C-d>", { desc = "Scroll half page down" })
+vim.keymap.set("n", "<C-k>", "<C-u>", { desc = "Scroll half page up" })
 
 vim.keymap.set("n", "<C-Left>", "<C-w><C-h>", { desc = "Move window left" })
 vim.keymap.set("n", "<C-Right>", "<C-w><C-l>", { desc = "Move window right" })
@@ -115,8 +122,9 @@ keymap.set("n", "<C-S-j>", "<C-w><C-j>", { desc = "Go down split" })
 -- Standard Operations
 vim.keymap.set("n", "<leader>s", "<cmd>w<cr>", { desc = "Save", silent = true })
 -- vim.keymap.set('n', "<leader>x", "<cmd>bd<cr>", { desc = "Close current buffer" })
-vim.keymap.set("n", "<leader>w", "<cmd>bd<cr>", { desc = "Close buffer/split", silent = true })
+-- vim.keymap.set("n", "<leader>w", "<cmd>bd<cr>", { desc = "Close buffer/split", silent = true })
 -- vim.keymap.set("n", "<leader>W", "<cmd>wqa<cr>", { desc = "Save All and quit" })
+vim.keymap.set("n", "<leader>W", "<cmd>tabclose<cr>", { silent = true, desc = "Close tab" })
 vim.keymap.set("n", "<leader>q", "<cmd>confirm q<cr>", { desc = "Quit" })
 vim.keymap.set("n", "<leader>Q", "<cmd>confirm qall<cr>", { desc = "Quit all" })
 vim.keymap.set("n", "<leader>n", "<<cmd>enew<cr>", { desc = "New File" })
@@ -137,8 +145,8 @@ vim.keymap.set("n", "<S-CR>", "m`o<Esc>``")
 vim.keymap.set("n", "<CR>", "m`O<Esc>``")
 
 -- hijack netrw
-vim.g.loaded_netrwPlugin = 1
-vim.g.loaded_netrw = 1
+vim.g.loaded_netrwPlugin = 0
+vim.g.loaded_netrw = 0
 
 -- hide ~ chars at the end of file
 vim.opt.fillchars = { eob = " " }
@@ -178,7 +186,7 @@ keymap.set("n", "$", "g$", { noremap = true, silent = true })
 vim.keymap.set({ "n", "x" }, "H", "g^", { desc = "End of line", noremap = true, silent = true })
 vim.keymap.set({ "n", "x" }, "L", "g$", { desc = "Start of line", noremap = true, silent = true })
 
-keymap.set({"n", "v"}, "s", "<Nop>", { noremap = true })
+keymap.set({ "n", "v" }, "s", "<Nop>", { noremap = true })
 
 -- Make change/delete/select whole word default
 -- keymap.set("n", "cw", "ciw", { noremap = true, silent = true, desc = "Change word" })
@@ -193,10 +201,8 @@ vim.opt.laststatus = 3 -- set in lualine.nvim
 vim.opt.cmdheight = 0
 vim.opt.showtabline = 2
 
--- grug-far.nvim
-vim.g.maplocalleader = "."
-
--- vim.o.winbar = ""
+-- grug-far
+vim.g.maplocalleader = " "
 
 -- optional themes
 vim.g.opt_themes = true
@@ -204,21 +210,54 @@ vim.g.opt_themes = true
 vim.opt.sessionoptions = { "buffers", "curdir", "tabpages", "winsize", "help", "globals", "skiprtp", "folds", "blank" }
 
 -- Duplicate a line and comment out the first line
-vim.keymap.set("n", "yc", "<cmd>norm yygcc<cr>p", { noremap = true, desc = "Duplicate line and comment original", silent = true })
+vim.keymap.set(
+	"n",
+	"yc",
+	"<cmd>norm yygcc<cr>p",
+	{ noremap = true, desc = "Duplicate line and comment original", silent = true }
+)
 
 -- Move selected lines with shift+j or shift+k
 -- vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv", { silent = true })
 -- vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv", { silent = true })
 
--- Complete till longest common string. If this doesn't result in a longer string, 
+-- Complete till longest common string. If this doesn't result in a longer string,
 -- use the next part.
 vim.opt.wildmode = "longest:full"
 
--- Mkae popup window use normal background while keeping its border color
+-- Make popup window use normal background while keeping its border color
 vim.api.nvim_create_autocmd("ColorScheme", {
-    callback = function(_)
-        local fg = vim.api.nvim_get_hl(0, {name = "FloatBorder"}).fg
+	callback = function(_)
+		local fg = vim.api.nvim_get_hl(0, { name = "FloatBorder" }).fg
 		vim.api.nvim_set_hl(0, "NormalFloat", { link = "Normal" })
-		vim.api.nvim_set_hl(0, "FloatBorder", { fg = fg, bg = "bg"})
-    end
+		vim.api.nvim_set_hl(0, "FloatBorder", { fg = fg, bg = "bg" })
+	end,
+})
+
+vim.filetype.add({
+	extension = {
+		strato = "scala",
+	},
+})
+
+-- vim.o.winborder = "double"
+
+-- Window management in terminal
+keymap.set("t", "<c-d>", function()
+	vim.cmd.wincmd("j")
+end)
+keymap.set("t", "<c-u>", function()
+	vim.cmd.wincmd("k")
+end)
+keymap.set("t", "<c-h>", function()
+	vim.cmd.wincmd("h")
+end)
+keymap.set("t", "<c-l>", function()
+	vim.cmd.wincmd("l")
+end)
+vim.api.nvim_create_autocmd({ "TermOpen", "TermEnter" }, {
+	pattern = "*",
+	callback = function()
+		vim.wo.winbar = "Neovim Terminal"
+	end,
 })

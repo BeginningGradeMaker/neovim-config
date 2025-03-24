@@ -1,6 +1,7 @@
 return {
 	{
 		"yetone/avante.nvim",
+        enabled = false,
         cmd = {"AvanteAsk", "AvanteBuild", "AvanteChat", "AvanteEdit", "AvanteFocus", "AvanteRefresh", "AvanteSwitchProvider", "AvanteShowRepoMap", "AvanteToggle"},
 		opts = {
 			-- add any opts here
