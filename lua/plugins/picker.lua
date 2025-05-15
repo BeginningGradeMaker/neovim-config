@@ -3,7 +3,7 @@ return {
         "folke/snacks.nvim",
         opts = {
             picker = {
-                enabled = true,
+                enabled = not vim.g.vscode,
                 layout = {
                     preset = function()
                         return vim.o.columns >= 120 and "ivy_taller" or "vertical"
@@ -175,7 +175,7 @@ return {
                                 picker.preview.state.colorscheme = nil
                                 vim.schedule(function()
                                     vim.cmd("colorscheme " .. item.text)
-                                    local file = io.open("/Users/zhisuw/.config/nvim/lua/colorscheme.lua", "w")
+                                    local file = io.open("/Users/zhisu/.config/nvim/lua/colorscheme.lua", "w")
                                     file:write(string.format("vim.cmd(\"colorscheme %s\")", item.text))
                                 end)
                             end

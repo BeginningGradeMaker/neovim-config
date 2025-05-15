@@ -14,6 +14,7 @@ vim.opt.rtp:prepend(lazypath)
 
 require("vim-options")
 require("neovide")
+require("vscode-options")
 require("lazy").setup("plugins", {
 	ui = {
 		border = "rounded",

@@ -74,18 +74,18 @@ return {
     {
         "projekt0n/github-nvim-theme",
         enabled = vim.g.opt_themes,
-        optional = not vim.g.opt_theme,
+        optional = not vim.g.opt_themes,
         priority = 1000,
     },
     {
         "sainnhe/gruvbox-material",
         -- optional = not vim.g.opt_theme,
-        enabled = vim.g.opt_theme,
+        enabled = vim.g.opt_themes,
         priority = 1000,
     },
     {
         "scottmckendry/cyberdream.nvim",
-        optional = not vim.g.opt_theme,
+        optional = not vim.g.opt_themes,
         enabled = vim.g.opt_themes,
         lazy = false,
         priority = 1000,
@@ -122,8 +122,8 @@ return {
     },
     {
         "rebelot/kanagawa.nvim",
-        optional = not vim.g.opt_theme,
-        enabled = vim.g.opt_themes,
+        optional = false,
+        enabled = true,
         priority = 1000,
     },
     {
@@ -143,6 +143,10 @@ return {
         priority = 1000,
     },
     {
+        "bluz71/vim-moonfly-colors",
+        priority = 1000,
+    },
+    {
         "armannikoyan/rusty",
         lazy = false,
         opts = {
@@ -154,5 +158,5 @@ return {
             require("rusty").setup(opts)
         end,
         priority = 1000,
-    }
+    },
 }

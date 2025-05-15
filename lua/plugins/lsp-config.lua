@@ -5,7 +5,7 @@ return {
         lazy = true,
         event = { "BufReadPost", "BufNewFile", "BufWritePost" },
         dependencies = {
-            "williamboman/mason.nvim",
+            "mason-org/mason.nvim",
             -- Useful status updates for LSP.
             { "j-hui/fidget.nvim", opts = {} },
             "saghen/blink.cmp",
@@ -183,10 +183,10 @@ return {
                         clangd = {
                             arguments = { "-I/Users/zhisuw/cpython/Include" }
                         }
-                    }
-                    -- handlers = {
-                    --     ["textDocument/publishDiagnostics"] = function() end,
-                    -- },
+                    },
+                    handlers = {
+                        ["textDocument/publishDiagnostics"] = function() end,
+                    },
                 },
                 lua_ls = {
                     capabilities = {
@@ -208,17 +208,17 @@ return {
                 },
                 texlab = {},
                 gopls = {},
-                -- tinymist = {
-                --     single_file_support = true,
-                --     root_dir = function()
-                --         return vim.fn.getcwd()
-                --     end,
-                --     settings = {
-                --         -- exportPdf = "onType",
-                --         exportPdf = "onSave",
-                --         -- outputPath = "$root/target/$dir/$name",
-                --     },
-                -- },
+                tinymist = {
+                    single_file_support = true,
+                    root_dir = function()
+                        return vim.fn.getcwd()
+                    end,
+                    settings = {
+                        -- exportPdf = "onType",
+                        exportPdf = "onSave",
+                        -- outputPath = "$root/target/$dir/$name",
+                    },
+                },
             }
 
             --  To check the current status of installed tools and/or manually install

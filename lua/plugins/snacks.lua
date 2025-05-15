@@ -25,9 +25,6 @@ return {
             enabled = true,
             replace_netrw = true
         },
-        image = {
-            enabeld = true,
-        },
         rename = {
             enabled = true,
         },

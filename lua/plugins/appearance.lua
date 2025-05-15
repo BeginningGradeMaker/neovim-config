@@ -2,7 +2,7 @@ return {
     {
         "folke/noice.nvim",
         lazy = true,
-        enabled = true,
+        enabled = not vim.g.vscode,
         event = "VeryLazy",
         opts = {
             cmdline = {
@@ -53,7 +53,7 @@ return {
             },
             views = {
                 hover = {
-                    border = { style = "double", highlight = "Normal:Normal,FloatBorder:FloatBorder,NormalFloat:None" },
+                    border = { style = "single", highlight = "Normal:Normal,FloatBorder:FloatBorder,NormalFloat:None" },
                     size = { max_width = 80 },
                 },
             },

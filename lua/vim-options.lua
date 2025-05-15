@@ -198,7 +198,7 @@ vim.g.copilot_enabled = 0
 
 -- views can only be fully collapsed with the global statusline
 vim.opt.laststatus = 3 -- set in lualine.nvim
-vim.opt.cmdheight = 0
+vim.opt.cmdheight = vim.g.vscode
 vim.opt.showtabline = 2
 
 -- grug-far
@@ -226,6 +226,7 @@ vim.keymap.set(
 vim.opt.wildmode = "longest:full"
 
 -- Make popup window use normal background while keeping its border color
+if not vim.g.vscode then
 vim.api.nvim_create_autocmd("ColorScheme", {
 	callback = function(_)
 		local fg = vim.api.nvim_get_hl(0, { name = "FloatBorder" }).fg
@@ -233,6 +234,7 @@ vim.api.nvim_create_autocmd("ColorScheme", {
 		vim.api.nvim_set_hl(0, "FloatBorder", { fg = fg, bg = "bg" })
 	end,
 })
+end
 
 vim.filetype.add({
 	extension = {

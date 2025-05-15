@@ -10,7 +10,7 @@ return {
         config = function()
             require("competitest").setup({
                 compile_command = {
-                    cpp = { exec = "g++-14", args = { "-std=c++20", "-O2", "-Wall", "$(FNAME)", "-o", "$(FNOEXT)" } },
+                    cpp = { exec = "g++-14", args = { "-std=c++23", "-O2", "-Wall", "$(FNAME)", "-o", "$(FNOEXT)" } },
                 },
                 -- runner_ui = { interface = "split" },
             })

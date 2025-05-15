@@ -44,6 +44,9 @@ return {
 			end
 			return vim.list_contains({ "<C-V>", "v", "V" }, ctx.mode)
 		end,
+        delay = function(ctx)
+            return 0
+        end,
 
 		-- icons = { group = vim.g.icons_enabled and "" or "+", separator = "" },
 		icons = {
@@ -69,7 +72,7 @@ return {
 			separator = "",
 		},
 		disable = { filetypes = { "TelescopePrompt" } },
-		preset = "modern",
+		preset = "helix",
 	},
 	config = function(_, opts)
 		local wk = require("which-key")

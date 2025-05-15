@@ -3,11 +3,12 @@ return {
     {
         "chomosuke/typst-preview.nvim",
         ft = "typst",
-        -- version = "0.3.*",
         keys = {
             {
                 "<leader>tp",
-                ":TypstPreviewToggle<cr>",
+                function()
+                    vim.cmd("TypstPreviewToggle")
+                end,
                 desc = "Typst preview",
             },
             {
@@ -25,13 +26,14 @@ return {
             require("typst-preview").update()
         end,
         opts = {
-            open_cmd = "open -a 'Google Chrome' %s",
+            -- open_cmd = "open -a 'Google Chrome' %s",
+            -- open_cmd = "typst_preview %s",
             -- open_cmd = "open"
-            dependencies_bin = {
-                -- if you are using tinymist, just set ['typst-preview'] = "tinymist".
-                ["typst-preview"] = "tinymist",
-                ["websocat"] = nil,
-            },
+            -- dependencies_bin = {
+            --     -- if you are using tinymist, just set ['typst-preview'] = "tinymist".
+            --     ["typst-preview"] = "tinymist",
+            --     ["websocat"] = nil,
+            -- },
         },
     },
     -- {
